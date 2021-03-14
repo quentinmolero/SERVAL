@@ -1,7 +1,9 @@
 package fr.serval.launcher.ihm;
 
+import fr.serval.GlobalKeys;
 import fr.serval.application.Application;
 import fr.serval.ihm.IHMFrameBuilder;
+import fr.serval.launcher.LauncherKeys;
 import fr.serval.launcher.plugin.ihm.PluginMenu;
 
 import javax.swing.*;
@@ -24,7 +26,7 @@ public class LauncherMainView implements IHMFrameBuilder {
     public LauncherMainView() {
         this.pluginMenu = new PluginMenu();
 
-        this.mainFrame = new JFrame("SERVAL Launcher");
+        this.mainFrame = new JFrame(LauncherKeys.LAUNCHER_NAME);
 
         setActionPanel();
 
@@ -80,18 +82,18 @@ public class LauncherMainView implements IHMFrameBuilder {
     }
 
     private void setTitle() {
-        this.title = new JLabel("SERVAL");
+        this.title = new JLabel(GlobalKeys.SERVAL);
         this.title.setHorizontalAlignment(SwingConstants.CENTER);
         this.title.setFont(new Font(new JLabel().getFont().getFontName(), Font.PLAIN, 24));
     }
 
     private void setDescription() {
-        this.description = new JLabel("Suivi Et Revu de Version ALlégé");
+        this.description = new JLabel(GlobalKeys.SERVAL_FULL_NAME);
         this.description.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
     private void setStartButton() {
-        this.startButton = new JButton("Démarrer");
+        this.startButton = new JButton(LauncherKeys.START);
         this.startButton.addActionListener(e -> {
             mainFrame.dispose();
             Application.main();
@@ -99,7 +101,7 @@ public class LauncherMainView implements IHMFrameBuilder {
     }
 
     private void setCloseButton() {
-        this.closeButton = new JButton("Fermer");
+        this.closeButton = new JButton(LauncherKeys.CLOSE);
         this.closeButton.addActionListener(e -> {
             mainFrame.dispose();
             System.exit(0);
@@ -107,7 +109,7 @@ public class LauncherMainView implements IHMFrameBuilder {
     }
 
     private void setManageButton() {
-        this.manageButton = new JButton("Gérer les plugins");
+        this.manageButton = new JButton(LauncherKeys.MANAGE_PLUGINS);
         this.manageButton.addActionListener(e -> pluginMenu.showWindow());
     }
 }

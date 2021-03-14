@@ -1,9 +1,9 @@
 package fr.serval.launcher.plugin.ihm;
 
 import fr.serval.ihm.IHMFrameBuilder;
+import fr.serval.launcher.LauncherKeys;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class PluginMenu implements IHMFrameBuilder {
@@ -52,6 +52,7 @@ public class PluginMenu implements IHMFrameBuilder {
         this.dialog.setResizable(true);
         this.dialog.setLocationByPlatform(true);
         this.dialog.setModal(true);
+        this.dialog.setTitle(LauncherKeys.MANAGER_NAME);
         this.dialog.pack();
         this.dialog.setVisible(true);
     }
@@ -69,15 +70,15 @@ public class PluginMenu implements IHMFrameBuilder {
     }
 
     private void setTitle() {
-        this.title = new JLabel("Gestion des plugins", JLabel.CENTER);
+        this.title = new JLabel(LauncherKeys.MANAGE_PLUGINS, JLabel.CENTER);
         this.title.setFont(new Font(new JLabel().getFont().getFontName(), Font.PLAIN, 16));
     }
 
     private void setSaveButton() {
-        this.saveButton = new JButton("Sauvegarder");
+        this.saveButton = new JButton(LauncherKeys.SAVE);
     }
 
     private void setCloseButton() {
-        this.closeButton = new JButton("Annuler");
+        this.closeButton = new JButton(LauncherKeys.CANCEL);
     }
 }
