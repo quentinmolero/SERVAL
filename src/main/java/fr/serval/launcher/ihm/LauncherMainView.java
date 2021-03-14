@@ -1,11 +1,15 @@
 package fr.serval.launcher.ihm;
 
 import fr.serval.application.Application;
+import fr.serval.ihm.IHMFrameBuilder;
+import fr.serval.launcher.plugin.ihm.PluginMenu;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class LauncherMainView {
+public class LauncherMainView implements IHMFrameBuilder {
+
+    private final PluginMenu pluginMenu;
 
     private final JFrame mainFrame;
     private JPanel actionPanel;
@@ -18,9 +22,11 @@ public class LauncherMainView {
     private JButton manageButton;
 
     public LauncherMainView() {
+        this.pluginMenu = new PluginMenu();
+
         this.mainFrame = new JFrame("SERVAL Launcher");
 
-        setActionFrame();
+        setActionPanel();
 
         setMainLayout();
         setActionLayout();
@@ -33,12 +39,14 @@ public class LauncherMainView {
         setManageButton();
     }
 
+    @Override
     public void showWindow() {
         addComponentsInWindow();
         configureMainFrame();
     }
 
-    private void addComponentsInWindow() {
+    @Override
+    public void addComponentsInWindow() {
         this.mainFrame.setLayout(mainLayout);
         this.mainFrame.add(title, BorderLayout.NORTH);
         this.mainFrame.add(description, BorderLayout.CENTER);
@@ -51,7 +59,8 @@ public class LauncherMainView {
         this.mainFrame.add(actionPanel, BorderLayout.SOUTH);
     }
 
-    private void configureMainFrame() {
+    @Override
+    public void configureMainFrame() {
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.mainFrame.setLocationByPlatform(true);
         this.mainFrame.pack();
@@ -62,7 +71,7 @@ public class LauncherMainView {
         this.mainLayout = new BorderLayout();
     }
 
-    private void setActionFrame() {
+    private void setActionPanel() {
         this.actionPanel = new JPanel();
     }
 
@@ -99,5 +108,6 @@ public class LauncherMainView {
 
     private void setManageButton() {
         this.manageButton = new JButton("Gérer les plugins");
+        this.manageButton.addActionListener(e -> pluginMenu.showWindow());
     }
 }
