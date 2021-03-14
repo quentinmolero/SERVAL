@@ -1,5 +1,7 @@
 package fr.serval.launcher.ihm;
 
+import fr.serval.application.Application;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -81,6 +83,10 @@ public class LauncherMainView {
 
     private void setStartButton() {
         this.startButton = new JButton("Démarrer");
+        this.startButton.addActionListener(e -> {
+            mainFrame.dispose();
+            Application.main();
+        });
     }
 
     private void setCloseButton() {
