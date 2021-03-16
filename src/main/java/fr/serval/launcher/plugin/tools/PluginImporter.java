@@ -1,19 +1,21 @@
 package fr.serval.launcher.plugin.tools;
 
 import fr.serval.GlobalKeys;
-import fr.serval.Main;
 import fr.serval.launcher.LauncherKeys;
+import fr.serval.launcher.plugin.Plugin;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Scanner;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -37,10 +39,6 @@ public class PluginImporter {
 
             if (!isPluginFileListPresent() && !createPluginFileList()) {
                 JOptionPane.showMessageDialog(null, LauncherKeys.ERROR_CAN_NOT_CREATE + this.pluginFileList.getAbsolutePath(), LauncherKeys.ERROR_PLUGIN_IMPORTER, JOptionPane.ERROR_MESSAGE);
-            }
-
-            if (isServalDirPresent() && isPluginFileListPresent()) {
-                printFileContent(this.pluginFileList);
             }
         }
     }
@@ -79,6 +77,32 @@ public class PluginImporter {
         } catch (IOException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Plugin> getPluginList() {
+        List<Plugin> pluginList = new ArrayList<>();
+        if (isServalDirPresent() && isPluginFileListPresent()) {
+            getPluginFileContent(this.pluginFileList).lines().forEach(line -> {
+                String[] data = line.split(";");
+                pluginList.add(new Plugin(data[0], data[1], Boolean.parseBoolean(data[2])));
+            });
+        }
+        return pluginList;
+    }
+
+    private String getPluginFileContent(File file) {
+        String fileContent = "";
+
+        try {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                fileContent += scanner.nextLine() + '\n';
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return fileContent;
     }
 
     private boolean isUserHomeDirPresent() {
