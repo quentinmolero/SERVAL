@@ -12,15 +12,15 @@ public class Plugin {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public String getFile() {
-        return file;
+        return this.file;
     }
 
     public boolean isEnabled() {
-        return isEnabled;
+        return this.isEnabled;
     }
 
     public void setEnabled(boolean enabled) {
