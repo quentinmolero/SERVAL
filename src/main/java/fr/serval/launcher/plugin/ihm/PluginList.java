@@ -52,7 +52,7 @@ public class PluginList {
         JCheckBox checkBox = new JCheckBox();
 
         checkBox.setSelected(plugin.isEnabled());
-        checkBox.addActionListener(e -> plugin.setEnabled(checkBox.isEnabled()));
+        checkBox.addActionListener(e -> plugin.setEnabled(checkBox.isSelected()));
 
         panel.setLayout(layout);
         panel.add(pluginFileState(plugin), BorderLayout.LINE_START);
