@@ -5,23 +5,31 @@ import fr.serval.launcher.plugin.PluginController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PluginList {
     private final JPanel pluginTable;
-    private final List<Plugin> plugins;
+    private List<Plugin> plugins;
     private BoxLayout pluginLayout;
 
     public PluginList() {
         this.pluginTable = new JPanel();
-        this.plugins = PluginController.getInstance().getPluginImporter().getPluginList();
         setPluginLayout();
     }
 
     public JPanel getPluginTable() {
+        fetchPluginList();
+        clearPluginTable();
         fillPluginTable();
         return this.pluginTable;
+    }
+
+    private void fetchPluginList() {
+        this.plugins = PluginController.getInstance().getPluginImporter().getPluginList();
+    }
+
+    private void clearPluginTable() {
+        this.pluginTable.removeAll();
     }
 
     private void fillPluginTable() {
@@ -38,6 +46,9 @@ public class PluginList {
         JCheckBox checkBox = new JCheckBox();
 
         checkBox.setSelected(plugin.isEnabled());
+        checkBox.addActionListener(e -> {
+            plugin.setEnabled(checkBox.isEnabled());
+        });
 
         panel.setLayout(layout);
         panel.add(label, BorderLayout.LINE_START);
@@ -48,5 +59,9 @@ public class PluginList {
 
     private void setPluginLayout() {
         this.pluginLayout = new BoxLayout(pluginTable, BoxLayout.Y_AXIS);
+    }
+
+    public List<Plugin> getPlugins() {
+        return plugins;
     }
 }

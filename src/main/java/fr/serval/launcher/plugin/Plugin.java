@@ -3,7 +3,7 @@ package fr.serval.launcher.plugin;
 public class Plugin {
     private final String name;
     private final String file;
-    private final boolean isEnabled;
+    private boolean isEnabled;
 
     public Plugin(String name, String file, boolean isEnabled) {
         this.name = name;
@@ -21,5 +21,9 @@ public class Plugin {
 
     public boolean isEnabled() {
         return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 }

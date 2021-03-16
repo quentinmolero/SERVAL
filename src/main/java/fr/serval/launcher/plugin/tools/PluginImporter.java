@@ -7,6 +7,7 @@ import fr.serval.launcher.plugin.Plugin;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 
 public class PluginImporter {
     private final File userHomeDir;
@@ -71,10 +73,8 @@ public class PluginImporter {
                 }
             }
             myReader.close();
-        } catch (FileNotFoundException | ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IOException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             System.out.println("An error occurred.");
-            e.printStackTrace();
-        } catch (IOException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
     }
@@ -82,7 +82,7 @@ public class PluginImporter {
     public List<Plugin> getPluginList() {
         List<Plugin> pluginList = new ArrayList<>();
         if (isServalDirPresent() && isPluginFileListPresent()) {
-            getPluginFileContent(this.pluginFileList).lines().forEach(line -> {
+            getPluginFileContent().lines().forEach(line -> {
                 String[] data = line.split(";");
                 pluginList.add(new Plugin(data[0], data[1], Boolean.parseBoolean(data[2])));
             });
@@ -90,19 +90,33 @@ public class PluginImporter {
         return pluginList;
     }
 
-    private String getPluginFileContent(File file) {
+    private String getPluginFileContent() {
         String fileContent = "";
 
         try {
-            Scanner scanner = new Scanner(file);
+            Scanner scanner = new Scanner(this.pluginFileList);
             while (scanner.hasNextLine()) {
                 fileContent += scanner.nextLine() + '\n';
             }
+            scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
         return fileContent;
+    }
+
+    public boolean setPluginFileContent(List<Plugin> plugins) {
+        try {
+            FileWriter fileWriter = new FileWriter(this.pluginFileList);
+            fileWriter.write(plugins.stream().map(plugin -> plugin.getName() + ";" + plugin.getFile() + ";" + plugin.isEnabled() + '\n').collect(Collectors.joining()));
+            fileWriter.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     private boolean isUserHomeDirPresent() {

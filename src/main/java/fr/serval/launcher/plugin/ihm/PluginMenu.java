@@ -2,6 +2,7 @@ package fr.serval.launcher.plugin.ihm;
 
 import fr.serval.ihm.IHMFrameBuilder;
 import fr.serval.launcher.LauncherKeys;
+import fr.serval.launcher.plugin.PluginController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,12 +31,14 @@ public class PluginMenu implements IHMFrameBuilder {
 
         setSaveButton();
         setCloseButton();
+
+        addComponentsInWindow();
+        configureMainFrame();
     }
 
     @Override
     public void showWindow() {
-        addComponentsInWindow();
-        configureMainFrame();
+        this.dialog.setVisible(true);
     }
 
     @Override
@@ -58,7 +61,6 @@ public class PluginMenu implements IHMFrameBuilder {
         this.dialog.setModal(true);
         this.dialog.setTitle(LauncherKeys.MANAGER_NAME);
         this.dialog.pack();
-        this.dialog.setVisible(true);
     }
 
     private void setActionPanel() {
@@ -80,9 +82,14 @@ public class PluginMenu implements IHMFrameBuilder {
 
     private void setSaveButton() {
         this.saveButton = new JButton(LauncherKeys.SAVE);
+        this.saveButton.addActionListener(e -> {
+            PluginController.getInstance().getPluginImporter().setPluginFileContent(this.pluginList.getPlugins());
+            this.dialog.dispose();
+        });
     }
 
     private void setCloseButton() {
         this.closeButton = new JButton(LauncherKeys.CANCEL);
+        this.closeButton.addActionListener(e -> this.dialog.dispose());
     }
 }
