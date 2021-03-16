@@ -8,8 +8,6 @@ import fr.serval.launcher.plugin.ihm.PluginMenu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LauncherMainView implements IHMFrameBuilder {
 

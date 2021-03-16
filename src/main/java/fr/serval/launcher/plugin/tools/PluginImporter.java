@@ -53,16 +53,16 @@ public class PluginImporter {
                 JarFile jarFile = new JarFile(this.servalHomeDir + String.valueOf(File.separator) + data);
                 Enumeration<JarEntry> e = jarFile.entries();
 
-                URL[] urls = { new URL("jar:file:" + this.servalHomeDir + File.separator + data+"!/") };
+                URL[] urls = {new URL("jar:file:" + this.servalHomeDir + File.separator + data + "!/")};
                 URLClassLoader cl = URLClassLoader.newInstance(urls);
 
                 while (e.hasMoreElements()) {
                     JarEntry je = e.nextElement();
-                    if(je.isDirectory() || !je.getName().endsWith(".class")){
+                    if (je.isDirectory() || !je.getName().endsWith(".class")) {
                         continue;
                     }
                     // -6 because of .class
-                    String className = je.getName().substring(0,je.getName().length()-6);
+                    String className = je.getName().substring(0, je.getName().length() - 6);
                     className = className.replace('/', '.');
                     Class c = cl.loadClass(className);
 
@@ -90,19 +90,19 @@ public class PluginImporter {
     }
 
     private String getPluginFileContent() {
-        String fileContent = "";
+        StringBuilder fileContent = new StringBuilder();
 
         try {
             Scanner scanner = new Scanner(this.pluginFileList);
             while (scanner.hasNextLine()) {
-                fileContent += scanner.nextLine() + '\n';
+                fileContent.append(scanner.nextLine()).append('\n');
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        return fileContent;
+        return fileContent.toString();
     }
 
     public boolean setPluginFileContent(List<Plugin> plugins) {
@@ -136,9 +136,11 @@ public class PluginImporter {
 
     private boolean createPluginFileList() {
         try {
-            this.pluginFileList.createNewFile();
+            if (!this.pluginFileList.createNewFile()) {
+                throw new IOException();
+            }
         } catch (IOException e) {
-            System.err.println(e);
+            e.printStackTrace();
         }
 
         return isPluginFileListPresent();

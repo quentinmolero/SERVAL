@@ -4,7 +4,6 @@ import fr.serval.launcher.LauncherKeys;
 import fr.serval.launcher.plugin.Plugin;
 import fr.serval.launcher.plugin.PluginController;
 
-import javax.print.DocFlavor;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -53,9 +52,7 @@ public class PluginList {
         JCheckBox checkBox = new JCheckBox();
 
         checkBox.setSelected(plugin.isEnabled());
-        checkBox.addActionListener(e -> {
-            plugin.setEnabled(checkBox.isEnabled());
-        });
+        checkBox.addActionListener(e -> plugin.setEnabled(checkBox.isEnabled()));
 
         panel.setLayout(layout);
         panel.add(pluginFileState(plugin), BorderLayout.LINE_START);
