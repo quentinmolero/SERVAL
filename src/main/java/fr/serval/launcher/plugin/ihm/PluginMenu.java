@@ -22,6 +22,13 @@ public class PluginMenu implements IHMFrameBuilder {
         this.pluginList = new PluginList();
         this.dialog = new JDialog();
 
+        initComponents();
+        addComponentsInWindow();
+        configureMainFrame();
+    }
+
+    @Override
+    public void initComponents() {
         setActionPanel();
 
         setMainLayout();
@@ -31,14 +38,6 @@ public class PluginMenu implements IHMFrameBuilder {
 
         setSaveButton();
         setCloseButton();
-
-        addComponentsInWindow();
-        configureMainFrame();
-    }
-
-    @Override
-    public void showWindow() {
-        this.dialog.setVisible(true);
     }
 
     @Override
@@ -61,6 +60,11 @@ public class PluginMenu implements IHMFrameBuilder {
         this.dialog.setModal(true);
         this.dialog.setTitle(LauncherKeys.MANAGER_NAME);
         this.dialog.pack();
+    }
+
+    @Override
+    public void showWindow() {
+        this.dialog.setVisible(true);
     }
 
     private void setActionPanel() {

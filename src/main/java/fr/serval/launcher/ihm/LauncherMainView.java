@@ -28,6 +28,13 @@ public class LauncherMainView implements IHMFrameBuilder {
 
         this.mainFrame = new JFrame(LauncherKeys.LAUNCHER_NAME);
 
+        initComponents();
+        addComponentsInWindow();
+        configureMainFrame();
+    }
+
+    @Override
+    public void initComponents() {
         setActionPanel();
 
         setMainLayout();
@@ -39,12 +46,6 @@ public class LauncherMainView implements IHMFrameBuilder {
         setStartButton();
         setCloseButton();
         setManageButton();
-    }
-
-    @Override
-    public void showWindow() {
-        addComponentsInWindow();
-        configureMainFrame();
     }
 
     @Override
@@ -66,6 +67,10 @@ public class LauncherMainView implements IHMFrameBuilder {
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.mainFrame.setLocationByPlatform(true);
         this.mainFrame.pack();
+    }
+
+    @Override
+    public void showWindow() {
         this.mainFrame.setVisible(true);
     }
 

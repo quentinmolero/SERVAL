@@ -2,9 +2,11 @@ package fr.serval.ihm;
 
 public interface IHMFrameBuilder {
 
-    void showWindow();
+    void initComponents();
 
     void addComponentsInWindow();
 
     void configureMainFrame();
+
+    void showWindow();
 }
