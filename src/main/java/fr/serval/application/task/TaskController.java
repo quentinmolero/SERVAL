@@ -4,7 +4,6 @@ import fr.serval.application.projects.Project;
 import fr.serval.application.task.ihm.TaskMainView;
 import fr.serval.controller.Controller;
 
-import javax.swing.*;
 import java.util.HashMap;
 import java.util.List;
 

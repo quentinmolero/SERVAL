@@ -1,7 +1,7 @@
 package fr.serval.application.projects;
 
 public class Project {
-    private String name;
+    private final String name;
 
     public Project(String name) {
         this.name = name;

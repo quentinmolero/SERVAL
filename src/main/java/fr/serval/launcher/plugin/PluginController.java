@@ -7,7 +7,7 @@ public class PluginController implements Controller {
 
     private static PluginController instance;
 
-    private PluginImporter pluginImporter;
+    private final PluginImporter pluginImporter;
 
     public PluginController() {
         this.pluginImporter = new PluginImporter();
