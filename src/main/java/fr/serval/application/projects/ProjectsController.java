@@ -1,11 +1,12 @@
 package fr.serval.application.projects;
 
 import fr.serval.application.projects.ihm.ProjectTreeView;
+import fr.serval.controller.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectsController {
+public class ProjectsController implements Controller {
 
     private static ProjectsController instance;
 
@@ -44,7 +45,7 @@ public class ProjectsController {
     private void fillProjectTreeForDev() {
         this.projectTreeView.resetProjectTree();
         for (Project project : this.projectList) {
-            this.projectTreeView.insertProjectNode(project.getName());
+            this.projectTreeView.insertProjectNode(project);
         }
     }
 }

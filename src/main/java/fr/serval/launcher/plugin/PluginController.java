@@ -1,8 +1,9 @@
 package fr.serval.launcher.plugin;
 
+import fr.serval.controller.Controller;
 import fr.serval.launcher.plugin.tools.PluginImporter;
 
-public class PluginController {
+public class PluginController implements Controller {
 
     private static PluginController instance;
 
