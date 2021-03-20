@@ -1,6 +1,9 @@
 package fr.serval.application.projects.ihm;
 
+import fr.serval.application.ApplicationViewController;
 import fr.serval.application.projects.Project;
+import fr.serval.application.projects.ProjectsController;
+import fr.serval.application.task.TaskController;
 import fr.serval.ihm.IHMComponentBuilder;
 
 import javax.swing.*;
@@ -23,6 +26,9 @@ public class ProjectTreeView implements IHMComponentBuilder {
         this.tree.setRootVisible(false);
         this.tree.addTreeSelectionListener(e -> {
             System.out.println(this.tree.getLastSelectedPathComponent());
+            DefaultMutableTreeNode treeNode = (DefaultMutableTreeNode) this.tree.getLastSelectedPathComponent();
+            Project project = ProjectsController.getInstance().getProjectFromProjectName((String) treeNode.getUserObject());
+            ApplicationViewController.getInstance().fillApplicationMainPanel((JComponent) TaskController.getInstance().getProjectTaskView(project));
         });
     }
 

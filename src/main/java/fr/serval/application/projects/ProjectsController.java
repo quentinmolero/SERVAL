@@ -1,6 +1,7 @@
 package fr.serval.application.projects;
 
 import fr.serval.application.projects.ihm.ProjectTreeView;
+import fr.serval.application.task.TaskController;
 import fr.serval.controller.Controller;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class ProjectsController implements Controller {
 
     private final ProjectTreeView projectTreeView;
     private final List<Project> projectList;
+    private final String[] names = {"Warsaw", "Minsk", "Kiev", "Riga", "Vilnius", "Tallinn"};
 
     public ProjectsController() {
         this.projectTreeView = new ProjectTreeView();
@@ -19,6 +21,8 @@ public class ProjectsController implements Controller {
 
         fillProjectListForDev();
         fillProjectTreeForDev();
+
+        TaskController.getInstance().setupProjectsViews(this.projectList);
     }
 
     public static ProjectsController getInstance() {
@@ -33,13 +37,20 @@ public class ProjectsController implements Controller {
         return projectTreeView;
     }
 
+    public Project getProjectFromProjectName(String name) {
+        return (Project) this.projectList.stream().filter(project -> project.getName().equals(name)).toArray()[0];
+    }
+
+    public boolean canAddProject(String name) {
+        return this.projectList.stream().noneMatch(project -> project.getName().equals(name));
+    }
+
     private void fillProjectListForDev() {
-        this.projectList.add(new Project("Warsaw"));
-        this.projectList.add(new Project("Minsk"));
-        this.projectList.add(new Project("Kiev"));
-        this.projectList.add(new Project("Riga"));
-        this.projectList.add(new Project("Vilnius"));
-        this.projectList.add(new Project("Tallinn"));
+        for (String name : names) {
+            if (canAddProject(name)) {
+                this.projectList.add(new Project(name));
+            }
+        }
     }
 
     private void fillProjectTreeForDev() {

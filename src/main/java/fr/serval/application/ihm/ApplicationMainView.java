@@ -9,6 +9,7 @@ import java.awt.*;
 public class ApplicationMainView implements IHMFrameBuilder {
     private final JFrame mainFrame;
     private BorderLayout borderLayout;
+    private JPanel mainPanel;
 
     public ApplicationMainView() {
         this.mainFrame = new JFrame("SERVAL");
@@ -21,12 +22,14 @@ public class ApplicationMainView implements IHMFrameBuilder {
     @Override
     public void initComponents() {
         setBorderLayout();
+        setMainPanel();
     }
 
     @Override
     public void addComponentsInWindow() {
         this.mainFrame.setLayout(this.borderLayout);
         this.mainFrame.add(ProjectsController.getInstance().getProjectTreeView().getComponent(), BorderLayout.WEST);
+        this.mainFrame.add(this.mainPanel, BorderLayout.EAST);
     }
 
     @Override
@@ -44,5 +47,13 @@ public class ApplicationMainView implements IHMFrameBuilder {
 
     private void setBorderLayout() {
         this.borderLayout = new BorderLayout();
+    }
+
+    private void setMainPanel() {
+        this.mainPanel = new JPanel();
+    }
+
+    public JPanel getMainPanel() {
+        return mainPanel;
     }
 }

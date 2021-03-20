@@ -17,7 +17,7 @@ public class ProjectRootNode implements IHMComponentBuilder {
 
     @Override
     public void setupComponent() {
-
+        this.defaultMutableTreeNode.setUserObject(project);
     }
 
     @Override
