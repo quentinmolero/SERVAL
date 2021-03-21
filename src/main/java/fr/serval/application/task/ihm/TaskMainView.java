@@ -1,6 +1,6 @@
 package fr.serval.application.task.ihm;
 
-import fr.serval.application.projects.Project;
+import fr.serval.application.project.Project;
 import fr.serval.ihm.IHMComponentBuilder;
 
 import javax.swing.*;

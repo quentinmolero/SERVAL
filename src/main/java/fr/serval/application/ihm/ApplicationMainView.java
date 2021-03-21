@@ -1,6 +1,6 @@
 package fr.serval.application.ihm;
 
-import fr.serval.application.projects.ProjectsController;
+import fr.serval.application.project.ProjectController;
 import fr.serval.ihm.IHMFrameBuilder;
 
 import javax.swing.*;
@@ -28,8 +28,8 @@ public class ApplicationMainView implements IHMFrameBuilder {
     @Override
     public void addComponentsInWindow() {
         this.mainFrame.setLayout(this.borderLayout);
-        this.mainFrame.add(ProjectsController.getInstance().getProjectTreeView().getComponent(), BorderLayout.WEST);
-        this.mainFrame.add(this.mainPanel, BorderLayout.EAST);
+        this.mainFrame.add(ProjectController.getInstance().getProjectTreeView().getComponent(), BorderLayout.WEST);
+        this.mainFrame.add(this.mainPanel, BorderLayout.CENTER);
     }
 
     @Override

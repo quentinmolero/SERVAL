@@ -1,6 +1,6 @@
 package fr.serval.application.task;
 
-import fr.serval.application.projects.Project;
+import fr.serval.application.project.Project;
 import fr.serval.application.task.ihm.TaskMainView;
 import fr.serval.controller.Controller;
 

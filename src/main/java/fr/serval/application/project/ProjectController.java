@@ -1,21 +1,21 @@
-package fr.serval.application.projects;
+package fr.serval.application.project;
 
-import fr.serval.application.projects.ihm.ProjectTreeView;
+import fr.serval.application.project.ihm.ProjectTreeView;
 import fr.serval.application.task.TaskController;
 import fr.serval.controller.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectsController implements Controller {
+public class ProjectController implements Controller {
 
-    private static ProjectsController instance;
+    private static ProjectController instance;
 
     private final ProjectTreeView projectTreeView;
     private final List<Project> projectList;
     private final String[] names = {"Warsaw", "Minsk", "Kiev", "Riga", "Vilnius", "Tallinn"};
 
-    public ProjectsController() {
+    public ProjectController() {
         this.projectTreeView = new ProjectTreeView();
         this.projectList = new ArrayList<>();
 
@@ -25,9 +25,9 @@ public class ProjectsController implements Controller {
         TaskController.getInstance().setupProjectsViews(this.projectList);
     }
 
-    public static ProjectsController getInstance() {
+    public static ProjectController getInstance() {
         if (instance == null) {
-            instance = new ProjectsController();
+            instance = new ProjectController();
         }
 
         return instance;
@@ -38,7 +38,11 @@ public class ProjectsController implements Controller {
     }
 
     public Project getProjectFromProjectName(String name) {
-        return (Project) this.projectList.stream().filter(project -> project.getName().equals(name)).toArray()[0];
+        Object[] foundObjects = this.projectList.stream().filter(project -> project.getName().equals(name)).toArray();
+        if (foundObjects.length > 0) {
+            return (Project) foundObjects[0];
+        }
+        return null;
     }
 
     public boolean canAddProject(String name) {

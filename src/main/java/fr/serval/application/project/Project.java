@@ -1,4 +1,4 @@
-package fr.serval.application.projects;
+package fr.serval.application.project;
 
 public class Project {
     private final String name;
