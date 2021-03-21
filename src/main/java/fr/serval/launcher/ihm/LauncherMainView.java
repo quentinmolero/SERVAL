@@ -50,6 +50,8 @@ public class LauncherMainView implements IHMFrameBuilder {
 
     @Override
     public void addComponentsInWindow() {
+        this.mainFrame.setPreferredSize(new Dimension(400, 300));
+        this.mainFrame.setResizable(false);
         this.mainFrame.setLayout(mainLayout);
         this.mainFrame.add(title, BorderLayout.NORTH);
         this.mainFrame.add(description, BorderLayout.CENTER);
