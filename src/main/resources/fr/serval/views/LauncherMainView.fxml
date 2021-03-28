@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.serval.controller.LauncherMainController">
+   <children>
+      <Button id="start_app" fx:id="btnStartApp" layoutX="231.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="38.0" prefWidth="138.0" text="Démarrer" />
+      <Button id="manage_plugins" fx:id="btnManagePlugins" layoutX="231.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="38.0" prefWidth="138.0" text="Gérer les plugins" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
+      <Button id="exit_app" fx:id="btnExitApp" layoutX="231.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="38.0" prefWidth="138.0" text="Quitter" />
+      <Label layoutX="6.0" layoutY="362.0" text="Status Github : Déconnecté" />
+      <Label layoutX="6.0" layoutY="378.0" text="Renseigner un token" />
+      <ImageView fitHeight="589.0" fitWidth="877.0" layoutX="-14.0" layoutY="-225.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/texte5.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
