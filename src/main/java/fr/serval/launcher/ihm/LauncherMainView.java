@@ -26,6 +26,7 @@ public class LauncherMainView extends Application {
         primaryStage.setScene(launcherScene);
         primaryStage.setTitle(GlobalKeys.SERVAL_NAME_DESC);
         primaryStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("images/logo_white_colored_background.png"))));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
