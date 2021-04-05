@@ -29,6 +29,10 @@ public class LauncherMainView extends Application {
         primaryStage.show();
     }
 
+    public static void setRoot(String fxml) throws IOException {
+        launcherScene.setRoot(loadFXML(fxml));
+    }
+
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/" + fxml + ".fxml"));
         return fxmlLoader.load();

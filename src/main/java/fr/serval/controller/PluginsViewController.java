@@ -10,14 +10,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LauncherMainController implements Initializable
+public class PluginsViewController implements Initializable
 {
     @FXML
-    private Button btnStartApp;
+    private Button btnSave;
     @FXML
-    private Button btnManagePlugins;
-    @FXML
-    private Button btnExitApp;
+    private Button btnCancel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -28,18 +26,10 @@ public class LauncherMainController implements Initializable
     @FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
         event.consume();
-        if(event.getSource() == btnStartApp)
+        if(event.getSource() == btnSave)
         {
-            System.out.println("Enter");
+            System.out.println("TODO: Sauvegarder les paramètres");
         }
-        if(event.getSource() == btnManagePlugins)
-        {
-            LauncherMainView.setRoot("PluginsView");
-        }
-        if(event.getSource() == btnExitApp)
-        {
-            System.out.println("Exit SERVAL");
-            System.exit(0);
-        }
+        LauncherMainView.setRoot("LauncherMainView");
     }
 }
