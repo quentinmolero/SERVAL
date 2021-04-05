@@ -6,5 +6,5 @@ module fr.serval {
 
     opens fr.serval to javafx.fxml;
     opens fr.serval.controller to javafx.fxml;
-    exports fr.serval;
+    exports fr.serval.launcher.ihm to javafx.graphics;
 }

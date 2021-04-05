@@ -1,15 +1,15 @@
 package fr.serval.launcher;
 
 import fr.serval.launcher.ihm.LauncherMainView;
-
-import javax.swing.*;
+import javafx.application.Application;
 
 public class Launcher {
 
-    private static LauncherMainView launcherMainView;
-
     public static void main() {
-        launcherMainView = new LauncherMainView();
-        SwingUtilities.invokeLater(() -> launcherMainView.showWindow());
+        try {
+            Application.launch(LauncherMainView.class, new String[]{""});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

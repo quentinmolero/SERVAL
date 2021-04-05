@@ -26,6 +26,7 @@ public class LauncherMainController implements Initializable
     @FXML
     private void handleButtonAction(ActionEvent event)
     {
+        event.consume();
         if(event.getSource() == btnStartApp)
         {
             System.out.println("Enter");
