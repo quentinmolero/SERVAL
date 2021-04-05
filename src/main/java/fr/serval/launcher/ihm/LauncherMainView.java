@@ -1,5 +1,6 @@
 package fr.serval.launcher.ihm;
 
+import fr.serval.GlobalKeys;
 import fr.serval.Main;
 import fr.serval.launcher.plugin.ihm.PluginMenu;
 import javafx.application.Application;
@@ -8,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,6 +24,8 @@ public class LauncherMainView extends Application {
         this.pluginMenu = new PluginMenu();
         launcherScene = new Scene(loadFXML("LauncherMainView"));
         primaryStage.setScene(launcherScene);
+        primaryStage.setTitle(GlobalKeys.SERVAL_NAME_DESC);
+        primaryStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("images/logo_white_colored_background.png"))));
         primaryStage.show();
     }
 
