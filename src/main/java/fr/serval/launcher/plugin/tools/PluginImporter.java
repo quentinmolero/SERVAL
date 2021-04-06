@@ -3,8 +3,9 @@ package fr.serval.launcher.plugin.tools;
 import fr.serval.GlobalKeys;
 import fr.serval.launcher.LauncherKeys;
 import fr.serval.launcher.plugin.Plugin;
+import javafx.scene.control.Alert;
+import javafx.stage.StageStyle;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -13,10 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
@@ -32,16 +30,25 @@ public class PluginImporter {
         this.pluginFileList = new File(servalHomeDir + String.valueOf(File.separator) + "plugins.lst");
 
         if (!isUserHomeDirPresent()) {
-            JOptionPane.showMessageDialog(null, LauncherKeys.ERROR_NO_HOME_DIR, LauncherKeys.ERROR_PLUGIN_IMPORTER, JOptionPane.ERROR_MESSAGE);
+            displayAlertError(LauncherKeys.ERROR_PLUGIN_IMPORTER, LauncherKeys.ERROR_NO_HOME_DIR);
         } else {
             if (!isServalDirPresent() && !createServalDir()) {
-                JOptionPane.showMessageDialog(null, LauncherKeys.ERROR_CAN_NOT_CREATE + this.servalHomeDir.getAbsolutePath(), LauncherKeys.ERROR_PLUGIN_IMPORTER, JOptionPane.ERROR_MESSAGE);
+                displayAlertError(LauncherKeys.ERROR_PLUGIN_IMPORTER, LauncherKeys.ERROR_CAN_NOT_CREATE + this.servalHomeDir.getAbsolutePath());
             }
 
             if (!isPluginFileListPresent() && !createPluginFileList()) {
-                JOptionPane.showMessageDialog(null, LauncherKeys.ERROR_CAN_NOT_CREATE + this.pluginFileList.getAbsolutePath(), LauncherKeys.ERROR_PLUGIN_IMPORTER, JOptionPane.ERROR_MESSAGE);
+                displayAlertError(LauncherKeys.ERROR_PLUGIN_IMPORTER, LauncherKeys.ERROR_CAN_NOT_CREATE + this.pluginFileList.getAbsolutePath());
             }
         }
+    }
+
+    private void displayAlertError(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private void printFileContent(File file) {
