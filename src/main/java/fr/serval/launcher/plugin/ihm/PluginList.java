@@ -3,7 +3,6 @@ package fr.serval.launcher.plugin.ihm;
 import fr.serval.launcher.LauncherKeys;
 import fr.serval.launcher.plugin.Plugin;
 import fr.serval.launcher.plugin.PluginController;
-import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;

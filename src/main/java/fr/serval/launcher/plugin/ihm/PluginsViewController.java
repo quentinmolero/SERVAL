@@ -1,12 +1,10 @@
 package fr.serval.launcher.plugin.ihm;
 
 import fr.serval.launcher.ihm.LauncherMainView;
-import fr.serval.launcher.plugin.Plugin;
 import fr.serval.launcher.plugin.PluginController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
