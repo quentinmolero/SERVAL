@@ -44,7 +44,7 @@ public class PluginMenu implements IHMFrameBuilder {
     public void addComponentsInWindow() {
         this.dialog.setLayout(mainLayout);
         this.dialog.add(title, BorderLayout.NORTH);
-        this.dialog.add(pluginList.getPluginTable(), BorderLayout.CENTER);
+        //this.dialog.add(pluginList.getPluginList(), BorderLayout.CENTER);
 
         this.actionPanel.setLayout(actionLayout);
         this.actionPanel.add(saveButton, BorderLayout.LINE_START);

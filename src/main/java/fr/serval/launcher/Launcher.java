@@ -7,7 +7,7 @@ public class Launcher {
 
     public static void main() {
         try {
-            Application.launch(LauncherMainView.class, new String[]{""});
+            Application.launch(LauncherMainView.class, "");
         } catch (Exception e) {
             e.printStackTrace();
         }

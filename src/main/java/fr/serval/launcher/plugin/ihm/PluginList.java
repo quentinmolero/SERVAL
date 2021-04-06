@@ -3,27 +3,32 @@ package fr.serval.launcher.plugin.ihm;
 import fr.serval.launcher.LauncherKeys;
 import fr.serval.launcher.plugin.Plugin;
 import fr.serval.launcher.plugin.PluginController;
+import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PluginList {
-    private final JPanel pluginTable;
+    private final List<HBox> pluginList;
     private List<Plugin> plugins;
-    private BoxLayout pluginLayout;
 
     public PluginList() {
-        this.pluginTable = new JPanel();
-        setPluginLayout();
+        this.pluginList = new ArrayList<>();
     }
 
-    public JPanel getPluginTable() {
+    public List<HBox> getPluginList() {
         fetchPluginList();
         clearPluginTable();
         fillPluginTable();
-        return this.pluginTable;
+        return this.pluginList;
     }
 
     private void fetchPluginList() {
@@ -31,68 +36,64 @@ public class PluginList {
     }
 
     private void clearPluginTable() {
-        this.pluginTable.removeAll();
+        this.pluginList.clear();
     }
 
     private void fillPluginTable() {
-        this.pluginTable.setLayout(pluginLayout);
         if (this.plugins.isEmpty()) {
-            this.pluginTable.add(noPluginFound());
+            this.pluginList.add(noPluginFound());
         } else {
             for (Plugin plugin : this.plugins) {
-                this.pluginTable.add(formatPluginName(plugin));
+                this.pluginList.add(formatPluginName(plugin));
             }
         }
     }
 
-    private JPanel formatPluginName(Plugin plugin) {
-        JPanel panel = new JPanel();
-        BorderLayout layout = new BorderLayout();
-        JLabel label = new JLabel(plugin.getName(), JLabel.LEFT);
-        JCheckBox checkBox = new JCheckBox();
+    private HBox formatPluginName(Plugin plugin) {
+        HBox box = new HBox();
+        Label label = new Label(plugin.getName());
+        CheckBox checkBox = new CheckBox();
 
+        box.setPrefWidth(600);
+
+        label.setFont(new Font(18));
+        label.setTextAlignment(TextAlignment.LEFT);
+
+        checkBox.setFont(new Font(18));
         checkBox.setSelected(plugin.isEnabled());
-        checkBox.addActionListener(e -> plugin.setEnabled(checkBox.isSelected()));
+        checkBox.setOnAction(e -> plugin.setEnabled(checkBox.isSelected()));
 
-        panel.setLayout(layout);
-        panel.add(pluginFileState(plugin), BorderLayout.LINE_START);
-        panel.add(label, BorderLayout.CENTER);
-        panel.add(checkBox, BorderLayout.LINE_END);
+        box.getChildren().add(pluginFileState(plugin));
+        box.getChildren().add(checkBox);
+        box.getChildren().add(label);
 
-        return panel;
+        return box;
     }
 
-    private JPanel pluginFileState(Plugin plugin) {
-        JPanel state = new JPanel();
+    private Rectangle pluginFileState(Plugin plugin) {
+        Rectangle state = new Rectangle();
         File jarFile = new File(PluginController.getInstance().getPluginImporter().getServalHomeDir() + File.separator + plugin.getFile());
 
-        state.setPreferredSize(new Dimension(10, 10));
-        state.setMaximumSize(new Dimension(10, 10));
+        state.setHeight(18);
+        state.setWidth(18);
 
         if (jarFile.exists()) {
-            state.setBackground(Color.GREEN);
-            state.setToolTipText(LauncherKeys.PLUGIN_STATE_NOMINAL);
+            state.setFill(Color.GREEN);
         } else {
-            state.setBackground(Color.RED);
-            state.setToolTipText(LauncherKeys.PLUGIN_STATE_NOT_FOUND);
+            state.setFill(Color.RED);
         }
 
         return state;
     }
 
-    private JPanel noPluginFound() {
-        JPanel panel = new JPanel();
-        BorderLayout borderLayout = new BorderLayout();
-        JLabel label = new JLabel(LauncherKeys.ERROR_NO_PLUGIN_FOUND, JLabel.CENTER);
+    private HBox noPluginFound() {
+        HBox box = new HBox();
+        Label label = new Label(LauncherKeys.ERROR_NO_PLUGIN_FOUND);
+        label.setTextAlignment(TextAlignment.CENTER);
 
-        panel.setLayout(borderLayout);
-        panel.add(label);
+        box.getChildren().add(label);
 
-        return panel;
-    }
-
-    private void setPluginLayout() {
-        this.pluginLayout = new BoxLayout(pluginTable, BoxLayout.Y_AXIS);
+        return box;
     }
 
     public List<Plugin> getPlugins() {
