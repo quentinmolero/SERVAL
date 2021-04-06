@@ -30,7 +30,7 @@ public class LauncherMainView extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/" + fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("views/launcher/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 }

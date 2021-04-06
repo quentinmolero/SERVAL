@@ -24,7 +24,7 @@ public class LauncherMainController implements Initializable
     private void handleManagePlugins(ActionEvent actionEvent) {
         actionEvent.consume();
         try {
-            LauncherMainView.setRoot("PluginsView");
+            LauncherMainView.setRoot("plugin/PluginsView");
         } catch (IOException e) {
             e.printStackTrace();
         }
