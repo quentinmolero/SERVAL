@@ -1,9 +1,11 @@
 package fr.serval.launcher.ihm;
 
+import fr.serval.application.ihm.ApplicationMainView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +20,8 @@ public class LauncherMainController implements Initializable
     @FXML
     private void handleLaunchApp(ActionEvent actionEvent) {
         actionEvent.consume();
+        LauncherMainView.closeStage();
+        ApplicationMainView.launchApplication();
     }
 
     @FXML
