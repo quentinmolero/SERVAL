@@ -10,25 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 
 public class ApplicationMainView extends Application {
-    private final JFrame mainFrame;
-    private BorderLayout borderLayout;
-    private JPanel mainPanel;
-
     private static Scene applicationScene;
     private static Stage applicationStage;
-
-    public ApplicationMainView() {
-        this.mainFrame = new JFrame("SERVAL");
-
-        initComponents();
-        addComponentsInWindow();
-        configureMainFrame();
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -36,8 +22,7 @@ public class ApplicationMainView extends Application {
         applicationStage = primaryStage;
         applicationStage.setScene(applicationScene);
         applicationStage.setOnCloseRequest(event -> {
-            Platform.exit();
-            System.exit(0);
+            ApplicationMainView.closeStage();
         });
         applicationStage.setTitle(GlobalKeys.SERVAL_NAME_DESC);
         applicationStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("images/logo_white_colored_background.png"))));
@@ -65,39 +50,8 @@ public class ApplicationMainView extends Application {
 
     public static void closeStage() {
         applicationStage.close();
+        Platform.exit();
+        System.exit(0);
     }
 
-    public void initComponents() {
-        setBorderLayout();
-        setMainPanel();
-    }
-
-    public void addComponentsInWindow() {
-        this.mainFrame.setLayout(this.borderLayout);
-        //this.mainFrame.add(ProjectController.getInstance().getProjectTreeView().getComponent(), BorderLayout.WEST);
-        this.mainFrame.add(this.mainPanel, BorderLayout.CENTER);
-    }
-
-    public void configureMainFrame() {
-        this.mainFrame.setPreferredSize(new Dimension(800, 600));
-        this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.mainFrame.setLocationByPlatform(true);
-        this.mainFrame.pack();
-    }
-
-    public void showWindow() {
-        this.mainFrame.setVisible(true);
-    }
-
-    private void setBorderLayout() {
-        this.borderLayout = new BorderLayout();
-    }
-
-    private void setMainPanel() {
-        this.mainPanel = new JPanel();
-    }
-
-    public JPanel getMainPanel() {
-        return mainPanel;
-    }
 }
