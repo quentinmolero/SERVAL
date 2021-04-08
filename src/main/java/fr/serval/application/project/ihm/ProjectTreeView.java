@@ -4,6 +4,7 @@ import fr.serval.application.git.GitController;
 import fr.serval.application.project.Project;
 import fr.serval.application.project.ProjectController;
 import fr.serval.ihm.IHMComponentBuilder;
+import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
@@ -24,9 +25,14 @@ public class ProjectTreeView implements IHMComponentBuilder {
         this.treeView.setShowRoot(false);
         this.treeView.setMaxWidth(200);
         this.treeView.getSelectionModel().selectedIndexProperty().addListener(e -> {
-            Project project = ProjectController.getInstance().getProjectFromProjectName(this.treeView.getSelectionModel().getSelectedItem().getValue());
+            String selectedNodeValue = this.treeView.getSelectionModel().getSelectedItem().getValue();
+            Project project = ProjectController.getInstance().getProjectFromProjectName(selectedNodeValue);
             if (project != null) {
+                ProjectController.getInstance().getProjectCoreView().displayInCoreView(new Label(selectedNodeValue));
+            } else if (selectedNodeValue == "Git") {
                 ProjectController.getInstance().getProjectCoreView().displayInCoreView((new GitController(project)).getComponent());
+            } else {
+                ProjectController.getInstance().getProjectCoreView().displayInCoreView(null);
             }
         });
 

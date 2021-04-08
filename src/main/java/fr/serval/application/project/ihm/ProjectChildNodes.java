@@ -17,14 +17,6 @@ public class ProjectChildNodes {
         this.project = project;
         this.childNodesInstance = new ArrayList<>();
         this.childNodes = new ArrayList<>();
-
-        setupChildNodes();
-    }
-
-    private void setupChildNodes() {
-        addChildNode(new ProjectGitNode(this.project));
-        addChildNode(new ProjectTaskNode(this.project));
-        addChildNode(new ProjectTicketNode(this.project));
     }
 
     public void addChildNode(IHMComponentBuilder childNodeInstance) {

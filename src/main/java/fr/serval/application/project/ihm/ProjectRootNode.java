@@ -19,6 +19,10 @@ public class ProjectRootNode implements IHMComponentBuilder {
 
     @Override
     public void setupComponent() {
+        projectChildNodes.addChildNode(new ProjectGitNode(project));
+        projectChildNodes.addChildNode(new ProjectTicketNode(project));
+        projectChildNodes.addChildNode(new ProjectTaskNode(project));
+
         for (TreeItem<String> childNode : projectChildNodes.getChildNodes()) {
             this.projectRootNode.getChildren().add(childNode);
         }
