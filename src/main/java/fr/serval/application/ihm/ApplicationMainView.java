@@ -3,6 +3,7 @@ package fr.serval.application.ihm;
 import fr.serval.GlobalKeys;
 import fr.serval.Main;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,6 +35,10 @@ public class ApplicationMainView extends Application {
         applicationScene = new Scene(loadFXML("ApplicationMainView"));
         applicationStage = primaryStage;
         applicationStage.setScene(applicationScene);
+        applicationStage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
+        });
         applicationStage.setTitle(GlobalKeys.SERVAL_NAME_DESC);
         applicationStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("images/logo_white_colored_background.png"))));
         applicationStage.setResizable(false);
