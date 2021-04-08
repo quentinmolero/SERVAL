@@ -3,7 +3,7 @@ package fr.serval.application.ihm;
 import fr.serval.application.project.ProjectController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 public class ApplicationMainViewController implements Initializable {
 
     @FXML
-    private VBox applicationMainPane;
+    private HBox applicationMainPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

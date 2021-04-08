@@ -2,8 +2,8 @@ package fr.serval.application.project.ihm;
 
 import fr.serval.application.project.Project;
 import fr.serval.ihm.IHMComponentBuilder;
+import javafx.scene.control.TreeItem;
 
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class ProjectChildNodes {
 
     private final Project project;
     private final List<IHMComponentBuilder> childNodesInstance;
-    private final List<DefaultMutableTreeNode> childNodes;
+    private final List<TreeItem<String>> childNodes;
 
     public ProjectChildNodes(Project project) {
         this.project = project;
@@ -29,10 +29,10 @@ public class ProjectChildNodes {
 
     public void addChildNode(IHMComponentBuilder childNodeInstance) {
         childNodeInstance.setupComponent();
-        this.childNodes.add((DefaultMutableTreeNode) childNodeInstance.getComponent());
+        this.childNodes.add((TreeItem<String>) childNodeInstance.getComponent());
     }
 
-    public List<DefaultMutableTreeNode> getChildNodes() {
+    public List<TreeItem<String>> getChildNodes() {
         return childNodes;
     }
 }

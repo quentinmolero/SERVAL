@@ -38,7 +38,8 @@ public class ProjectTreeView implements IHMComponentBuilder {
     }
 
     public void insertProjectNode(Project project) {
-        this.rootNode.getChildren().add(new TreeItem<>(project.getName()));
+        ProjectRootNode projectNode = new ProjectRootNode(project);
+        this.rootNode.getChildren().add(projectNode.getComponent());
     }
 
     public void resetProjectTree() {
