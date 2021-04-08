@@ -1,7 +1,7 @@
 package fr.serval.application.project;
 
+import fr.serval.application.project.ihm.ProjectCoreView;
 import fr.serval.application.project.ihm.ProjectTreeView;
-import fr.serval.application.task.TaskController;
 import fr.serval.controller.Controller;
 
 import java.util.ArrayList;
@@ -12,17 +12,17 @@ public class ProjectController implements Controller {
     private static ProjectController instance;
 
     private final ProjectTreeView projectTreeView;
+    private final ProjectCoreView projectCoreView;
     private final List<Project> projectList;
     private final String[] names = {"Warsaw", "Minsk", "Kiev", "Riga", "Vilnius", "Tallinn"};
 
     public ProjectController() {
         this.projectTreeView = new ProjectTreeView();
+        this.projectCoreView = new ProjectCoreView();
         this.projectList = new ArrayList<>();
 
         fillProjectListForDev();
         fillProjectTreeForDev();
-
-        TaskController.getInstance().setupProjectsViews(this.projectList);
     }
 
     public static ProjectController getInstance() {
@@ -35,6 +35,10 @@ public class ProjectController implements Controller {
 
     public ProjectTreeView getProjectTreeView() {
         return projectTreeView;
+    }
+
+    public ProjectCoreView getProjectCoreView() {
+        return projectCoreView;
     }
 
     public Project getProjectFromProjectName(String name) {
