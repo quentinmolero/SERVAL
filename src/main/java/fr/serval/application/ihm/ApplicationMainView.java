@@ -2,7 +2,6 @@ package fr.serval.application.ihm;
 
 import fr.serval.GlobalKeys;
 import fr.serval.Main;
-import fr.serval.application.project.ProjectController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -59,6 +58,10 @@ public class ApplicationMainView extends Application {
         }
     }
 
+    public static void closeStage() {
+        applicationStage.close();
+    }
+
     public void initComponents() {
         setBorderLayout();
         setMainPanel();
@@ -66,7 +69,7 @@ public class ApplicationMainView extends Application {
 
     public void addComponentsInWindow() {
         this.mainFrame.setLayout(this.borderLayout);
-        this.mainFrame.add(ProjectController.getInstance().getProjectTreeView().getComponent(), BorderLayout.WEST);
+        //this.mainFrame.add(ProjectController.getInstance().getProjectTreeView().getComponent(), BorderLayout.WEST);
         this.mainFrame.add(this.mainPanel, BorderLayout.CENTER);
     }
 
