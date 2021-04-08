@@ -1,5 +1,6 @@
 package fr.serval.application.project.ihm;
 
+import fr.serval.application.git.GitController;
 import fr.serval.application.project.Project;
 import fr.serval.application.project.ProjectController;
 import fr.serval.ihm.IHMComponentBuilder;
@@ -25,7 +26,7 @@ public class ProjectTreeView implements IHMComponentBuilder {
         this.treeView.getSelectionModel().selectedIndexProperty().addListener(e -> {
             Project project = ProjectController.getInstance().getProjectFromProjectName(this.treeView.getSelectionModel().getSelectedItem().getValue());
             if (project != null) {
-                System.out.println(project);
+                ProjectController.getInstance().getProjectCoreView().displayInCoreView((new GitController(project)).getComponent());
             }
         });
 
