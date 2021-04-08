@@ -3,6 +3,7 @@ package fr.serval.application.project.ihm;
 import fr.serval.application.git.GitController;
 import fr.serval.application.project.Project;
 import fr.serval.application.project.ProjectController;
+import fr.serval.application.task.TaskController;
 import fr.serval.ihm.IHMComponentBuilder;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -27,10 +28,12 @@ public class ProjectTreeView implements IHMComponentBuilder {
         this.treeView.getSelectionModel().selectedIndexProperty().addListener(e -> {
             String selectedNodeValue = this.treeView.getSelectionModel().getSelectedItem().getValue();
             Project project = ProjectController.getInstance().getProjectFromProjectName(selectedNodeValue);
-            if (project != null) {
-                ProjectController.getInstance().getProjectCoreView().displayInCoreView(new Label(selectedNodeValue));
-            } else if (selectedNodeValue == "Git") {
+            if (selectedNodeValue.equals("Git")) {
                 ProjectController.getInstance().getProjectCoreView().displayInCoreView((new GitController(project)).getComponent());
+            } else if (selectedNodeValue.equals("Taches")) {
+                ProjectController.getInstance().getProjectCoreView().displayInCoreView((new TaskController()).getComponent());
+            } else if (project != null) {
+                ProjectController.getInstance().getProjectCoreView().displayInCoreView(new Label(selectedNodeValue));
             } else {
                 ProjectController.getInstance().getProjectCoreView().displayInCoreView(null);
             }
