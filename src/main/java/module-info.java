@@ -3,6 +3,7 @@ module fr.serval {
     requires javafx.fxml;
     requires java.desktop;
     requires javafx.graphics;
+    requires json.simple;
 
     opens fr.serval to javafx.fxml;
 

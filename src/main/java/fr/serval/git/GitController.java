@@ -7,6 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class GitController {
     private final String ACCESS_TOKEN = "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";
@@ -37,9 +40,15 @@ public class GitController {
         return instance == null;
     }
 
-    public void getAllRepositoriesFromUser() throws IOException {
+    public void getAllRepositoriesFromUser() throws ParseException, IOException {
         String contentString = getUserRepos();
-        System.out.println(contentString);
+        JSONArray array = jsonStringToArray(contentString);
+        System.out.println(array);
+    }
+
+    JSONArray jsonStringToArray(String jsonString) throws ParseException {
+        JSONParser parser = new JSONParser();
+        return (JSONArray)parser.parse(jsonString);
     }
 
     public String getUserRepos() throws IOException
