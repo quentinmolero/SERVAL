@@ -15,4 +15,6 @@ module fr.serval {
 
     opens fr.serval.application.ihm to javafx.fxml, javafx.graphics;
     exports fr.serval.application.ihm to javafx.graphics;
+
+    exports fr.serval.controller;
 }

@@ -65,7 +65,7 @@ public class PluginImporter {
 
             while (e.hasMoreElements()) {
                 JarEntry je = e.nextElement();
-                if (je.isDirectory() || !je.getName().endsWith(".class")) {
+                if (je.isDirectory() || !je.getName().endsWith("/Main.class")) {
                     continue;
                 }
                 // -6 because of .class
@@ -76,6 +76,10 @@ public class PluginImporter {
                 Method m = c.getMethod("main");
                 m.setAccessible(true);
                 m.invoke(null);
+
+                m = c.getMethod("getPluginController");
+                m.setAccessible(true);
+                System.out.println(m.invoke(null));
             }
         } catch (ClassNotFoundException | IOException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             System.out.println("An error occurred.");
