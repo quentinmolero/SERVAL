@@ -30,7 +30,7 @@ public class ApplicationMainView extends Application {
         applicationStage.setResizable(true);
         applicationStage.show();
 
-        PluginController.getInstance().getPluginImporter().loadPlugins();
+        PluginController.getInstance().getPluginImporter().getPluginControllerList();
     }
 
     public static void setRoot(String fxml) throws IOException {

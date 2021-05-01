@@ -1,6 +1,7 @@
 package fr.serval.launcher.plugin.tools;
 
 import fr.serval.GlobalKeys;
+import fr.serval.controller.Controller;
 import fr.serval.launcher.LauncherKeys;
 import fr.serval.launcher.plugin.Plugin;
 import javafx.scene.control.Alert;
@@ -12,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ public class PluginImporter {
     private final File servalHomeDir;
     private final File pluginFileList;
     private List<Plugin> pluginList;
+    private List<Controller> pluginControllerList;
 
     public PluginImporter() {
         this.userHomeDir = new File(System.getProperty(LauncherKeys.USER_HOME_DIR));
@@ -57,34 +60,71 @@ public class PluginImporter {
 
     private void printFileContent(File file) {
         try {
-            JarFile jarFile = new JarFile(file);
-            Enumeration<JarEntry> e = jarFile.entries();
+            Enumeration<JarEntry> jarEntryEnumeration = getJarEntriesFromFile(file);
+            URLClassLoader urlClassLoader = getURLClassLoaderFromFile(file);
 
-            URL[] urls = {new URL("jar:file:" + file + "!/")};
-            URLClassLoader cl = URLClassLoader.newInstance(urls);
-
-            while (e.hasMoreElements()) {
-                JarEntry je = e.nextElement();
-                if (je.isDirectory() || !je.getName().endsWith("/Main.class")) {
+            while (jarEntryEnumeration.hasMoreElements()) {
+                JarEntry jarEntry = jarEntryEnumeration.nextElement();
+                if (jarEntry.isDirectory() || !jarEntry.getName().endsWith("/Main.class")) {
                     continue;
                 }
-                // -6 because of .class
-                String className = je.getName().substring(0, je.getName().length() - 6);
-                className = className.replace('/', '.');
-                Class c = cl.loadClass(className);
+                Class c = loadClassFromJarEntry(jarEntry, urlClassLoader);
 
-                Method m = c.getMethod("main");
-                m.setAccessible(true);
+                Method m = extractMethodFromClass(c, "main");
                 m.invoke(null);
 
-                m = c.getMethod("getPluginController");
-                m.setAccessible(true);
-                System.out.println(m.invoke(null));
+                m = extractMethodFromClass(c, "getPluginController");
+                this.pluginControllerList.addAll(getPluginControllerFromMethod(m));
+                System.out.println(this.pluginControllerList);
             }
         } catch (ClassNotFoundException | IOException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    private Enumeration<JarEntry> getJarEntriesFromFile(File file) throws IOException {
+        JarFile jarFile = new JarFile(file);
+        return jarFile.entries();
+    }
+
+    private URLClassLoader getURLClassLoaderFromFile(File file) throws MalformedURLException {
+        URL[] urls = {new URL("jar:file:" + file + "!/")};
+        return URLClassLoader.newInstance(urls);
+    }
+
+    private Class loadClassFromJarEntry(JarEntry jarEntry, URLClassLoader urlClassLoader) throws ClassNotFoundException {
+        // -6 to remove .class (file type)
+        String className = jarEntry.getName().substring(0, jarEntry.getName().length() - 6);
+        className = className.replace('/', '.');
+        return urlClassLoader.loadClass(className);
+    }
+
+    private Method extractMethodFromClass(Class c, String methodName) throws NoSuchMethodException {
+        Method method = c.getMethod(methodName);
+        method.setAccessible(true);
+        return method;
+    }
+
+    private List<Controller> getPluginControllerFromMethod(Method method) throws InvocationTargetException, IllegalAccessException {
+        Object methodResult = method.invoke(null);
+        List<Controller> foundController = new ArrayList<>();
+        if (methodResult instanceof List) {
+            for (Object object : (List<Object>) methodResult) {
+                if (object instanceof Controller) {
+                    foundController.add((Controller) object);
+                }
+            }
+        }
+        return foundController;
+    }
+
+    public List<Controller> getPluginControllerList() {
+        if (this.pluginControllerList == null) {
+            this.pluginControllerList = new ArrayList<>();
+            loadPlugins();
+        }
+        return this.pluginControllerList;
     }
 
     public List<Plugin> getPluginList() {
