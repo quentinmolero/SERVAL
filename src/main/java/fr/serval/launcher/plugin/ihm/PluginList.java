@@ -71,7 +71,7 @@ public class PluginList {
 
     private Rectangle pluginFileState(Plugin plugin) {
         Rectangle state = new Rectangle();
-        File jarFile = new File(PluginController.getInstance().getPluginImporter().getServalHomeDir() + File.separator + plugin.getFile());
+        File jarFile = plugin.getFile();
 
         state.setHeight(18);
         state.setWidth(18);
