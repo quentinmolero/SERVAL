@@ -9,5 +9,5 @@ public interface NodeController {
 
     void setProject(Project project);
 
-    List<IHMComponentBuilder> getNodeList();
+    List<ProjectTreeNode> getNodeList();
 }

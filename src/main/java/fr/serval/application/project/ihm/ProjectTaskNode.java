@@ -2,10 +2,12 @@ package fr.serval.application.project.ihm;
 
 import fr.serval.application.project.Project;
 import fr.serval.application.project.ProjectKeys;
-import fr.serval.ihm.IHMComponentBuilder;
+import fr.serval.application.task.TaskController;
+import fr.serval.controller.ProjectTreeNode;
 import javafx.scene.control.TreeItem;
+import javafx.scene.layout.HBox;
 
-public class ProjectTaskNode implements IHMComponentBuilder {
+public class ProjectTaskNode implements ProjectTreeNode {
 
     private Project project;
     private TreeItem<String> gitNode;
@@ -22,5 +24,10 @@ public class ProjectTaskNode implements IHMComponentBuilder {
     @Override
     public TreeItem<String> getComponent() {
         return this.gitNode;
+    }
+
+    @Override
+    public HBox getDisplayComponent() {
+        return (new TaskController()).getComponent();
     }
 }

@@ -1,11 +1,13 @@
 package fr.serval.application.project.ihm;
 
+import fr.serval.application.git.GitController;
 import fr.serval.application.project.Project;
 import fr.serval.application.project.ProjectKeys;
-import fr.serval.ihm.IHMComponentBuilder;
+import fr.serval.controller.ProjectTreeNode;
 import javafx.scene.control.TreeItem;
+import javafx.scene.layout.BorderPane;
 
-public class ProjectGitNode implements IHMComponentBuilder {
+public class ProjectGitNode implements ProjectTreeNode {
 
     private Project project;
     private TreeItem<String> gitNode;
@@ -22,5 +24,10 @@ public class ProjectGitNode implements IHMComponentBuilder {
     @Override
     public TreeItem<String> getComponent() {
         return this.gitNode;
+    }
+
+    @Override
+    public BorderPane getDisplayComponent() {
+        return (new GitController(this.project)).getComponent();
     }
 }

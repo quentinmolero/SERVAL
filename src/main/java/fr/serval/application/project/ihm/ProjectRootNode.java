@@ -3,6 +3,7 @@ package fr.serval.application.project.ihm;
 import fr.serval.application.plugin.PluginLoader;
 import fr.serval.application.project.Project;
 import fr.serval.controller.NodeController;
+import fr.serval.controller.ProjectTreeNode;
 import fr.serval.ihm.IHMComponentBuilder;
 import javafx.scene.control.TreeItem;
 
@@ -25,7 +26,7 @@ public class ProjectRootNode implements IHMComponentBuilder, NodeController {
 
         for (NodeController nodeController : PluginLoader.getInstance().getPluginNodeController()) {
             nodeController.setProject(project);
-            for (IHMComponentBuilder node : nodeController.getNodeList()) {
+            for (ProjectTreeNode node : nodeController.getNodeList()) {
                 projectChildNodes.addChildNode(node);
             }
         }
@@ -46,7 +47,16 @@ public class ProjectRootNode implements IHMComponentBuilder, NodeController {
     }
 
     @Override
-    public List<IHMComponentBuilder> getNodeList() {
+    public List<ProjectTreeNode> getNodeList() {
+        return null;
+    }
+
+    public ProjectTreeNode findChildNodeFromName(String name) {
+        for (ProjectTreeNode childNodeInstance : this.projectChildNodes.getChildNodesInstance()) {
+            if (name.equals(((TreeItem<String>) childNodeInstance.getComponent()).getValue())) {
+                return childNodeInstance;
+            }
+        }
         return null;
     }
 }

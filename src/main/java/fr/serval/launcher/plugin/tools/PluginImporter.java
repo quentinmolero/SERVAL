@@ -70,12 +70,11 @@ public class PluginImporter {
                 }
                 Class c = loadClassFromJarEntry(jarEntry, urlClassLoader);
 
-                Method m = extractMethodFromClass(c, "main");
-                m.invoke(null);
+//                Method m = extractMethodFromClass(c, "main");
+//                m.invoke(null);
 
-                m = extractMethodFromClass(c, "getPluginController");
+                Method m = extractMethodFromClass(c, "getPluginController");
                 this.pluginControllerList.addAll(getPluginControllerFromMethod(m));
-                System.out.println(this.pluginControllerList);
             }
         } catch (ClassNotFoundException | IOException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             System.out.println("An error occurred.");
