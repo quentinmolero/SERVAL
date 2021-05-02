@@ -2,7 +2,6 @@ package fr.serval.application.project.ihm;
 
 import fr.serval.ihm.IHMComponentBuilder;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
 public class ProjectCoreView implements IHMComponentBuilder {

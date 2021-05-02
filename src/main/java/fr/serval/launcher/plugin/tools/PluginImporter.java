@@ -1,7 +1,7 @@
 package fr.serval.launcher.plugin.tools;
 
 import fr.serval.GlobalKeys;
-import fr.serval.controller.Controller;
+import fr.serval.controller.PluginController;
 import fr.serval.launcher.LauncherKeys;
 import fr.serval.launcher.plugin.Plugin;
 import javafx.scene.control.Alert;
@@ -29,7 +29,7 @@ public class PluginImporter {
     private final File servalHomeDir;
     private final File pluginFileList;
     private List<Plugin> pluginList;
-    private List<Controller> pluginControllerList;
+    private List<PluginController> pluginControllerList;
 
     public PluginImporter() {
         this.userHomeDir = new File(System.getProperty(LauncherKeys.USER_HOME_DIR));
@@ -106,20 +106,20 @@ public class PluginImporter {
         return method;
     }
 
-    private List<Controller> getPluginControllerFromMethod(Method method) throws InvocationTargetException, IllegalAccessException {
+    private List<PluginController> getPluginControllerFromMethod(Method method) throws InvocationTargetException, IllegalAccessException {
         Object methodResult = method.invoke(null);
-        List<Controller> foundController = new ArrayList<>();
+        List<PluginController> foundController = new ArrayList<>();
         if (methodResult instanceof List) {
             for (Object object : (List<Object>) methodResult) {
-                if (object instanceof Controller) {
-                    foundController.add((Controller) object);
+                if (object instanceof PluginController) {
+                    foundController.add((PluginController) object);
                 }
             }
         }
         return foundController;
     }
 
-    public List<Controller> getPluginControllerList() {
+    public List<PluginController> getPluginControllerList() {
         if (this.pluginControllerList == null) {
             this.pluginControllerList = new ArrayList<>();
             loadPlugins();

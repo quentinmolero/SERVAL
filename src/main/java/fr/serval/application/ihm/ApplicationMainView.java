@@ -2,6 +2,7 @@ package fr.serval.application.ihm;
 
 import fr.serval.GlobalKeys;
 import fr.serval.Main;
+import fr.serval.application.plugin.PluginLoader;
 import fr.serval.launcher.plugin.PluginController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -19,6 +20,9 @@ public class ApplicationMainView extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        PluginLoader.getInstance().setPluginController(PluginController.getInstance().getPluginImporter().getPluginControllerList());
+        PluginLoader.getInstance().loadAllController();
+
         applicationScene = new Scene(loadFXML("ApplicationMainView"));
         applicationStage = primaryStage;
         applicationStage.setScene(applicationScene);
@@ -29,8 +33,6 @@ public class ApplicationMainView extends Application {
         applicationStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("images/logo_white_colored_background.png"))));
         applicationStage.setResizable(true);
         applicationStage.show();
-
-        PluginController.getInstance().getPluginImporter().getPluginControllerList();
     }
 
     public static void setRoot(String fxml) throws IOException {

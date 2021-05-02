@@ -17,4 +17,6 @@ module fr.serval {
     exports fr.serval.application.ihm to javafx.graphics;
 
     exports fr.serval.controller;
+    exports fr.serval.ihm;
+    exports fr.serval.application.project;
 }
