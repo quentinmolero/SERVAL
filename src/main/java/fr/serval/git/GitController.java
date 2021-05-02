@@ -12,8 +12,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class GitController {
-    private final String ACCESS_TOKEN = "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";
-    private final String USER_NAME = "JackAuxLanternes";
+    private final String ACCESS_TOKEN = "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";
+    private final String USER_NAME = "quentinmolero";
 
     private static GitController instance;
 
