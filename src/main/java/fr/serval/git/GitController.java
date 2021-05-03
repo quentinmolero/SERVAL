@@ -78,4 +78,8 @@ public class GitController {
         }
         return null;
     }
+
+    public String getSession() {
+        return session;
+    }
 }
