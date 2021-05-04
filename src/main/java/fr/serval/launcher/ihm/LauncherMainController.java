@@ -1,10 +1,14 @@
 package fr.serval.launcher.ihm;
 
 import fr.serval.application.ihm.ApplicationMainView;
+import fr.serval.git.GitAuthController;
+import fr.serval.git.GitController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -13,15 +17,24 @@ import java.util.ResourceBundle;
 
 public class LauncherMainController implements Initializable
 {
+    @FXML private Label errorLabel;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
     @FXML
     private void handleLaunchApp(ActionEvent actionEvent) {
+        GitAuthController gitAuthController = GitController.getInstance().getGitAuthController();
         actionEvent.consume();
-        LauncherMainView.closeStage();
-        ApplicationMainView.launchApplication();
+        if(gitAuthController.getSession() != null){
+            LauncherMainView.closeStage();
+            ApplicationMainView.launchApplication();
+        }
+        else{
+            errorLabel.setWrapText(true);
+            errorLabel.setText("Vous devez être connecté pour pouvoir démarrer SERVAL");
+        }
     }
 
     @FXML

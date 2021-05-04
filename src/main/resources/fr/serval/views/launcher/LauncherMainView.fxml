@@ -18,5 +18,6 @@
          </image>
       </ImageView>
       <Button fx:id="launcherConnexion" layoutX="10.0" layoutY="367.0" mnemonicParsing="false" onAction="#handleConnexion" text="Renseigner un token" />
+      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="192.0" layoutY="288.0" prefHeight="69.0" prefWidth="216.0" textAlignment="CENTER" textFill="#cd0000" textOverrun="CLIP" />
    </children>
 </AnchorPane>
