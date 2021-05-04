@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -17,10 +18,17 @@ import java.util.ResourceBundle;
 
 public class LauncherMainController implements Initializable
 {
-    @FXML private Label errorLabel;
+    @FXML public Label errorLabel;
+    @FXML public Label githubStatusLabel;
+    @FXML public Button launcherConnexion;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        GitAuthController gitAuthController = GitController.getInstance().getGitAuthController();
+        if(gitAuthController.getSession() != null){
+            githubStatusLabel.setText("Connecté avec " + gitAuthController.getUserName());
+            launcherConnexion.setText("Se déconnecter");
+        }
     }
 
     @FXML
@@ -56,8 +64,16 @@ public class LauncherMainController implements Initializable
 
     @FXML
     private void handleConnexion(ActionEvent actionEvent) throws Exception {
+        GitAuthController gitAuthController = GitController.getInstance().getGitAuthController();
         actionEvent.consume();
-        LoginView loginView = new LoginView();
-        loginView.start(new Stage());
+        if(gitAuthController.getSession() != null){
+            gitAuthController.logout();
+            launcherConnexion.setText("Se connecter");
+            githubStatusLabel.setText("Non connecté");
+        }
+        else{
+            LoginView loginView = new LoginView();
+            loginView.start(new Stage());
+        }
     }
 }

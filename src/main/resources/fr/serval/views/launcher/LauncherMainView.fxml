@@ -11,13 +11,13 @@
       <Button id="start_app" fx:id="launcherLaunchApp" layoutX="231.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleLaunchApp" prefHeight="38.0" prefWidth="138.0" text="Démarrer" />
       <Button id="manage_plugins" fx:id="launcherManagePlugins" layoutX="231.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleManagePlugins" prefHeight="38.0" prefWidth="138.0" text="Gérer les plugins" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
       <Button id="exit_app" fx:id="launcherClose" layoutX="231.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="38.0" prefWidth="138.0" text="Quitter" />
-      <Label layoutX="10.0" layoutY="351.0" text="Status Github : Déconnecté" />
+      <Label fx:id="githubStatusLabel" layoutX="10.0" layoutY="351.0" text="Non connecté" />
       <ImageView fitHeight="114.0" fitWidth="580.0" layoutX="100.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/title.png" />
          </image>
       </ImageView>
-      <Button fx:id="launcherConnexion" layoutX="10.0" layoutY="367.0" mnemonicParsing="false" onAction="#handleConnexion" text="Renseigner un token" />
+      <Button fx:id="launcherConnexion" layoutX="10.0" layoutY="367.0" mnemonicParsing="false" onAction="#handleConnexion" text="Se connecter" />
       <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="192.0" layoutY="288.0" prefHeight="69.0" prefWidth="216.0" textAlignment="CENTER" textFill="#cd0000" textOverrun="CLIP" />
    </children>
 </AnchorPane>

@@ -46,7 +46,17 @@ public class GitAuthController {
         session = res.get("token").toString();
     }
 
+    public void logout() {
+        access_token = null;
+        user_name = null;
+        session = null;
+    }
+
     public String getSession() {
         return session;
+    }
+
+    public String getUserName() {
+        return user_name;
     }
 }
