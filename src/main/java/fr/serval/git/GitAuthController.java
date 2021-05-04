@@ -1,7 +1,9 @@
 package fr.serval.git;
 
+import fr.serval.GlobalKeys;
 import org.json.simple.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 
 public class GitAuthController {
@@ -50,6 +52,35 @@ public class GitAuthController {
         access_token = null;
         user_name = null;
         session = null;
+        deleteSaveFile();
+    }
+
+    public void writeSaveFile(){
+        JSONObject json = new JSONObject();
+        SaveFileImporter saveFileImporter = new SaveFileImporter();
+
+        json.put("access_token", access_token);
+        json.put("session", session);
+        json.put("username", user_name);
+
+        saveFileImporter.setSaveFileContent(json);
+    }
+
+    public void deleteSaveFile(){
+        SaveFileImporter saveFileImporter = new SaveFileImporter();
+
+        saveFileImporter.deleteSaveFile();
+    }
+
+    public void readSaveFile(){
+        SaveFileImporter saveFileImporter = new SaveFileImporter();
+        JSONObject json = saveFileImporter.getSaveJSON();
+
+        if(json != null && !json.toJSONString().equals("{}")){
+            access_token = json.get("access_token").toString();
+            user_name = json.get("username").toString();
+            session = json.get("session").toString();
+        }
     }
 
     public String getSession() {
