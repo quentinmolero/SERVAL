@@ -20,7 +20,6 @@ public class LoginView extends Application {
         loginStage = stage;
         loginStage.setScene(loginScene);
         loginStage.setTitle(GlobalKeys.SERVAL_LOGIN);
-        loginStage.setResizable(false);
         loginStage.show();
     }
 
