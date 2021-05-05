@@ -1,23 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.serval.launcher.ihm.LauncherMainController">
+
+<VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.serval.launcher.ihm.LauncherMainController">
    <children>
-      <Button id="start_app" fx:id="launcherLaunchApp" layoutX="231.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleLaunchApp" prefHeight="38.0" prefWidth="138.0" text="Démarrer" />
-      <Button id="manage_plugins" fx:id="launcherManagePlugins" layoutX="231.0" layoutY="206.0" mnemonicParsing="false" onAction="#handleManagePlugins" prefHeight="38.0" prefWidth="138.0" text="Gérer les plugins" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" />
-      <Button id="exit_app" fx:id="launcherClose" layoutX="231.0" layoutY="250.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="38.0" prefWidth="138.0" text="Quitter" />
-      <Label fx:id="githubStatusLabel" layoutX="10.0" layoutY="351.0" text="Non connecté" />
-      <ImageView fitHeight="114.0" fitWidth="580.0" layoutX="100.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="114.0" fitWidth="580.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../images/title.png" />
          </image>
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
       </ImageView>
-      <Button fx:id="launcherConnexion" layoutX="10.0" layoutY="367.0" mnemonicParsing="false" onAction="#handleConnexion" text="Se connecter" />
-      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="192.0" layoutY="288.0" prefHeight="69.0" prefWidth="216.0" textAlignment="CENTER" textFill="#cd0000" textOverrun="CLIP" />
+      <Button id="start_app" fx:id="launcherLaunchApp" mnemonicParsing="false" onAction="#handleLaunchApp" prefHeight="38.0" prefWidth="138.0" text="Démarrer" textAlignment="CENTER">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Button>
+      <Button id="manage_plugins" fx:id="launcherManagePlugins" mnemonicParsing="false" onAction="#handleManagePlugins" prefHeight="38.0" prefWidth="138.0" text="Gérer les plugins" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Button>
+      <Button id="exit_app" fx:id="launcherClose" mnemonicParsing="false" onAction="#handleClose" prefHeight="38.0" prefWidth="138.0" text="Quitter" textAlignment="CENTER">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <VBox.margin>
+            <Insets bottom="20.0" />
+         </VBox.margin>
+      </Button>
+      <Label fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="500.0" textAlignment="CENTER" textFill="#cd0000" textOverrun="CLIP">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Label>
+      <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="githubStatusLabel" text="Non connecté" />
+            <Button fx:id="launcherConnexion" mnemonicParsing="false" onAction="#handleConnexion" text="Se connecter">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" />
+         </padding>
+      </VBox>
    </children>
-</AnchorPane>
+</VBox>
