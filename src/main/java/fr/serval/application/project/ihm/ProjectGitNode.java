@@ -5,7 +5,7 @@ import fr.serval.application.project.Project;
 import fr.serval.application.project.ProjectKeys;
 import fr.serval.controller.ProjectTreeNode;
 import javafx.scene.control.TreeItem;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 
 public class ProjectGitNode implements ProjectTreeNode {
 
@@ -27,7 +27,7 @@ public class ProjectGitNode implements ProjectTreeNode {
     }
 
     @Override
-    public BorderPane getDisplayComponent() {
+    public GridPane getDisplayComponent() {
         return (new GitController(this.project)).getComponent();
     }
 }

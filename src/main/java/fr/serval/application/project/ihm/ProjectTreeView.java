@@ -27,7 +27,6 @@ public class ProjectTreeView implements IHMComponentBuilder {
     public void setupComponent() {
         this.treeView.setRoot(this.rootNode);
         this.treeView.setShowRoot(false);
-        this.treeView.setMaxWidth(200);
         this.treeView.getSelectionModel().selectedIndexProperty().addListener(e -> {
             String selectedNodeValue = this.treeView.getSelectionModel().getSelectedItem().getValue();
             ProjectTreeNode projectTreeNode = this.projectNode.findChildNodeFromName(selectedNodeValue);

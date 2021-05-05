@@ -24,7 +24,6 @@ public class GitCommitList implements IHMComponentBuilder {
     public void setupComponent() {
         this.commitTree.setRoot(this.commitRoot);
         this.commitTree.setShowRoot(false);
-        this.commitTree.setMaxWidth(100);
         this.commitTree.setBorder(new Border(new BorderStroke(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, new CornerRadii(4), BorderWidths.DEFAULT, new Insets(1))));
         this.commitRoot.setExpanded(true);
 

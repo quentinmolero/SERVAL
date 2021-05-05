@@ -24,7 +24,6 @@ public class GitCommitTask implements IHMComponentBuilder {
     public void setupComponent() {
         this.taskTree.setRoot(this.taskRoot);
         this.taskTree.setShowRoot(false);
-        this.taskTree.setPrefHeight(200);
         this.taskTree.setBorder(new Border(new BorderStroke(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, new CornerRadii(4), BorderWidths.DEFAULT, new Insets(1))));
         this.taskRoot.setExpanded(true);
 

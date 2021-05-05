@@ -32,6 +32,8 @@ public class ApplicationMainView extends Application {
         applicationStage.setTitle(GlobalKeys.SERVAL_NAME_DESC);
         applicationStage.getIcons().add(new Image(String.valueOf(Main.class.getResource("images/logo_white_colored_background.png"))));
         applicationStage.setResizable(true);
+        applicationStage.setMinHeight(400.0);
+        applicationStage.setMinWidth(600.0);
         applicationStage.show();
     }
 
