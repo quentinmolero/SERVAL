@@ -24,7 +24,6 @@ public class TaskListView implements IHMComponentBuilder {
     public void setupComponent() {
         this.tasksTree.setRoot(this.tasksRoot);
         this.tasksTree.setShowRoot(false);
-        this.tasksTree.setMaxWidth(100);
         this.tasksTree.setBorder(new Border(new BorderStroke(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, new CornerRadii(4), BorderWidths.DEFAULT, new Insets(1))));
         this.tasksRoot.setExpanded(true);
 

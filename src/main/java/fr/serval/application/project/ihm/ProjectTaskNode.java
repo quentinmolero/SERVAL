@@ -5,7 +5,7 @@ import fr.serval.application.project.ProjectKeys;
 import fr.serval.application.task.TaskController;
 import fr.serval.controller.ProjectTreeNode;
 import javafx.scene.control.TreeItem;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 
 public class ProjectTaskNode implements ProjectTreeNode {
 
@@ -27,7 +27,7 @@ public class ProjectTaskNode implements ProjectTreeNode {
     }
 
     @Override
-    public HBox getDisplayComponent() {
+    public GridPane getDisplayComponent() {
         return (new TaskController()).getComponent();
     }
 }

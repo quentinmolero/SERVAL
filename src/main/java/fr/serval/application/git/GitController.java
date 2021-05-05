@@ -6,6 +6,7 @@ import fr.serval.application.git.ihm.GitCommitTask;
 import fr.serval.application.project.Project;
 import fr.serval.controller.Controller;
 import fr.serval.ihm.IHMComponentBuilder;
+import fr.serval.tools.GridPaneConstraintBuilder;
 import javafx.scene.layout.*;
 
 public class GitController implements Controller, IHMComponentBuilder {
@@ -33,33 +34,19 @@ public class GitController implements Controller, IHMComponentBuilder {
 
     @Override
     public void setupComponent() {
-        this.gitMainInfoView.getColumnConstraints().add(0, buildGridColumnConstraint(Priority.SOMETIMES, 100));
-        this.gitMainInfoView.getRowConstraints().add(0, buildGridRowConstraint(Priority.SOMETIMES, 50));
+        this.gitMainInfoView.getColumnConstraints().add(0, GridPaneConstraintBuilder.buildGridColumnConstraint(Priority.SOMETIMES, 100));
+        this.gitMainInfoView.getRowConstraints().add(0, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 50));
 
         this.gitMainInfoView.add(gitCommitDetails.getComponent(), 0, 0);
         this.gitMainInfoView.add(gitCommitTask.getComponent(), 0, 1);
 
-        this.gitMainView.getColumnConstraints().add(0, buildGridColumnConstraint(Priority.SOMETIMES, 50));
-        this.gitMainView.getColumnConstraints().add(1, buildGridColumnConstraint(Priority.SOMETIMES, 50));
+        this.gitMainView.getColumnConstraints().add(0, GridPaneConstraintBuilder.buildGridColumnConstraint(Priority.SOMETIMES, 50));
+        this.gitMainView.getColumnConstraints().add(1, GridPaneConstraintBuilder.buildGridColumnConstraint(Priority.SOMETIMES, 50));
 
-        this.gitMainView.getRowConstraints().add(0, buildGridRowConstraint(Priority.SOMETIMES, 100));
+        this.gitMainView.getRowConstraints().add(0, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 100));
 
         this.gitMainView.add(this.gitCommitList.getComponent(), 0, 0);
         this.gitMainView.add(this.gitMainInfoView, 1, 0);
-    }
-
-    private ColumnConstraints buildGridColumnConstraint(Priority priority, double percentWidth) {
-        ColumnConstraints columnConstraints = new ColumnConstraints();
-        columnConstraints.setHgrow(priority);
-        columnConstraints.setPercentWidth(percentWidth);
-        return columnConstraints;
-    }
-
-    private RowConstraints buildGridRowConstraint(Priority priority, double percentWidth) {
-        RowConstraints rowConstraints = new RowConstraints();
-        rowConstraints.setVgrow(priority);
-        rowConstraints.setPercentHeight(percentWidth);
-        return rowConstraints;
     }
 
     @Override
