@@ -1,9 +1,8 @@
 package fr.serval.git;
 
-import fr.serval.GlobalKeys;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
-import java.io.File;
 import java.io.IOException;
 
 public class GitAuthController {
@@ -11,36 +10,12 @@ public class GitAuthController {
     private String session;
     private String user_name;
 
-    private static GitAuthController instance;
-
-    public static GitAuthController getInstance() {
-        if (isInstanceNotInitialized()) {
-            instance = new GitAuthController();
-        }
-        return instance;
-    }
-
-    public static void deleteInstance() {
-        if (instance != null) {
-            instance = null;
-        }
-    }
-
-    public static GitAuthController resetInstance() {
-        deleteInstance();
-        return getInstance();
-    }
-
-    private static boolean isInstanceNotInitialized() {
-        return instance == null;
-    }
-
-    public void login(String login, String password) throws IOException {
+    public void login(String login, String password) throws IOException, ParseException {
         JSONObject parameters = new JSONObject();
         parameters.put("username", login);
         parameters.put("password", password);
-        JSONObject res = RouteController.callPostURL("http://localhost:3000/auth/login", parameters);
-        if(res == null){
+        JSONObject res = (JSONObject) RouteController.callPostURL("http://localhost:3000/auth/login", parameters);
+        if (res == null) {
             throw new Error("An error have occurred while calling API");
         }
         access_token = password;
@@ -55,7 +30,7 @@ public class GitAuthController {
         deleteSaveFile();
     }
 
-    public void writeSaveFile(){
+    public void writeSaveFile() {
         JSONObject json = new JSONObject();
         SaveFileImporter saveFileImporter = new SaveFileImporter();
 
@@ -66,21 +41,25 @@ public class GitAuthController {
         saveFileImporter.setSaveFileContent(json);
     }
 
-    public void deleteSaveFile(){
+    public void deleteSaveFile() {
         SaveFileImporter saveFileImporter = new SaveFileImporter();
 
         saveFileImporter.deleteSaveFile();
     }
 
-    public void readSaveFile(){
+    public void readSaveFile() {
         SaveFileImporter saveFileImporter = new SaveFileImporter();
         JSONObject json = saveFileImporter.getSaveJSON();
 
-        if(json != null && !json.toJSONString().equals("{}")){
+        if (json != null && !json.toJSONString().equals("{}")) {
             access_token = json.get("access_token").toString();
             user_name = json.get("username").toString();
             session = json.get("session").toString();
         }
+    }
+
+    public String getAccessToken() {
+        return access_token;
     }
 
     public String getSession() {
