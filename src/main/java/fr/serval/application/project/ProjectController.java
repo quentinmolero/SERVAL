@@ -60,7 +60,7 @@ public class ProjectController implements Controller {
 
     private void fillProjectList() {
         try {
-            JSONArray jsonArray = JSONTools.convertStringToJSONArray(GitController.getInstance().getUserRepos());
+            JSONArray jsonArray = JSONTools.convertStringToJSONArray(GitController.getInstance().getGitRepoController().getUserRepos());
             List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
             for (JSONObject jsonObject : jsonObjectList) {
                 String projectName = JSONTools.extractStringFromJSONObject(jsonObject, "name");
@@ -68,7 +68,7 @@ public class ProjectController implements Controller {
                     this.projectList.add(new Project(projectName));
                 }
             }
-        } catch (IOException | ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }

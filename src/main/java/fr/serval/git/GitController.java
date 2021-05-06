@@ -4,9 +4,11 @@ public class GitController {
     private static GitController instance;
 
     private GitAuthController gitAuthController;
+    private GitRepoController gitRepoController;
 
     public GitController() {
         gitAuthController = new GitAuthController();
+        gitRepoController = new GitRepoController();
     }
 
     public static GitController getInstance() {
@@ -33,5 +35,9 @@ public class GitController {
 
     public GitAuthController getGitAuthController() {
         return gitAuthController;
+    }
+
+    public GitRepoController getGitRepoController() {
+        return gitRepoController;
     }
 }
