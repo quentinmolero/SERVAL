@@ -6,12 +6,12 @@ import fr.serval.application.git.ihm.GitCommitTask;
 import fr.serval.application.project.Project;
 import fr.serval.controller.Controller;
 import fr.serval.ihm.IHMComponentBuilder;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import fr.serval.tools.GridPaneConstraintBuilder;
+import javafx.scene.layout.*;
 
 public class GitController implements Controller, IHMComponentBuilder {
-    private final BorderPane gitMainView;
-    private final VBox gitMainInfoView;
+    private final GridPane gitMainView;
+    private final GridPane gitMainInfoView;
 
     private final GitCommitList gitCommitList;
     private final GitCommitDetails gitCommitDetails;
@@ -20,8 +20,8 @@ public class GitController implements Controller, IHMComponentBuilder {
     private Project project;
 
     public GitController(Project project) {
-        this.gitMainView = new BorderPane();
-        this.gitMainInfoView = new VBox();
+        this.gitMainView = new GridPane();
+        this.gitMainInfoView = new GridPane();
 
         this.gitCommitList = new GitCommitList();
         this.gitCommitDetails = new GitCommitDetails();
@@ -34,14 +34,23 @@ public class GitController implements Controller, IHMComponentBuilder {
 
     @Override
     public void setupComponent() {
-        this.gitMainView.setLeft(gitCommitList.getComponent());
-        this.gitMainView.setCenter(this.gitMainInfoView);
-        this.gitMainInfoView.getChildren().add(gitCommitDetails.getComponent());
-        this.gitMainInfoView.getChildren().add(gitCommitTask.getComponent());
+        this.gitMainInfoView.getColumnConstraints().add(0, GridPaneConstraintBuilder.buildGridColumnConstraint(Priority.SOMETIMES, 100));
+        this.gitMainInfoView.getRowConstraints().add(0, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 50));
+
+        this.gitMainInfoView.add(gitCommitDetails.getComponent(), 0, 0);
+        this.gitMainInfoView.add(gitCommitTask.getComponent(), 0, 1);
+
+        this.gitMainView.getColumnConstraints().add(0, GridPaneConstraintBuilder.buildGridColumnConstraint(Priority.SOMETIMES, 50));
+        this.gitMainView.getColumnConstraints().add(1, GridPaneConstraintBuilder.buildGridColumnConstraint(Priority.SOMETIMES, 50));
+
+        this.gitMainView.getRowConstraints().add(0, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 100));
+
+        this.gitMainView.add(this.gitCommitList.getComponent(), 0, 0);
+        this.gitMainView.add(this.gitMainInfoView, 1, 0);
     }
 
     @Override
-    public BorderPane getComponent() {
+    public GridPane getComponent() {
         return this.gitMainView;
     }
 

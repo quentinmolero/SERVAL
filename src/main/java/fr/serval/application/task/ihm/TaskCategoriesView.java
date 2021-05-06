@@ -24,7 +24,6 @@ public class TaskCategoriesView implements IHMComponentBuilder {
     public void setupComponent() {
         this.categoriesTree.setRoot(this.categoriesRoot);
         this.categoriesTree.setShowRoot(false);
-        this.categoriesTree.setMaxWidth(100);
         this.categoriesTree.setBorder(new Border(new BorderStroke(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, new CornerRadii(4), BorderWidths.DEFAULT, new Insets(1))));
         this.categoriesRoot.setExpanded(true);
 

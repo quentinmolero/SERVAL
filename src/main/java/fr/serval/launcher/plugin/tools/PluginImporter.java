@@ -1,6 +1,7 @@
 package fr.serval.launcher.plugin.tools;
 
 import fr.serval.GlobalKeys;
+import fr.serval.controller.PluginController;
 import fr.serval.launcher.LauncherKeys;
 import fr.serval.launcher.plugin.Plugin;
 import javafx.scene.control.Alert;
@@ -12,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ public class PluginImporter {
     private final File userHomeDir;
     private final File servalHomeDir;
     private final File pluginFileList;
+    private List<Plugin> pluginList;
+    private List<PluginController> pluginControllerList;
 
     public PluginImporter() {
         this.userHomeDir = new File(System.getProperty(LauncherKeys.USER_HOME_DIR));
@@ -56,45 +60,81 @@ public class PluginImporter {
 
     private void printFileContent(File file) {
         try {
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
+            Enumeration<JarEntry> jarEntryEnumeration = getJarEntriesFromFile(file);
+            URLClassLoader urlClassLoader = getURLClassLoaderFromFile(file);
 
-                JarFile jarFile = new JarFile(this.servalHomeDir + String.valueOf(File.separator) + data);
-                Enumeration<JarEntry> e = jarFile.entries();
-
-                URL[] urls = {new URL("jar:file:" + this.servalHomeDir + File.separator + data + "!/")};
-                URLClassLoader cl = URLClassLoader.newInstance(urls);
-
-                while (e.hasMoreElements()) {
-                    JarEntry je = e.nextElement();
-                    if (je.isDirectory() || !je.getName().endsWith(".class")) {
-                        continue;
-                    }
-                    // -6 because of .class
-                    String className = je.getName().substring(0, je.getName().length() - 6);
-                    className = className.replace('/', '.');
-                    Class c = cl.loadClass(className);
-
-                    Method m = c.getMethod("main");
-                    m.setAccessible(true);
-                    m.invoke(null);
+            while (jarEntryEnumeration.hasMoreElements()) {
+                JarEntry jarEntry = jarEntryEnumeration.nextElement();
+                if (jarEntry.isDirectory() || !jarEntry.getName().endsWith("/Main.class")) {
+                    continue;
                 }
+                Class c = loadClassFromJarEntry(jarEntry, urlClassLoader);
+
+//                Method m = extractMethodFromClass(c, "main");
+//                m.invoke(null);
+
+                Method m = extractMethodFromClass(c, "getPluginController");
+                this.pluginControllerList.addAll(getPluginControllerFromMethod(m));
             }
-            myReader.close();
         } catch (ClassNotFoundException | IOException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
 
+    private Enumeration<JarEntry> getJarEntriesFromFile(File file) throws IOException {
+        JarFile jarFile = new JarFile(file);
+        return jarFile.entries();
+    }
+
+    private URLClassLoader getURLClassLoaderFromFile(File file) throws MalformedURLException {
+        URL[] urls = {new URL("jar:file:" + file + "!/")};
+        return URLClassLoader.newInstance(urls);
+    }
+
+    private Class loadClassFromJarEntry(JarEntry jarEntry, URLClassLoader urlClassLoader) throws ClassNotFoundException {
+        // -6 to remove .class (file type)
+        String className = jarEntry.getName().substring(0, jarEntry.getName().length() - 6);
+        className = className.replace('/', '.');
+        return urlClassLoader.loadClass(className);
+    }
+
+    private Method extractMethodFromClass(Class c, String methodName) throws NoSuchMethodException {
+        Method method = c.getMethod(methodName);
+        method.setAccessible(true);
+        return method;
+    }
+
+    private List<PluginController> getPluginControllerFromMethod(Method method) throws InvocationTargetException, IllegalAccessException {
+        Object methodResult = method.invoke(null);
+        List<PluginController> foundController = new ArrayList<>();
+        if (methodResult instanceof List) {
+            for (Object object : (List<Object>) methodResult) {
+                if (object instanceof PluginController) {
+                    foundController.add((PluginController) object);
+                }
+            }
+        }
+        return foundController;
+    }
+
+    public List<PluginController> getPluginControllerList() {
+        if (this.pluginControllerList == null) {
+            this.pluginControllerList = new ArrayList<>();
+            loadPlugins();
+        }
+        return this.pluginControllerList;
+    }
+
     public List<Plugin> getPluginList() {
-        List<Plugin> pluginList = new ArrayList<>();
-        if (isServalDirPresent() && isPluginFileListPresent()) {
-            getPluginFileContent().lines().forEach(line -> {
-                String[] data = line.split(";");
-                pluginList.add(new Plugin(data[0], data[1], Boolean.parseBoolean(data[2])));
-            });
+        if (this.pluginList == null) {
+            this.pluginList = new ArrayList<>();
+            if (isServalDirPresent() && isPluginFileListPresent()) {
+                getPluginFileContent().lines().forEach(line -> {
+                    String[] data = line.split(";");
+                    pluginList.add(new Plugin(data[0], data[1], Boolean.parseBoolean(data[2])));
+                });
+            }
         }
         return pluginList;
     }
@@ -118,7 +158,7 @@ public class PluginImporter {
     public boolean setPluginFileContent(List<Plugin> plugins) {
         try {
             FileWriter fileWriter = new FileWriter(this.pluginFileList);
-            fileWriter.write(plugins.stream().map(plugin -> plugin.getName() + ";" + plugin.getFile() + ";" + plugin.isEnabled() + '\n').collect(Collectors.joining()));
+            fileWriter.write(plugins.stream().map(plugin -> plugin.getName() + ";" + plugin.getFileName() + ";" + plugin.isEnabled() + '\n').collect(Collectors.joining()));
             fileWriter.close();
             return true;
         } catch (IOException e) {
@@ -126,6 +166,14 @@ public class PluginImporter {
         }
 
         return false;
+    }
+
+    public void loadPlugins() {
+        for (Plugin plugin : this.getPluginList()) {
+            if (plugin.isEnabled()) {
+                printFileContent(plugin.getFile());
+            }
+        }
     }
 
     private boolean isUserHomeDirPresent() {
