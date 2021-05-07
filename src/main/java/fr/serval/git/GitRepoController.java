@@ -1,6 +1,7 @@
 package fr.serval.git;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -11,8 +12,8 @@ public class GitRepoController
         GitAuthController gitAuthController = GitController.getInstance().getGitAuthController();
         return (JSONArray) RouteController.callGetURLWithBearerToken("projects/users/all", gitAuthController.getSession());
     }
-    public JSONArray getProjetCommit(String projetName) throws IOException, ParseException {
+    public JSONObject getProjetCommit(String projetName) throws IOException, ParseException {
         GitAuthController gitAuthController = GitController.getInstance().getGitAuthController();
-        return (JSONArray) RouteController.callGetURLWithBearerToken(projetName + "/commits", gitAuthController.getSession());
+        return (JSONObject) RouteController.callGetURLWithBearerToken("projects/" + projetName + "/commits", gitAuthController.getSession());
     }
 }
