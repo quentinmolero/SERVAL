@@ -9,6 +9,10 @@ public class GitRepoController
 {
     public JSONArray getUserRepos() throws IOException, ParseException {
         GitAuthController gitAuthController = GitController.getInstance().getGitAuthController();
-        return (JSONArray) RouteController.callGetURLWithBearerToken("http://localhost:3000/projects/users/all", gitAuthController.getSession());
+        return (JSONArray) RouteController.callGetURLWithBearerToken("projects/users/all", gitAuthController.getSession());
+    }
+    public JSONArray getProjetCommit(String projetName) throws IOException, ParseException {
+        GitAuthController gitAuthController = GitController.getInstance().getGitAuthController();
+        return (JSONArray) RouteController.callGetURLWithBearerToken(projetName + "/commits", gitAuthController.getSession());
     }
 }

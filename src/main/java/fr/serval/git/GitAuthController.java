@@ -14,7 +14,7 @@ public class GitAuthController {
         JSONObject parameters = new JSONObject();
         parameters.put("username", login);
         parameters.put("password", password);
-        JSONObject res = (JSONObject) RouteController.callPostURL("http://localhost:3000/auth/login", parameters);
+        JSONObject res = (JSONObject) RouteController.callPostURL("auth/login", parameters);
         if (res == null) {
             throw new Error("An error have occurred while calling API");
         }

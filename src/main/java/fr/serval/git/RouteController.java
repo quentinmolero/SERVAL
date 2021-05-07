@@ -13,8 +13,10 @@ import java.net.URL;
 
 public class RouteController
 {
-    public static Object callGetURL(String urlString) throws IOException, ParseException {
-        URL url = new URL(urlString);
+    private static final String BASE_URL = "http://localhost:3000/";
+
+    public static Object callGetURL(String urlRoute) throws IOException, ParseException {
+        URL url = new URL(BASE_URL + urlRoute);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setDoOutput(true);
@@ -22,8 +24,8 @@ public class RouteController
         return readConnection(connection);
     }
 
-    public static Object callGetURLWithBearerToken(String urlString, String authValue) throws IOException, ParseException {
-        URL url = new URL(urlString);
+    public static Object callGetURLWithBearerToken(String urlRoute, String authValue) throws IOException, ParseException {
+        URL url = new URL(BASE_URL + urlRoute);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setDoOutput(true);
@@ -32,8 +34,8 @@ public class RouteController
         return readConnection(connection);
     }
 
-    public static Object callPostURL(String urlString, JSONObject parameters) throws IOException, ParseException {
-        URL url = new URL(urlString);
+    public static Object callPostURL(String urlRoute, JSONObject parameters) throws IOException, ParseException {
+        URL url = new URL(BASE_URL + urlRoute);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
@@ -42,8 +44,8 @@ public class RouteController
         return readConnection(connection);
     }
 
-    public static Object callPostURLWithBearerToken(String urlString, JSONObject parameters, String authValue) throws IOException, ParseException {
-        URL url = new URL(urlString);
+    public static Object callPostURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) throws IOException, ParseException {
+        URL url = new URL(BASE_URL + urlRoute);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
