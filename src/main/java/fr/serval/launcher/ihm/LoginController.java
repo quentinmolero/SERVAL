@@ -1,11 +1,10 @@
 package fr.serval.launcher.ihm;
 
-import fr.serval.git.GitAuthController;
-import fr.serval.git.GitController;
+import fr.serval.api.APIAuthController;
+import fr.serval.api.APIController;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class LoginController {
 
@@ -15,16 +14,16 @@ public class LoginController {
 
     @FXML
     private void handleSignIn() throws Exception {
-        GitAuthController gitAuthController = GitController.getInstance().getGitAuthController();
+        APIAuthController APIAuthController = APIController.getInstance().getGitAuthController();
 
-        gitAuthController.login(loginUsername.getText(), loginToken.getText());
-        if(gitAuthController.getSession() != null)
+        APIAuthController.login(loginUsername.getText(), loginToken.getText());
+        if(APIAuthController.getSession() != null)
         {
             if(keepConnectCheckbox.isSelected()){
-                gitAuthController.writeSaveFile();
+                APIAuthController.writeSaveFile();
             }
             else {
-                gitAuthController.deleteSaveFile();
+                APIAuthController.deleteSaveFile();
             }
             LauncherMainView.setRoot("LauncherMainView");
             LoginView.closeStage();

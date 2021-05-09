@@ -1,4 +1,4 @@
-package fr.serval.git;
+package fr.serval.api;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,7 +11,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class RouteController
+public class APIRouter
 {
     private static final String BASE_URL = "http://localhost:3000/";
 

@@ -3,7 +3,7 @@ package fr.serval.application.project;
 import fr.serval.application.project.ihm.ProjectCoreView;
 import fr.serval.application.project.ihm.ProjectTreeView;
 import fr.serval.controller.Controller;
-import fr.serval.git.GitController;
+import fr.serval.api.APIController;
 import fr.serval.tools.JSONTools;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -60,7 +60,7 @@ public class ProjectController implements Controller {
 
     private void fillProjectList() {
         try {
-            JSONArray jsonArray = GitController.getInstance().getGitRepoController().getUserRepos();
+            JSONArray jsonArray = APIController.getInstance().getGitRepoController().getUserRepos();
             List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
             for (JSONObject jsonObject : jsonObjectList) {
                 String projectName = JSONTools.extractStringFromJSONObject(jsonObject, "name");
