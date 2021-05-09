@@ -59,25 +59,29 @@ public class APIRouter
         return readConnection(connection);
     }
 
-    public static Object callDeleteURL(String urlRoute, JSONObject parameters) throws IOException, ParseException {
+    public static void callDeleteURL(String urlRoute, JSONObject parameters) throws IOException {
         URL url = new URL(BASE_URL + urlRoute);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("DELETE");
         connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
         callParameters(connection, parameters);
 
-        return readConnection(connection);
+        connection.getInputStream();
     }
 
-    public static Object callDeleteURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) throws IOException, ParseException {
+    public static void callDeleteURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) throws IOException {
         URL url = new URL(BASE_URL + urlRoute);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("DELETE");
         connection.setDoOutput(true);
         connection.setRequestProperty("Authorization", "Bearer " + authValue);
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
         callParameters(connection, parameters);
 
-        return readConnection(connection);
+        connection.getInputStream();
     }
 
     private static void callParameters(HttpURLConnection connection, JSONObject parameters) throws IOException {
