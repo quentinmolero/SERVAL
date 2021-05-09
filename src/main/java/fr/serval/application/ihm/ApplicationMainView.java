@@ -61,4 +61,8 @@ public class ApplicationMainView extends Application {
         System.exit(0);
     }
 
+    public static Stage getMainStage() {
+        return applicationStage;
+    }
+
 }

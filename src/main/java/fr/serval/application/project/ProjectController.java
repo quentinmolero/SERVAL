@@ -21,6 +21,8 @@ public class ProjectController implements Controller {
     private final ProjectCoreView projectCoreView;
     private final List<Project> projectList;
 
+    private final String[] projects = {"Project 1", "Project 2", "Project 3"};
+
     public ProjectController() {
         this.projectTreeView = new ProjectTreeView();
         this.projectCoreView = new ProjectCoreView();
@@ -59,17 +61,23 @@ public class ProjectController implements Controller {
     }
 
     private void fillProjectList() {
-        try {
-            JSONArray jsonArray = JSONTools.convertStringToJSONArray(GitController.getInstance().getGitRepoController().getUserRepos());
-            List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
-            for (JSONObject jsonObject : jsonObjectList) {
-                String projectName = JSONTools.extractStringFromJSONObject(jsonObject, "name");
-                if (canAddProject(projectName)) {
-                    this.projectList.add(new Project(projectName));
-                }
+//        try {
+//            JSONArray jsonArray = JSONTools.convertStringToJSONArray(GitController.getInstance().getGitRepoController().getUserRepos());
+//            List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
+//            for (JSONObject jsonObject : jsonObjectList) {
+//                String projectName = JSONTools.extractStringFromJSONObject(jsonObject, "name");
+//                if (canAddProject(projectName)) {
+//                    this.projectList.add(new Project(projectName));
+//                }
+//            }
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
+        for (String project : this.projects) {
+            if (this.canAddProject(project)) {
+                this.projectList.add(new Project(project));
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
     }
 

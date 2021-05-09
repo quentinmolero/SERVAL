@@ -14,9 +14,10 @@ module fr.serval {
     exports fr.serval.launcher.plugin.ihm to javafx.graphics;
 
     opens fr.serval.application.ihm to javafx.fxml, javafx.graphics;
-    exports fr.serval.application.ihm to javafx.graphics;
 
+    exports fr.serval.application.ihm;
     exports fr.serval.controller;
     exports fr.serval.ihm;
     exports fr.serval.application.project;
+    exports fr.serval.tools;
 }
