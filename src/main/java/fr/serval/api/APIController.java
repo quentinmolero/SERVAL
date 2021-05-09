@@ -3,12 +3,14 @@ package fr.serval.api;
 public class APIController {
     private static APIController instance;
 
-    private APIAuthController APIAuthController;
-    private APIProjectController APIProjectController;
+    private final APIAuthController APIAuthController;
+    private final APIProjectController APIProjectController;
+    private final APITaskController APITaskController;
 
-    public APIController() {
+    private APIController() {
         APIAuthController = new APIAuthController();
         APIProjectController = new APIProjectController();
+        APITaskController = new APITaskController();
     }
 
     public static APIController getInstance() {
@@ -39,5 +41,9 @@ public class APIController {
 
     public APIProjectController getAPIProjectController() {
         return APIProjectController;
+    }
+
+    public APITaskController getAPITaskController() {
+        return APITaskController;
     }
 }
