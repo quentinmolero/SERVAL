@@ -14,7 +14,7 @@ public class LoginController {
 
     @FXML
     private void handleSignIn() throws Exception {
-        APIAuthController APIAuthController = APIController.getInstance().getGitAuthController();
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
 
         APIAuthController.login(loginUsername.getText(), loginToken.getText());
         if(APIAuthController.getSession() != null)

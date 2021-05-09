@@ -39,7 +39,9 @@ public class APIRouter
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
-        callPost(connection, parameters);
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
+        callParameters(connection, parameters);
 
         return readConnection(connection);
     }
@@ -50,15 +52,35 @@ public class APIRouter
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
         connection.setRequestProperty("Authorization", "Bearer " + authValue);
-        callPost(connection, parameters);
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
+        callParameters(connection, parameters);
 
         return readConnection(connection);
     }
 
-    private static void callPost(HttpURLConnection connection, JSONObject parameters) throws IOException {
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("Accept", "application/json");
+    public static Object callDeleteURL(String urlRoute, JSONObject parameters) throws IOException, ParseException {
+        URL url = new URL(BASE_URL + urlRoute);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("DELETE");
+        connection.setDoOutput(true);
+        callParameters(connection, parameters);
 
+        return readConnection(connection);
+    }
+
+    public static Object callDeleteURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) throws IOException, ParseException {
+        URL url = new URL(BASE_URL + urlRoute);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("DELETE");
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Authorization", "Bearer " + authValue);
+        callParameters(connection, parameters);
+
+        return readConnection(connection);
+    }
+
+    private static void callParameters(HttpURLConnection connection, JSONObject parameters) throws IOException {
         OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
         osw.write(parameters.toString());
         osw.flush();

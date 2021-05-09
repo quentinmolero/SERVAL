@@ -33,11 +33,11 @@ public class APIController {
         return instance == null;
     }
 
-    public APIAuthController getGitAuthController() {
+    public APIAuthController getAPIAuthController() {
         return APIAuthController;
     }
 
-    public APIProjectController getGitRepoController() {
+    public APIProjectController getAPIProjectController() {
         return APIProjectController;
     }
 }

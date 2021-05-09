@@ -8,7 +8,7 @@ public class Launcher {
 
     public static void main() {
         try {
-            APIController.getInstance().getGitAuthController().readSaveFile();
+            APIController.getInstance().getAPIAuthController().readSaveFile();
             Application.launch(LauncherMainView.class, "");
         } catch (Exception e) {
             e.printStackTrace();

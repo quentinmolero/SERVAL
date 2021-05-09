@@ -23,7 +23,7 @@ public class LauncherMainController implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        APIAuthController APIAuthController = APIController.getInstance().getGitAuthController();
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         if(APIAuthController.getSession() != null){
             githubStatusLabel.setText("Connecté avec " + APIAuthController.getUserName());
             launcherConnexion.setText("Se déconnecter");
@@ -32,7 +32,7 @@ public class LauncherMainController implements Initializable
 
     @FXML
     private void handleLaunchApp(ActionEvent actionEvent) {
-        APIAuthController APIAuthController = APIController.getInstance().getGitAuthController();
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         actionEvent.consume();
         if(APIAuthController.getSession() != null){
             LauncherMainView.closeStage();
@@ -63,7 +63,7 @@ public class LauncherMainController implements Initializable
 
     @FXML
     private void handleConnexion(ActionEvent actionEvent) throws Exception {
-        APIAuthController APIAuthController = APIController.getInstance().getGitAuthController();
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         actionEvent.consume();
         if(APIAuthController.getSession() != null){
             APIAuthController.logout();
