@@ -10,34 +10,73 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
-public class RouteController {
-    public static JSONObject callPostURL(String urlString, JSONObject parameters) throws IOException {
-    URL url = new URL(urlString);
-    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-    connection.setRequestMethod("POST");
-    connection.setDoOutput(true);
-    connection.setRequestProperty("Content-Type", "application/json");
-    connection.setRequestProperty("Accept", "application/json");
+public class RouteController
+{
+    private static final String BASE_URL = "http://localhost:3000/";
 
-    OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
-    osw.write(parameters.toString());
-    osw.flush();
-    osw.close();
+    public static Object callGetURL(String urlRoute) throws IOException, ParseException {
+        URL url = new URL(BASE_URL + urlRoute);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setDoOutput(true);
 
-    try(BufferedReader br = new BufferedReader(
-            new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
-        StringBuilder response = new StringBuilder();
-        String responseLine = null;
-        while ((responseLine = br.readLine()) != null) {
-            response.append(responseLine.trim());
-        }
-        JSONParser parser = new JSONParser();
-        return (JSONObject) parser.parse(response.toString());
-    } catch (ParseException e) {
-        e.printStackTrace();
+        return readConnection(connection);
     }
-    return null;
-}
+
+    public static Object callGetURLWithBearerToken(String urlRoute, String authValue) throws IOException, ParseException {
+        URL url = new URL(BASE_URL + urlRoute);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Authorization", "Bearer " + authValue);
+
+        return readConnection(connection);
+    }
+
+    public static Object callPostURL(String urlRoute, JSONObject parameters) throws IOException, ParseException {
+        URL url = new URL(BASE_URL + urlRoute);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+        callPost(connection, parameters);
+
+        return readConnection(connection);
+    }
+
+    public static Object callPostURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) throws IOException, ParseException {
+        URL url = new URL(BASE_URL + urlRoute);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+        connection.setRequestProperty("Authorization", "Bearer " + authValue);
+        callPost(connection, parameters);
+
+        return readConnection(connection);
+    }
+
+    private static void callPost(HttpURLConnection connection, JSONObject parameters) throws IOException {
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Accept", "application/json");
+
+        OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+        osw.write(parameters.toString());
+        osw.flush();
+        osw.close();
+    }
+
+    private static Object readConnection(HttpURLConnection connection) throws IOException, ParseException
+    {
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String output;
+
+        StringBuilder response = new StringBuilder();
+        while ((output = in.readLine()) != null) {
+            response.append(output);
+        }
+        in.close();
+
+        JSONParser parser = new JSONParser();
+        return parser.parse(response.toString());
+    }
 }
