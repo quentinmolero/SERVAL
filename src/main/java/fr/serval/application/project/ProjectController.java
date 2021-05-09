@@ -60,7 +60,7 @@ public class ProjectController implements Controller {
 
     private void fillProjectList() {
         try {
-            JSONArray jsonArray = APIController.getInstance().getAPIProjectController().getUserRepos();
+            JSONArray jsonArray = APIController.getInstance().getAPIProjectController().getCurrentUserProjects();
             List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
             for (JSONObject jsonObject : jsonObjectList) {
                 String projectName = JSONTools.extractStringFromJSONObject(jsonObject, "name");

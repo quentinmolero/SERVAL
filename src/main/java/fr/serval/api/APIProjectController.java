@@ -8,7 +8,14 @@ import java.io.IOException;
 
 public class APIProjectController
 {
-    public JSONArray getUserRepos() throws IOException, ParseException {
+    public JSONObject addProjectToCurrentUser(String repo_name) throws IOException, ParseException {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        JSONObject parameters = new JSONObject();
+        parameters.put("repository", repo_name);
+        return (JSONObject) APIRouter.callPostURLWithBearerToken("projects/", parameters, APIAuthController.getSession());
+    }
+
+    public JSONArray getCurrentUserProjects() throws IOException, ParseException {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         return (JSONArray) APIRouter.callGetURLWithBearerToken("projects/users/all", APIAuthController.getSession());
     }
