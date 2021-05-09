@@ -1,15 +1,14 @@
 package fr.serval.launcher.ihm;
 
 import fr.serval.application.ihm.ApplicationMainView;
-import fr.serval.git.GitAuthController;
-import fr.serval.git.GitController;
+import fr.serval.api.APIAuthController;
+import fr.serval.api.APIController;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,18 +23,18 @@ public class LauncherMainController implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        GitAuthController gitAuthController = GitController.getInstance().getGitAuthController();
-        if(gitAuthController.getSession() != null){
-            githubStatusLabel.setText("Connecté avec " + gitAuthController.getUserName());
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        if(APIAuthController.getSession() != null){
+            githubStatusLabel.setText("Connecté avec " + APIAuthController.getUserName());
             launcherConnexion.setText("Se déconnecter");
         }
     }
 
     @FXML
     private void handleLaunchApp(ActionEvent actionEvent) {
-        GitAuthController gitAuthController = GitController.getInstance().getGitAuthController();
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         actionEvent.consume();
-        if(gitAuthController.getSession() != null){
+        if(APIAuthController.getSession() != null){
             LauncherMainView.closeStage();
             ApplicationMainView.launchApplication();
         }
@@ -64,10 +63,10 @@ public class LauncherMainController implements Initializable
 
     @FXML
     private void handleConnexion(ActionEvent actionEvent) throws Exception {
-        GitAuthController gitAuthController = GitController.getInstance().getGitAuthController();
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         actionEvent.consume();
-        if(gitAuthController.getSession() != null){
-            gitAuthController.logout();
+        if(APIAuthController.getSession() != null){
+            APIAuthController.logout();
             launcherConnexion.setText("Se connecter");
             githubStatusLabel.setText("Non connecté");
         }

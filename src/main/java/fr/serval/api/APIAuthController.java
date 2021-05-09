@@ -1,11 +1,11 @@
-package fr.serval.git;
+package fr.serval.api;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 
-public class GitAuthController {
+public class APIAuthController {
     private String access_token;
     private String session;
     private String user_name;
@@ -14,7 +14,7 @@ public class GitAuthController {
         JSONObject parameters = new JSONObject();
         parameters.put("username", login);
         parameters.put("password", password);
-        JSONObject res = (JSONObject) RouteController.callPostURL("auth/login", parameters);
+        JSONObject res = (JSONObject) APIRouter.callPostURL("auth/login", parameters);
         if (res == null) {
             throw new Error("An error have occurred while calling API");
         }
@@ -32,24 +32,24 @@ public class GitAuthController {
 
     public void writeSaveFile() {
         JSONObject json = new JSONObject();
-        SaveFileImporter saveFileImporter = new SaveFileImporter();
+        LoginSaveImporter loginSaveImporter = new LoginSaveImporter();
 
         json.put("access_token", access_token);
         json.put("session", session);
         json.put("username", user_name);
 
-        saveFileImporter.setSaveFileContent(json);
+        loginSaveImporter.setLoginSaveFileContent(json);
     }
 
     public void deleteSaveFile() {
-        SaveFileImporter saveFileImporter = new SaveFileImporter();
+        LoginSaveImporter loginSaveImporter = new LoginSaveImporter();
 
-        saveFileImporter.deleteSaveFile();
+        loginSaveImporter.deleteLoginSaveFile();
     }
 
     public void readSaveFile() {
-        SaveFileImporter saveFileImporter = new SaveFileImporter();
-        JSONObject json = saveFileImporter.getSaveJSON();
+        LoginSaveImporter loginSaveImporter = new LoginSaveImporter();
+        JSONObject json = loginSaveImporter.getLoginSaveJSON();
 
         if (json != null && !json.toJSONString().equals("{}")) {
             access_token = json.get("access_token").toString();

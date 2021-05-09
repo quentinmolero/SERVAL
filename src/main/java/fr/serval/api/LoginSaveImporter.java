@@ -1,4 +1,4 @@
-package fr.serval.git;
+package fr.serval.api;
 
 import fr.serval.GlobalKeys;
 import fr.serval.launcher.LauncherKeys;
@@ -9,25 +9,16 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.nio.CharBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Enumeration;
-import java.util.Scanner;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
-public class SaveFileImporter {
+public class LoginSaveImporter {
     private final File userHomeDir;
     private final File servalHomeDir;
     private final File saveFile;
 
-    public SaveFileImporter() {
+    public LoginSaveImporter() {
         this.userHomeDir = new File(System.getProperty(LauncherKeys.USER_HOME_DIR));
         this.servalHomeDir = new File(userHomeDir + String.valueOf(File.separator) + GlobalKeys.SERVAL);
         this.saveFile = new File(servalHomeDir + String.valueOf(File.separator) + "save.json");
@@ -54,7 +45,7 @@ public class SaveFileImporter {
         alert.showAndWait();
     }
 
-    public JSONObject getSaveJSON() {
+    public JSONObject getLoginSaveJSON() {
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader(this.saveFile); FileReader tmpReader = new FileReader(this.saveFile))
@@ -69,7 +60,7 @@ public class SaveFileImporter {
         return null;
     }
 
-    public void setSaveFileContent(JSONObject json) {
+    public void setLoginSaveFileContent(JSONObject json) {
         try {
             FileWriter fileWriter = new FileWriter(this.saveFile);
             fileWriter.write(json.toJSONString());
@@ -79,7 +70,7 @@ public class SaveFileImporter {
         }
     }
 
-    public void deleteSaveFile() {
+    public void deleteLoginSaveFile() {
         try {
             Path fileToDeletePath = Paths.get(String.valueOf(this.saveFile));
             Files.deleteIfExists(fileToDeletePath);
