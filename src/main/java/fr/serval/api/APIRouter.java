@@ -15,21 +15,27 @@ public class APIRouter
 {
     private static final String BASE_URL = "http://localhost:3000/";
 
-    public static Object callGetURL(String urlRoute) throws IOException, ParseException {
+    public static Object callGetURL(String urlRoute, JSONObject parameters) throws IOException, ParseException {
         URL url = new URL(BASE_URL + urlRoute);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setDoOutput(true);
+        if(parameters != null){
+            callParameters(connection, parameters);
+        }
 
         return readConnection(connection);
     }
 
-    public static Object callGetURLWithBearerToken(String urlRoute, String authValue) throws IOException, ParseException {
+    public static Object callGetURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) throws IOException, ParseException {
         URL url = new URL(BASE_URL + urlRoute);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setDoOutput(true);
         connection.setRequestProperty("Authorization", "Bearer " + authValue);
+        if(parameters != null){
+            callParameters(connection, parameters);
+        }
 
         return readConnection(connection);
     }
@@ -41,7 +47,9 @@ public class APIRouter
         connection.setDoOutput(true);
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
-        callParameters(connection, parameters);
+        if(parameters != null){
+            callParameters(connection, parameters);
+        }
 
         return readConnection(connection);
     }
@@ -54,7 +62,9 @@ public class APIRouter
         connection.setRequestProperty("Authorization", "Bearer " + authValue);
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
-        callParameters(connection, parameters);
+        if(parameters != null){
+            callParameters(connection, parameters);
+        }
 
         return readConnection(connection);
     }
@@ -66,7 +76,9 @@ public class APIRouter
         connection.setDoOutput(true);
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
-        callParameters(connection, parameters);
+        if(parameters != null){
+            callParameters(connection, parameters);
+        }
 
         connection.getInputStream();
     }
@@ -79,7 +91,9 @@ public class APIRouter
         connection.setRequestProperty("Authorization", "Bearer " + authValue);
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Accept", "application/json");
-        callParameters(connection, parameters);
+        if(parameters != null){
+            callParameters(connection, parameters);
+        }
 
         connection.getInputStream();
     }

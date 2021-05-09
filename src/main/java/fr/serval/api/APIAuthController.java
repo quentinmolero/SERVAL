@@ -23,7 +23,8 @@ public class APIAuthController {
         session = res.get("token").toString();
     }
 
-    public void logout() {
+    public void logout() throws IOException {
+        APIRouter.callDeleteURLWithBearerToken("auth/logout", null, session);
         access_token = null;
         user_name = null;
         session = null;
