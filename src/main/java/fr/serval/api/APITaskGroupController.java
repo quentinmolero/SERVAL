@@ -1,0 +1,20 @@
+package fr.serval.api;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
+
+public class APITaskGroupController
+{
+    private final String ROUTE = "taskGroups/";
+
+    public JSONObject addNewTaskGroupToProject(int project_id, String task_group_name, String task_group_description) throws IOException, ParseException {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        JSONObject parameters = new JSONObject();
+        parameters.put("project_id", project_id);
+        parameters.put("name", task_group_name);
+        parameters.put("description", task_group_description);
+        return (JSONObject) APIRouter.callPostURLWithBearerToken(ROUTE, parameters, APIAuthController.getSession());
+    }
+}

@@ -6,11 +6,13 @@ public class APIController {
     private final APIAuthController APIAuthController;
     private final APIProjectController APIProjectController;
     private final APITaskController APITaskController;
+    private final APITaskGroupController APITaskGroupController;
 
     private APIController() {
         APIAuthController = new APIAuthController();
         APIProjectController = new APIProjectController();
         APITaskController = new APITaskController();
+        APITaskGroupController = new APITaskGroupController();
     }
 
     public static APIController getInstance() {
@@ -45,5 +47,9 @@ public class APIController {
 
     public APITaskController getAPITaskController() {
         return APITaskController;
+    }
+
+    public APITaskGroupController getAPITaskGroupController() {
+        return APITaskGroupController;
     }
 }
