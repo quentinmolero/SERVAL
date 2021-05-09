@@ -1,11 +1,12 @@
 package fr.serval.application.project.ihm;
 
+import fr.serval.application.git.GitController;
 import fr.serval.application.project.Project;
 import fr.serval.application.project.ProjectKeys;
+import fr.serval.application.ticket.TicketController;
 import fr.serval.controller.ProjectTreeNode;
-import fr.serval.ihm.IHMComponentBuilder;
-import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
+import javafx.scene.layout.GridPane;
 
 public class ProjectTicketNode implements ProjectTreeNode {
 
@@ -27,7 +28,7 @@ public class ProjectTicketNode implements ProjectTreeNode {
     }
 
     @Override
-    public Label getDisplayComponent() {
-        return new Label(ProjectKeys.TICKET_NODE_NAME);
+    public GridPane getDisplayComponent() {
+        return (new TicketController()).getComponent();
     }
 }
