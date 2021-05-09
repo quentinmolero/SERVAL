@@ -17,4 +17,9 @@ public class APITaskGroupController
         parameters.put("description", task_group_description);
         return (JSONObject) APIRouter.callPostURLWithBearerToken(ROUTE, parameters, APIAuthController.getSession());
     }
+
+    public JSONObject getTaskGroup(int task_group_id) throws IOException, ParseException {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        return (JSONObject) APIRouter.callGetURLWithBearerToken(ROUTE + task_group_id, null, APIAuthController.getSession());
+    }
 }
