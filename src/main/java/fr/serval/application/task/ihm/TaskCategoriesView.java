@@ -1,21 +1,32 @@
 package fr.serval.application.task.ihm;
 
+import fr.serval.api.APIController;
+import fr.serval.application.project.Project;
 import fr.serval.ihm.IHMComponentBuilder;
+import fr.serval.tools.JSONTools;
 import javafx.geometry.Insets;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
+import java.util.List;
 
 public class TaskCategoriesView implements IHMComponentBuilder {
     private final TreeView<String> categoriesTree;
     private final TreeItem<String> categoriesRoot;
 
-    private final String[] categories = {"Login", "Signin", "Disconnect", "DB interactions", "Jardinage"};
+    private final Project project;
 
-    public TaskCategoriesView() {
+    public TaskCategoriesView(Project project) {
         this.categoriesTree = new TreeView<>();
         this.categoriesRoot = new TreeItem<>();
+
+        this.project = project;
 
         this.setupComponent();
     }
@@ -31,9 +42,15 @@ public class TaskCategoriesView implements IHMComponentBuilder {
     }
 
     public void updateCategories() {
-        this.categoriesRoot.getChildren().clear();
-        for (String c : categories) {
-            this.categoriesRoot.getChildren().add(new TreeItem<>(c));
+        System.out.println(this.project.getName());
+        try {
+            JSONObject projectTaskGroup = (JSONObject) APIController.getInstance().getAPIProjectController().getProjetTaskGroup(this.project.getId()).get(0);
+            List<JSONObject> taskCategories = JSONTools.collectJSONArrayChildrenAsArrayList(JSONTools.extractJSONArrayFromJSONObject(projectTaskGroup, "Task_Groups"));
+            for (JSONObject categories : taskCategories) {
+                this.categoriesRoot.getChildren().add(new TreeItem<>(JSONTools.extractStringFromJSONObject(categories, "name")));
+            }
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
         }
     }
 
