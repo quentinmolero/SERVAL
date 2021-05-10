@@ -22,13 +22,13 @@ public class APIProjectController
         return (JSONArray) APIRouter.callGetURLWithBearerToken(ROUTE + "users/all", null, APIAuthController.getSession());
     }
 
-    public JSONArray addUserToProject(String role_name, int project_id, int user_id) throws IOException, ParseException {
+    public JSONObject addUserToProject(String role_name, int project_id, int user_id) throws IOException, ParseException {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();
         parameters.put("role_name", role_name);
         parameters.put("project_id", project_id);
         parameters.put("user_id", user_id);
-        return (JSONArray) APIRouter.callPostURLWithBearerToken(ROUTE + "users", parameters, APIAuthController.getSession());
+        return (JSONObject) APIRouter.callPostURLWithBearerToken(ROUTE + "users", parameters, APIAuthController.getSession());
     }
 
     public void removeUserFromAProject(int project_id, int user_id) throws IOException {
