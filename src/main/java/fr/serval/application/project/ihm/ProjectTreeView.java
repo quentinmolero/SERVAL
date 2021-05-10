@@ -1,9 +1,7 @@
 package fr.serval.application.project.ihm;
 
-import fr.serval.application.git.GitController;
 import fr.serval.application.project.Project;
 import fr.serval.application.project.ProjectController;
-import fr.serval.application.task.TaskController;
 import fr.serval.controller.ProjectTreeNode;
 import fr.serval.ihm.IHMComponentBuilder;
 import javafx.scene.Node;

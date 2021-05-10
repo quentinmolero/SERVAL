@@ -1,9 +1,9 @@
 package fr.serval.application.project;
 
+import fr.serval.api.APIController;
 import fr.serval.application.project.ihm.ProjectCoreView;
 import fr.serval.application.project.ihm.ProjectTreeView;
 import fr.serval.controller.Controller;
-import fr.serval.api.APIController;
 import fr.serval.tools.JSONTools;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

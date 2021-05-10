@@ -1,6 +1,5 @@
 package fr.serval.application.project.ihm;
 
-import fr.serval.application.git.GitController;
 import fr.serval.application.project.Project;
 import fr.serval.application.project.ProjectKeys;
 import fr.serval.application.ticket.TicketController;

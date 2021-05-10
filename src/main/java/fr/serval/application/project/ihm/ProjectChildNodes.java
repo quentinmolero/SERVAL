@@ -2,7 +2,6 @@ package fr.serval.application.project.ihm;
 
 import fr.serval.application.project.Project;
 import fr.serval.controller.ProjectTreeNode;
-import fr.serval.ihm.IHMComponentBuilder;
 import javafx.scene.control.TreeItem;
 
 import java.util.ArrayList;
