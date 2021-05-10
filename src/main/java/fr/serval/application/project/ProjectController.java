@@ -62,10 +62,7 @@ public class ProjectController implements Controller {
             JSONArray jsonArray = APIController.getInstance().getAPIProjectController().getCurrentUserProjects();
             List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
             for (JSONObject jsonObject : jsonObjectList) {
-                String projectName = JSONTools.extractStringFromJSONObject(jsonObject, "name");
-                if (canAddProject(projectName)) {
-                    this.projectList.add(new Project(projectName));
-                }
+                this.projectList.add(Project.buildProjectFromJSONObject(jsonObject));
             }
 
             this.projectTreeView.setProjectList(this.projectList);
