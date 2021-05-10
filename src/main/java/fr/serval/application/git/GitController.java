@@ -20,14 +20,14 @@ public class GitController implements Controller, IHMComponentBuilder {
     private Project project;
 
     public GitController(Project project) {
+        this.project = project;
+
         this.gitMainView = new GridPane();
         this.gitMainInfoView = new GridPane();
 
-        this.gitCommitList = new GitCommitList();
+        this.gitCommitList = new GitCommitList(this.project);
         this.gitCommitDetails = new GitCommitDetails();
         this.gitCommitTask = new GitCommitTask();
-
-        this.project = project;
 
         this.setupComponent();
     }
