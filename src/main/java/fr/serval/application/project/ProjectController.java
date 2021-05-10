@@ -67,6 +67,8 @@ public class ProjectController implements Controller {
                     this.projectList.add(new Project(projectName));
                 }
             }
+
+            this.projectTreeView.setProjectList(this.projectList);
         } catch (ParseException | IOException e) {
             e.printStackTrace();
         }

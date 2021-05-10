@@ -7,9 +7,10 @@ import fr.serval.application.task.TaskController;
 import fr.serval.controller.ProjectTreeNode;
 import fr.serval.ihm.IHMComponentBuilder;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+
+import java.util.List;
 
 public class ProjectTreeView implements IHMComponentBuilder {
     private final TreeView<String> treeView;
@@ -43,6 +44,14 @@ public class ProjectTreeView implements IHMComponentBuilder {
     @Override
     public TreeView<String> getComponent() {
         return this.treeView;
+    }
+
+    public void setProjectList(List<Project> projectList) {
+        this.resetProjectTree();
+
+        for (Project project : projectList) {
+            this.insertProjectNode(project);
+        }
     }
 
     public void insertProjectNode(Project project) {
