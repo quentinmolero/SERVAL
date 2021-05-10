@@ -27,7 +27,6 @@ public class ProjectController implements Controller {
         this.projectList = new ArrayList<>();
 
         fillProjectList();
-        fillProjectTreeForDev();
     }
 
     public static ProjectController getInstance() {
@@ -70,13 +69,6 @@ public class ProjectController implements Controller {
             }
         } catch (ParseException | IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private void fillProjectTreeForDev() {
-        this.projectTreeView.resetProjectTree();
-        for (Project project : this.projectList) {
-            this.projectTreeView.insertProjectNode(project);
         }
     }
 }
