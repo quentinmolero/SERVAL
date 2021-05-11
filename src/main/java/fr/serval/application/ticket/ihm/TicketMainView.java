@@ -35,7 +35,7 @@ public class TicketMainView implements IHMComponentBuilder {
     @Override
     public void setupComponent() {
         this.ticketTitle.setText("ticket001");
-        this.ticketDescription.setText("Probleme sur l'IHM principale, les couleurs de texte et de fond sont inversees");
+        this.ticketDescription.setText("Probleme sur l'IHM principale");
 
         this.closeTicketButton.setText("Fermer le ticket");
 

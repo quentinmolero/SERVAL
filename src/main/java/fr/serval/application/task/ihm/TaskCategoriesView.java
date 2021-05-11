@@ -41,7 +41,6 @@ public class TaskCategoriesView implements IHMComponentBuilder {
     }
 
     public void updateCategories() {
-        System.out.println(this.project.getName());
         try {
             JSONObject projectTaskGroup = (JSONObject) APIController.getInstance().getAPIProjectController().getProjetTaskGroup(this.project.getId()).get(0);
             List<JSONObject> taskCategories = JSONTools.collectJSONArrayChildrenAsArrayList(JSONTools.extractJSONArrayFromJSONObject(projectTaskGroup, "Task_Groups"));
