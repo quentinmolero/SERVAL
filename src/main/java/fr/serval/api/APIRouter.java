@@ -9,93 +9,128 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class APIRouter
 {
     private static final String BASE_URL = "http://localhost:3000/";
 
-    public static Object callGetURL(String urlRoute, JSONObject parameters) throws IOException, ParseException {
-        URL url = new URL(BASE_URL + urlRoute);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setDoOutput(true);
-        if(parameters != null){
-            callParameters(connection, parameters);
-        }
+    public static Object callGetURL(String urlRoute, JSONObject parameters) {
+        try {
+            URL url = new URL(BASE_URL + urlRoute);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            if (parameters != null) {
+                callParameters(connection, parameters);
+            }
 
-        return readConnection(connection);
+            return readConnection(connection);
+        }
+        catch (IOException | ParseException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public static Object callGetURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) throws IOException, ParseException {
-        URL url = new URL(BASE_URL + urlRoute);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setDoOutput(true);
-        connection.setRequestProperty("Authorization", "Bearer " + authValue);
-        if(parameters != null){
-            callParameters(connection, parameters);
-        }
+    public static Object callGetURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) {
+        try {
+            URL url = new URL(BASE_URL + urlRoute);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Bearer " + authValue);
+            if (parameters != null) {
+                callParameters(connection, parameters);
+            }
 
-        return readConnection(connection);
+            return readConnection(connection);
+        }
+        catch (IOException | ParseException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public static Object callPostURL(String urlRoute, JSONObject parameters) throws IOException, ParseException {
-        URL url = new URL(BASE_URL + urlRoute);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setDoOutput(true);
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("Accept", "application/json");
-        if(parameters != null){
-            callParameters(connection, parameters);
-        }
+    public static Object callPostURL(String urlRoute, JSONObject parameters) {
+        try {
+            URL url = new URL(BASE_URL + urlRoute);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+            if (parameters != null) {
+                callParameters(connection, parameters);
+            }
 
-        return readConnection(connection);
+            return readConnection(connection);
+        }
+        catch (IOException | ParseException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public static Object callPostURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) throws IOException, ParseException {
-        URL url = new URL(BASE_URL + urlRoute);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setDoOutput(true);
-        connection.setRequestProperty("Authorization", "Bearer " + authValue);
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("Accept", "application/json");
-        if(parameters != null){
-            callParameters(connection, parameters);
-        }
+    public static Object callPostURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue){
+        try {
+            URL url = new URL(BASE_URL + urlRoute);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Bearer " + authValue);
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+            if (parameters != null) {
+                callParameters(connection, parameters);
+            }
 
-        return readConnection(connection);
+            return readConnection(connection);
+        }
+        catch (IOException | ParseException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public static void callDeleteURL(String urlRoute, JSONObject parameters) throws IOException {
-        URL url = new URL(BASE_URL + urlRoute);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("DELETE");
-        connection.setDoOutput(true);
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("Accept", "application/json");
-        if(parameters != null){
-            callParameters(connection, parameters);
-        }
+    public static void callDeleteURL(String urlRoute, JSONObject parameters) {
+        try {
+            URL url = new URL(BASE_URL + urlRoute);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("DELETE");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+            if (parameters != null) {
+                callParameters(connection, parameters);
+            }
 
-        connection.getInputStream();
+            connection.getInputStream();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
-    public static void callDeleteURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) throws IOException {
-        URL url = new URL(BASE_URL + urlRoute);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("DELETE");
-        connection.setDoOutput(true);
-        connection.setRequestProperty("Authorization", "Bearer " + authValue);
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("Accept", "application/json");
-        if(parameters != null){
-            callParameters(connection, parameters);
-        }
+    public static void callDeleteURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) {
+        try {
+            URL url = new URL(BASE_URL + urlRoute);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("DELETE");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization", "Bearer " + authValue);
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+            if (parameters != null) {
+                callParameters(connection, parameters);
+            }
 
-        connection.getInputStream();
+            connection.getInputStream();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     private static void callParameters(HttpURLConnection connection, JSONObject parameters) throws IOException {

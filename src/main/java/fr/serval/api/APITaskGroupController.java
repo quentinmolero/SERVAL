@@ -9,7 +9,7 @@ public class APITaskGroupController
 {
     private final String ROUTE = "taskGroups/";
 
-    public JSONObject addNewTaskGroupToProject(int project_id, String task_group_name, String task_group_description) throws IOException, ParseException {
+    public JSONObject addNewTaskGroupToProject(int project_id, String task_group_name, String task_group_description) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();
         parameters.put("project_id", project_id);
@@ -18,7 +18,7 @@ public class APITaskGroupController
         return (JSONObject) APIRouter.callPostURLWithBearerToken(ROUTE, parameters, APIAuthController.getSession());
     }
 
-    public JSONObject getTaskGroup(int task_group_id) throws IOException, ParseException {
+    public JSONObject getTaskGroup(int task_group_id) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         return (JSONObject) APIRouter.callGetURLWithBearerToken(ROUTE + task_group_id, null, APIAuthController.getSession());
     }

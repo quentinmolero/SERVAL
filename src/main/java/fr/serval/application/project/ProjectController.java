@@ -59,17 +59,13 @@ public class ProjectController implements Controller {
     }
 
     private void fillProjectList() {
-        try {
-            JSONArray jsonArray = APIController.getInstance().getAPIProjectController().getCurrentUserProjects();
-            List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
-            for (JSONObject jsonObject : jsonObjectList) {
-                String projectName = JSONTools.extractStringFromJSONObject(jsonObject, "name");
-                if (canAddProject(projectName)) {
-                    this.projectList.add(new Project(projectName));
-                }
+        JSONArray jsonArray = APIController.getInstance().getAPIProjectController().getCurrentUserProjects();
+        List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
+        for (JSONObject jsonObject : jsonObjectList) {
+            String projectName = JSONTools.extractStringFromJSONObject(jsonObject, "name");
+            if (canAddProject(projectName)) {
+                this.projectList.add(new Project(projectName));
             }
-        } catch (ParseException | IOException e) {
-            e.printStackTrace();
         }
     }
 
