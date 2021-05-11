@@ -19,20 +19,20 @@ public class APIProjectController
         return (JSONArray) APIRouter.callGetURLWithBearerToken(ROUTE + "users/all", null, APIAuthController.getSession());
     }
 
-    public JSONObject addUserToProject(String role_name, int project_id, int user_id) {
+    public JSONObject addUserToProject(String role_name, int project_id, String user_name) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();
         parameters.put("role_name", role_name);
         parameters.put("project_id", project_id);
-        parameters.put("user_id", user_id);
+        parameters.put("user_name", user_name);
         return (JSONObject) APIRouter.callPostURLWithBearerToken(ROUTE + "users", parameters, APIAuthController.getSession());
     }
 
-    public void removeUserFromAProject(int project_id, int user_id) {
+    public void removeUserFromAProject(int project_id, String user_name) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();
         parameters.put("project_id", project_id);
-        parameters.put("user_id", user_id);
+        parameters.put("user_name", user_name);
         APIRouter.callDeleteURLWithBearerToken(ROUTE + "users", parameters, APIAuthController.getSession());
     }
 
