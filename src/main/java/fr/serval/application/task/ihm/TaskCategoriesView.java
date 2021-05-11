@@ -42,14 +42,10 @@ public class TaskCategoriesView implements IHMComponentBuilder {
 
     public void updateCategories() {
         System.out.println(this.project.getName());
-        try {
-            JSONObject projectTaskGroup = (JSONObject) APIController.getInstance().getAPIProjectController().getProjetTaskGroup(this.project.getId()).get(0);
-            List<JSONObject> taskCategories = JSONTools.collectJSONArrayChildrenAsArrayList(JSONTools.extractJSONArrayFromJSONObject(projectTaskGroup, "Task_Groups"));
-            for (JSONObject categories : taskCategories) {
-                this.categoriesRoot.getChildren().add(new TreeItem<>(JSONTools.extractStringFromJSONObject(categories, "name")));
-            }
-        } catch (ParseException | IOException e) {
-            e.printStackTrace();
+        JSONObject projectTaskGroup = (JSONObject) APIController.getInstance().getAPIProjectController().getProjetTaskGroup(this.project.getId()).get(0);
+        List<JSONObject> taskCategories = JSONTools.collectJSONArrayChildrenAsArrayList(JSONTools.extractJSONArrayFromJSONObject(projectTaskGroup, "Task_Groups"));
+        for (JSONObject categories : taskCategories) {
+            this.categoriesRoot.getChildren().add(new TreeItem<>(JSONTools.extractStringFromJSONObject(categories, "name")));
         }
     }
 

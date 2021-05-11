@@ -46,14 +46,10 @@ public class GitCommitList implements IHMComponentBuilder {
     }
 
     public void updateCommitList() {
-        try {
-            JSONObject projectJSONObject = APIController.getInstance().getAPIProjectController().getProjetCommit(this.project.getName());
-            List<JSONObject> commitList = JSONTools.collectJSONArrayChildrenAsArrayList(JSONTools.extractJSONArrayFromJSONObject(projectJSONObject, "commits"));
-            for (JSONObject commit : commitList) {
-                this.commitRoot.getChildren().add(new TreeItem<>(JSONTools.extractStringFromJSONObject(commit, "message")));
-            }
-        } catch (ParseException | IOException e) {
-            e.printStackTrace();
+        JSONObject projectJSONObject = APIController.getInstance().getAPIProjectController().getProjetCommit(this.project.getId());
+        List<JSONObject> commitList = JSONTools.collectJSONArrayChildrenAsArrayList(JSONTools.extractJSONArrayFromJSONObject(projectJSONObject, "commits"));
+        for (JSONObject commit : commitList) {
+            this.commitRoot.getChildren().add(new TreeItem<>(JSONTools.extractStringFromJSONObject(commit, "message")));
         }
     }
 }

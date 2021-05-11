@@ -1,9 +1,6 @@
 package fr.serval.api;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 
 public class APITaskGroupController
 {
