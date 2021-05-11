@@ -58,16 +58,12 @@ public class ProjectController implements Controller {
     }
 
     private void fillProjectList() {
-        try {
-            JSONArray jsonArray = APIController.getInstance().getAPIProjectController().getCurrentUserProjects();
-            List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
-            for (JSONObject jsonObject : jsonObjectList) {
-                this.projectList.add(Project.buildProjectFromJSONObject(jsonObject));
-            }
-
-            this.projectTreeView.setProjectList(this.projectList);
-        } catch (ParseException | IOException e) {
-            e.printStackTrace();
+        JSONArray jsonArray = APIController.getInstance().getAPIProjectController().getCurrentUserProjects();
+        List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
+        for (JSONObject jsonObject : jsonObjectList) {
+            this.projectList.add(Project.buildProjectFromJSONObject(jsonObject));
         }
+
+        this.projectTreeView.setProjectList(this.projectList);
     }
 }

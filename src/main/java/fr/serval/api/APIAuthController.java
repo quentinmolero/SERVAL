@@ -1,16 +1,13 @@
 package fr.serval.api;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 
 public class APIAuthController {
     private String access_token;
     private String session;
     private String user_name;
 
-    public void login(String login, String password) throws IOException, ParseException {
+    public void login(String login, String password) {
         JSONObject parameters = new JSONObject();
         parameters.put("username", login);
         parameters.put("password", password);
@@ -23,7 +20,7 @@ public class APIAuthController {
         session = res.get("token").toString();
     }
 
-    public void logout() throws IOException {
+    public void logout() {
         APIRouter.callDeleteURLWithBearerToken("auth/logout", null, session);
         access_token = null;
         user_name = null;
