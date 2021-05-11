@@ -7,7 +7,8 @@ import fr.serval.application.project.Project;
 import fr.serval.controller.Controller;
 import fr.serval.ihm.IHMComponentBuilder;
 import fr.serval.tools.GridPaneConstraintBuilder;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 public class GitController implements Controller, IHMComponentBuilder {
     private final GridPane gitMainView;
@@ -20,14 +21,14 @@ public class GitController implements Controller, IHMComponentBuilder {
     private Project project;
 
     public GitController(Project project) {
+        this.project = project;
+
         this.gitMainView = new GridPane();
         this.gitMainInfoView = new GridPane();
 
-        this.gitCommitList = new GitCommitList();
+        this.gitCommitList = new GitCommitList(this.project);
         this.gitCommitDetails = new GitCommitDetails();
         this.gitCommitTask = new GitCommitTask();
-
-        this.project = project;
 
         this.setupComponent();
     }

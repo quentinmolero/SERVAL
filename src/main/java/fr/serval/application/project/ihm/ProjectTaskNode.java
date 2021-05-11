@@ -28,6 +28,6 @@ public class ProjectTaskNode implements ProjectTreeNode {
 
     @Override
     public GridPane getDisplayComponent() {
-        return (new TaskController()).getComponent();
+        return (new TaskController(this.project)).getComponent();
     }
 }

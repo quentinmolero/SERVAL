@@ -47,6 +47,11 @@ public class ProjectRootNode implements IHMComponentBuilder, NodeController {
     }
 
     @Override
+    public Project getProject() {
+        return this.project;
+    }
+
+    @Override
     public List<ProjectTreeNode> getNodeList() {
         return null;
     }

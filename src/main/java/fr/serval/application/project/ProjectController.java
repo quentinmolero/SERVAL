@@ -1,9 +1,9 @@
 package fr.serval.application.project;
 
+import fr.serval.api.APIController;
 import fr.serval.application.project.ihm.ProjectCoreView;
 import fr.serval.application.project.ihm.ProjectTreeView;
 import fr.serval.controller.Controller;
-import fr.serval.api.APIController;
 import fr.serval.tools.JSONTools;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -27,7 +27,6 @@ public class ProjectController implements Controller {
         this.projectList = new ArrayList<>();
 
         fillProjectList();
-        fillProjectTreeForDev();
     }
 
     public static ProjectController getInstance() {
@@ -62,17 +61,9 @@ public class ProjectController implements Controller {
         JSONArray jsonArray = APIController.getInstance().getAPIProjectController().getCurrentUserProjects();
         List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
         for (JSONObject jsonObject : jsonObjectList) {
-            String projectName = JSONTools.extractStringFromJSONObject(jsonObject, "name");
-            if (canAddProject(projectName)) {
-                this.projectList.add(new Project(projectName));
-            }
+            this.projectList.add(Project.buildProjectFromJSONObject(jsonObject));
         }
-    }
 
-    private void fillProjectTreeForDev() {
-        this.projectTreeView.resetProjectTree();
-        for (Project project : this.projectList) {
-            this.projectTreeView.insertProjectNode(project);
-        }
+        this.projectTreeView.setProjectList(this.projectList);
     }
 }

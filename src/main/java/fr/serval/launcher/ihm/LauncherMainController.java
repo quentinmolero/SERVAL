@@ -1,8 +1,8 @@
 package fr.serval.launcher.ihm;
 
-import fr.serval.application.ihm.ApplicationMainView;
 import fr.serval.api.APIAuthController;
 import fr.serval.api.APIController;
+import fr.serval.application.ihm.ApplicationMainView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

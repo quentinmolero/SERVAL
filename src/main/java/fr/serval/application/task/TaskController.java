@@ -1,5 +1,6 @@
 package fr.serval.application.task;
 
+import fr.serval.application.project.Project;
 import fr.serval.application.task.ihm.TaskCategoriesView;
 import fr.serval.application.task.ihm.TaskDetailsView;
 import fr.serval.application.task.ihm.TaskListView;
@@ -16,10 +17,14 @@ public class TaskController implements Controller, IHMComponentBuilder {
     private final TaskListView taskListView;
     private final TaskDetailsView taskDetailsView;
 
-    public TaskController() {
+    private final Project project;
+
+    public TaskController(Project project) {
+        this.project = project;
+
         this.taskMainView = new GridPane();
 
-        this.taskCategoriesView = new TaskCategoriesView();
+        this.taskCategoriesView = new TaskCategoriesView(this.project);
         this.taskListView = new TaskListView();
         this.taskDetailsView = new TaskDetailsView();
 

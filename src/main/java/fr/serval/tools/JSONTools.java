@@ -22,6 +22,10 @@ public class JSONTools {
         return jsonObject.get(key).toString();
     }
 
+    public static JSONArray extractJSONArrayFromJSONObject(JSONObject jsonObject, String key) {
+        return (JSONArray) jsonObject.get(key);
+    }
+
     public static JSONObject findJSONObjectInJSONArrayWithKeyValue(JSONArray jsonArray, Object key, Object value) {
         for (Object element : jsonArray) {
             JSONObject jsonObject = (JSONObject) element;
