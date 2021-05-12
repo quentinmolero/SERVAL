@@ -7,9 +7,7 @@ import fr.serval.controller.Controller;
 import fr.serval.tools.JSONTools;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,5 +63,9 @@ public class ProjectController implements Controller {
         }
 
         this.projectTreeView.setProjectList(this.projectList);
+    }
+
+    public List<Project> getProjectList() {
+        return projectList;
     }
 }
