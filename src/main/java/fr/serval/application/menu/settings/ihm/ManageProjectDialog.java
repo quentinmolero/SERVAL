@@ -26,7 +26,8 @@ public class ManageProjectDialog implements IHMComponentBuilder {
     private final VBox listProjectActions;
 
     private final TextField textField;
-    private final Button button;
+    private final Button addUserButton;
+    private final Button removeUserButton;
     private final Text text;
 
     private final ToggleGroup toggleGroup;
@@ -39,7 +40,8 @@ public class ManageProjectDialog implements IHMComponentBuilder {
         this.listProjectActions = new VBox(5);
 
         this.textField = new TextField();
-        this.button = new Button();
+        this.addUserButton = new Button();
+        this.removeUserButton = new Button();
         this.text = new Text();
 
         this.toggleGroup = new ToggleGroup();
@@ -52,11 +54,12 @@ public class ManageProjectDialog implements IHMComponentBuilder {
         this.fillProjectRadioList();
 
         this.textField.setPromptText("Nom d'utilisateur Github");
-        this.setupButtonAddUser();
+        this.setupButtons();
         this.text.fillProperty().setValue(Color.RED);
 
         this.listProjectActions.getChildren().add(this.textField);
-        this.listProjectActions.getChildren().add(this.button);
+        this.listProjectActions.getChildren().add(this.addUserButton);
+        this.listProjectActions.getChildren().add(this.removeUserButton);
         this.listProjectActions.getChildren().add(this.text);
 
         this.dialogRoot.add(this.listProjectNames, 0, 0);
@@ -80,10 +83,10 @@ public class ManageProjectDialog implements IHMComponentBuilder {
         }
     }
 
-    private void setupButtonAddUser() {
-        this.button.setText("Ajouter au projet");
-        this.button.setOnAction(event -> {
-            this.button.setDisable(true);
+    private void setupButtons() {
+        this.addUserButton.setText("Ajouter au projet");
+        this.addUserButton.setOnAction(event -> {
+            this.addUserButton.setDisable(true);
             this.text.setText("");
 
             if (!this.textField.getText().isEmpty() && !this.textField.getText().isBlank()) {
@@ -92,7 +95,21 @@ public class ManageProjectDialog implements IHMComponentBuilder {
                 this.text.setText("Le nom ne peux pas être vide");
             }
 
-            this.button.setDisable(false);
+            this.addUserButton.setDisable(false);
+        });
+
+        this.removeUserButton.setText("Retirer du projet");
+        this.removeUserButton.setOnAction(event -> {
+            this.removeUserButton.setDisable(true);
+            this.text.setText("");
+
+            if (!this.textField.getText().isEmpty() && !this.textField.getText().isBlank()) {
+                System.out.println(this.textField.getText());
+            } else {
+                this.text.setText("Le nom ne peux pas être vide");
+            }
+
+            this.removeUserButton.setDisable(false);
         });
     }
 
