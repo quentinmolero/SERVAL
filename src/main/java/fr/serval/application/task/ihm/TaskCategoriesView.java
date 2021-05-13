@@ -10,9 +10,7 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
 import java.util.List;
 
 public class TaskCategoriesView implements IHMComponentBuilder {
