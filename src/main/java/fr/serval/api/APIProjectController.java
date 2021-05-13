@@ -38,11 +38,11 @@ public class APIProjectController
 
     public JSONObject getProjetCommit(int project_id) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
-        return (JSONObject) APIRouter.callGetURLWithBearerToken(ROUTE + project_id + "commits", null, APIAuthController.getSession());
+        return (JSONObject) APIRouter.callGetURLWithBearerToken(ROUTE + project_id + "/commits", null, APIAuthController.getSession());
     }
 
     public JSONArray getProjetTaskGroup(int projet_id) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
-        return (JSONArray) APIRouter.callGetURLWithBearerToken(ROUTE + projet_id + "taskGroups", null, APIAuthController.getSession());
+        return (JSONArray) APIRouter.callGetURLWithBearerToken(ROUTE + projet_id + "/taskGroups", null, APIAuthController.getSession());
     }
 }
