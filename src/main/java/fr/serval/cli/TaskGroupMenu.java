@@ -1,4 +1,4 @@
-package fr.serval.api;
+package fr.serval.cli;
 
 import fr.serval.cli.CLIController;
 
