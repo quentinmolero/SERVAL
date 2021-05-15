@@ -8,8 +8,6 @@ public class LauncherMenu {
         APIController apiController = APIController.getInstance();
         APIAuthController apiAuthController = apiController.getAPIAuthController();
 
-        System.out.println("Bienvenue sur Serval CLI !");
-
         apiAuthController.readSaveFile();
         if(apiAuthController.getSession() == null){
             System.out.println("Vous devez d'abord être connecté pour pouvoir utiliser Serval");
