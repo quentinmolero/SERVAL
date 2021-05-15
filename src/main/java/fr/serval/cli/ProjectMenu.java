@@ -10,6 +10,30 @@ import org.json.simple.JSONObject;
 public class ProjectMenu {
     public static void main(){
         int userAnswer;
+        System.out.println("=================");
+        System.out.println("Bienvenue sur Serval CLI !");
+
+        do {
+            System.out.println("1 : Accéder à un projet");
+            System.out.println("2 : Ajouter un nouveau projet");
+            System.out.println("3 : Quitter Serval");
+
+            userAnswer = CLIController.readUserChoice(1, 3);
+
+            switch(userAnswer){
+                case 1:
+                    selectProjectMenu();
+                    break;
+                case 2:
+                    addProjectMenu();
+                    break;
+            }
+        }
+        while(userAnswer != 3);
+    }
+
+    private static void selectProjectMenu(){
+        int userAnswer;
         APIProjectController apiProjectController = APIController.getInstance().getAPIProjectController();
         JSONArray projects = apiProjectController.getCurrentUserProjects();
 
@@ -33,5 +57,9 @@ public class ProjectMenu {
                 TaskGroupMenu.main(projectId);
             }
         } while(userAnswer != (projects.size() + 1));
+    }
+
+    private static void addProjectMenu(){
+        System.out.println("WIP"); // TODO: addProjectMenu
     }
 }

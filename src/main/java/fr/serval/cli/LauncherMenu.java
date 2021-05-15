@@ -23,7 +23,6 @@ public class LauncherMenu {
                 LoginMenu.main();
             }
         }
-
-        AppMenu.main();
+        ProjectMenu.main();
     }
 }
