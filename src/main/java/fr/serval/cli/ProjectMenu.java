@@ -59,6 +59,13 @@ public class ProjectMenu {
     }
 
     private static void addProjectMenu(){
-        System.out.println("WIP"); // TODO: addProjectMenu
+        APIProjectController apiProjectController = APIController.getInstance().getAPIProjectController();
+        String repo_name;
+        do {
+            System.out.println("Veuillez saisir le nom du dépôt Github que vous souhaitez ajouter en tant que projet : ");
+            repo_name = CLIController.readStringUserInput();
+        } while(apiProjectController.addProjectToCurrentUser(repo_name) == null);
+
+        System.out.println("Le projet " + repo_name + " a bien été ajouté");
     }
 }
