@@ -52,7 +52,7 @@ public class ProjectMenu {
             userAnswer = CLIController.readUserChoice(1, projects.size() + 1);
 
             if(userAnswer <= projects.size()){
-                int projectId = JSONTools.extractIntFromJSONObject((JSONObject) projects.get(userAnswer), "id");
+                int projectId = JSONTools.extractIntFromJSONObject((JSONObject) projects.get(userAnswer - 1), "id");
                 TaskGroupMenu.main(projectId);
             }
         } while(userAnswer != (projects.size() + 1));

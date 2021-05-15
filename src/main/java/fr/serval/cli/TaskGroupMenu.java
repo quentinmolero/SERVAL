@@ -1,6 +1,10 @@
 package fr.serval.cli;
 
-import fr.serval.cli.CLIController;
+import fr.serval.api.APIController;
+import fr.serval.api.APITaskGroupController;
+import fr.serval.tools.JSONTools;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class TaskGroupMenu {
     public static void main(int projectId){
@@ -24,7 +28,30 @@ public class TaskGroupMenu {
     }
 
     private static void selectTaskGroupMenu(int projectId){
-        System.out.println("WIP"); // TODO: selectTaskGroupMenu
+        int userAnswer;
+        APITaskGroupController apiTaskGroupController = APIController.getInstance().getAPITaskGroupController();
+        JSONArray taskGroups = apiTaskGroupController.getAllTaskGroupForAProject(projectId);
+
+        if(taskGroups == null){
+            System.out.println("Vous n'avez pas enregistré de groupe de tâches");
+            return;
+        }
+
+        do {
+            System.out.println("À quel groupe de tâches souhaitez vous accéder ?");
+            for (int i = 0; i < taskGroups.size(); i++)
+            {
+                String projectName = JSONTools.extractStringFromJSONObject((JSONObject) taskGroups.get(i), "name");
+                System.out.println((i + 1) + " : " + projectName);
+            }
+            System.out.println((taskGroups.size() + 1) + " : Retourner à la sélection des projets");
+            userAnswer = CLIController.readUserChoice(1, taskGroups.size() + 1);
+
+            if(userAnswer <= taskGroups.size()){
+                int taskGroupId = JSONTools.extractIntFromJSONObject((JSONObject) taskGroups.get(userAnswer - 1), "id");
+                TaskGroupMenu.main(taskGroupId);
+            }
+        } while(userAnswer != (taskGroups.size() + 1));
     }
 
     private static void addTaskGroupMenu(int projectId){
