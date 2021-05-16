@@ -12,6 +12,7 @@ public class CLIController {
         return userChoice;
     }
 
+    //TODO: Make this method get all string instead of only the first word
     public static String readStringUserInput() {
         Scanner scanner = new Scanner(System.in);
         return scanner.next();

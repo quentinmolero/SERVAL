@@ -1,5 +1,6 @@
 package fr.serval.api;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class APITaskController
@@ -13,5 +14,13 @@ public class APITaskController
         parameters.put("name", task_name);
         parameters.put("description", task_description);
         return (JSONObject) APIRouter.callPostURLWithBearerToken(ROUTE, parameters, APIAuthController.getSession());
+    }
+
+    public JSONArray getAllTaskForATaskGroup(int projectId, int taskGroupId) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        JSONObject parameters = new JSONObject();
+        parameters.put("taskGroupId", taskGroupId);
+        parameters.put("projectId", projectId);
+        return (JSONArray) APIRouter.callPostURLWithBearerToken(ROUTE + "all", parameters, APIAuthController.getSession());
     }
 }

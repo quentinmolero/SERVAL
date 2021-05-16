@@ -1,7 +1,6 @@
 package fr.serval.cli;
 
 import fr.serval.api.APIController;
-import fr.serval.api.APIProjectController;
 import fr.serval.api.APITaskGroupController;
 import fr.serval.tools.JSONTools;
 import org.json.simple.JSONArray;
@@ -50,7 +49,7 @@ public class TaskGroupMenu {
 
             if(userAnswer <= taskGroups.size()){
                 int taskGroupId = JSONTools.extractIntFromJSONObject((JSONObject) taskGroups.get(userAnswer - 1), "id");
-                TaskGroupMenu.main(taskGroupId);
+                TaskMenu.main(projectId, taskGroupId);
             }
         } while(userAnswer != (taskGroups.size() + 1));
     }
