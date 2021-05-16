@@ -1,6 +1,7 @@
 package fr.serval.cli;
 
 import fr.serval.api.APIController;
+import fr.serval.api.APIProjectController;
 import fr.serval.api.APITaskGroupController;
 import fr.serval.tools.JSONTools;
 import org.json.simple.JSONArray;
@@ -55,6 +56,16 @@ public class TaskGroupMenu {
     }
 
     private static void addTaskGroupMenu(int projectId){
-        System.out.println("WIP"); // TODO: addTaskGroupMenu
+        APITaskGroupController apiTaskGroupController = APIController.getInstance().getAPITaskGroupController();
+        String taskGroupName;
+        String taskGroupDescription;
+        do {
+            System.out.println("Veuillez saisir le nom du groupe de tâches que vous souhaitez créer : ");
+            taskGroupName = CLIController.readStringUserInput();
+            System.out.println("Veuillez saisir la description du groupe de tâches que vous souhaitez créer : ");
+            taskGroupDescription = CLIController.readStringUserInput();
+        } while(apiTaskGroupController.addNewTaskGroupToProject(projectId, taskGroupName, taskGroupDescription) == null);
+
+        System.out.println("Le groupe de tâche " + taskGroupName + " a bien été ajouté");
     }
 }
