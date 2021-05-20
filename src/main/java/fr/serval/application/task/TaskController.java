@@ -24,9 +24,9 @@ public class TaskController implements Controller, IHMComponentBuilder {
 
         this.taskMainView = new GridPane();
 
-        this.taskCategoriesView = new TaskCategoriesView(this.project);
-        this.taskListView = new TaskListView();
         this.taskDetailsView = new TaskDetailsView();
+        this.taskListView = new TaskListView(this.taskDetailsView);
+        this.taskCategoriesView = new TaskCategoriesView(this.taskListView, this.project);
 
         this.setupComponent();
     }
