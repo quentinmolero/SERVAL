@@ -11,19 +11,28 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.json.simple.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GitCommitList implements IHMComponentBuilder {
     private final TreeView<String> commitTree;
     private final TreeItem<String> commitRoot;
 
-    private final Project project;
+    private final Map<String, JSONObject> commitHashMap;
 
-    public GitCommitList(Project project) {
+    private final Project project;
+    private final GitCommitDetails gitCommitDetails;
+
+    public GitCommitList(Project project, GitCommitDetails gitCommitDetails) {
         this.commitTree = new TreeView<>();
         this.commitRoot = new TreeItem<>();
 
+        this.commitHashMap = new HashMap<>();
+
         this.project = project;
+
+        this.gitCommitDetails = gitCommitDetails;
 
         this.setupComponent();
     }
@@ -34,6 +43,12 @@ public class GitCommitList implements IHMComponentBuilder {
         this.commitTree.setShowRoot(false);
         this.commitTree.setBorder(new Border(new BorderStroke(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, new CornerRadii(4), BorderWidths.DEFAULT, new Insets(1))));
         this.commitRoot.setExpanded(true);
+
+        this.commitTree.getSelectionModel().selectedIndexProperty().addListener(e -> {
+            TreeItem<String> selectedNode = this.commitTree.getSelectionModel().getSelectedItem();
+            JSONObject selectedTask = this.commitHashMap.get(selectedNode.getValue().split("\n")[1]);
+            this.gitCommitDetails.updateDetails(selectedTask);
+        });
 
         this.updateCommitList();
     }
@@ -47,7 +62,10 @@ public class GitCommitList implements IHMComponentBuilder {
         JSONObject projectJSONObject = APIController.getInstance().getAPIProjectController().getProjetCommit(this.project.getId());
         List<JSONObject> commitList = JSONTools.collectJSONArrayChildrenAsArrayList(JSONTools.extractJSONArrayFromJSONObject(projectJSONObject, "commits"));
         for (JSONObject commit : commitList) {
-            this.commitRoot.getChildren().add(new TreeItem<>(JSONTools.extractStringFromJSONObject(commit, "message")));
+            String sha = JSONTools.extractStringFromJSONObject(commit, "sha");
+            this.commitHashMap.put(sha, commit);
+            String commitName = JSONTools.extractStringFromJSONObject(commit, "message") + '\n' + sha;
+            this.commitRoot.getChildren().add(new TreeItem<>(commitName));
         }
     }
 }
