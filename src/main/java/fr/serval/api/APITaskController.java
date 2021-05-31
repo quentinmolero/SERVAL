@@ -20,4 +20,9 @@ public class APITaskController
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         return (JSONArray) APIRouter.callGetURLWithBearerToken(ROUTE + "all?taskGroupId="+taskGroupId+"&projectId="+projectId, null, APIAuthController.getSession());
     }
+
+    public JSONArray getAllCommitsForATask(int projectId, int taskId) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        return (JSONArray) APIRouter.callGetURLWithBearerToken(ROUTE + "commits?taskId="+taskId+"&projectId="+projectId, null, APIAuthController.getSession());
+    }
 }
