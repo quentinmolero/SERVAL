@@ -50,7 +50,7 @@ public class TaskMenu {
 
             if(userAnswer <= taskGroups.size()){
                 int taskId = JSONTools.extractIntFromJSONObject((JSONObject) taskGroups.get(userAnswer - 1), "id");
-                TaskMenu.tastOptionsMenu(taskId);
+                TaskMenu.taskOptionsMenu(taskId);
             }
         } while(userAnswer != (taskGroups.size() + 1));
     }
@@ -69,7 +69,7 @@ public class TaskMenu {
         System.out.println("Le groupe de tâche " + taskName + " a bien été ajouté");
     }
 
-    private static void tastOptionsMenu(int taskId){
+    private static void taskOptionsMenu(int taskId){
         System.out.println("WIP"); //TODO: tastOptionsMenu
     }
 }
