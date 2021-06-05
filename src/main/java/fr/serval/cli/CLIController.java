@@ -1,5 +1,8 @@
 package fr.serval.cli;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class CLIController {
@@ -12,10 +15,15 @@ public class CLIController {
         return userChoice;
     }
 
-    //TODO: Make this method get all string instead of only the first word
     public static String readStringUserInput() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.next();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        try{
+            return reader.readLine();
+        }
+        catch (IOException e) {
+            return "";
+        }
     }
 
     public static int readIntFromUserInput() {
