@@ -2,11 +2,13 @@ package fr.serval.application.task.ihm;
 
 import fr.serval.ihm.IHMComponentBuilder;
 import fr.serval.tools.GridPaneConstraintBuilder;
+import fr.serval.tools.JSONTools;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import org.json.simple.JSONObject;
 
 public class TaskDetailsView implements IHMComponentBuilder {
     private final GridPane taskDetailsView;
@@ -34,11 +36,13 @@ public class TaskDetailsView implements IHMComponentBuilder {
         this.taskDetailsView.add(this.actorPane, 0, 1);
         this.taskDetailsView.add(this.finishTask, 0, 2);
 
-        this.taskDescription.setText("Description de la tache");
-
         this.actorPane.setBorder(new Border(new BorderStroke(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, BorderStrokeStyle.SOLID, new CornerRadii(4), BorderWidths.DEFAULT, new Insets(1))));
 
         this.finishTask.setText("Finir la tache");
+    }
+
+    public void updateDetails(JSONObject taskJSONObject){
+        this.taskDescription.setText(JSONTools.extractStringFromJSONObject(taskJSONObject, "description"));
     }
 
     @Override
