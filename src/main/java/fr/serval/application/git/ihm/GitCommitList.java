@@ -23,8 +23,9 @@ public class GitCommitList implements IHMComponentBuilder {
 
     private final Project project;
     private final GitCommitDetails gitCommitDetails;
+    private final GitCommitTask gitCommitTask;
 
-    public GitCommitList(Project project, GitCommitDetails gitCommitDetails) {
+    public GitCommitList(Project project, GitCommitDetails gitCommitDetails, GitCommitTask gitCommitTask) {
         this.commitTree = new TreeView<>();
         this.commitRoot = new TreeItem<>();
 
@@ -33,6 +34,7 @@ public class GitCommitList implements IHMComponentBuilder {
         this.project = project;
 
         this.gitCommitDetails = gitCommitDetails;
+        this.gitCommitTask = gitCommitTask;
 
         this.setupComponent();
     }
@@ -48,6 +50,7 @@ public class GitCommitList implements IHMComponentBuilder {
             TreeItem<String> selectedNode = this.commitTree.getSelectionModel().getSelectedItem();
             JSONObject selectedTask = this.commitHashMap.get(selectedNode.getValue().split("\n")[1]);
             this.gitCommitDetails.updateDetails(selectedTask);
+            this.gitCommitTask.updateTaskList(JSONTools.extractStringFromJSONObject(selectedTask, "message"));
         });
 
         this.updateCommitList();
