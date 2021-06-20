@@ -20,4 +20,11 @@ public class APITicketController
         parameters.put("description", description);
         return (JSONObject) APIRouter.callPostURLWithBearerToken(ROUTE + "projects", parameters, APIAuthController.getSession());
     }
+
+    public void deleteTicketToAProjet(int ticket_id) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        JSONObject parameters = new JSONObject();
+        parameters.put("ticketId", ticket_id);
+        APIRouter.callDeleteURLWithBearerToken(ROUTE, parameters, APIAuthController.getSession());
+    }
 }
