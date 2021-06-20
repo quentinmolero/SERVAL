@@ -2,6 +2,8 @@ package fr.serval.api;
 
 import org.json.simple.JSONObject;
 
+import java.net.ConnectException;
+
 public class APIAuthController {
     private String access_token;
     private String session;

@@ -8,8 +8,9 @@ import org.json.simple.JSONObject;
 
 public class ProjectMenu {
     public static void main(){
-        int userAnswer;
         System.out.println("=================");
+
+        int userAnswer;
         System.out.println("Bienvenue sur Serval CLI !");
 
         do {
@@ -32,6 +33,8 @@ public class ProjectMenu {
     }
 
     private static void selectProjectMenu(){
+        System.out.println("=================");
+
         int userAnswer;
         APIProjectController apiProjectController = APIController.getInstance().getAPIProjectController();
         JSONArray projects = apiProjectController.getCurrentUserProjects();
@@ -52,13 +55,13 @@ public class ProjectMenu {
             userAnswer = CLIController.readUserChoice(1, projects.size() + 1);
 
             if(userAnswer <= projects.size()){
-                int projectId = JSONTools.extractIntFromJSONObject((JSONObject) projects.get(userAnswer - 1), "id");
-                TaskGroupMenu.main(projectId);
+                TaskGroupMenu.main((JSONObject) projects.get(userAnswer - 1));
             }
         } while(userAnswer != (projects.size() + 1));
     }
 
     private static void addProjectMenu(){
+        System.out.println("=================");
         APIProjectController apiProjectController = APIController.getInstance().getAPIProjectController();
         String repo_name;
         do {
