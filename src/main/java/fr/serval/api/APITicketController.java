@@ -27,4 +27,12 @@ public class APITicketController
         parameters.put("ticketId", ticket_id);
         APIRouter.callDeleteURLWithBearerToken(ROUTE, parameters, APIAuthController.getSession());
     }
+
+    public String addUserToATicket(int ticket_id, int user_id) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        JSONObject parameters = new JSONObject();
+        parameters.put("ticketId", ticket_id);
+        parameters.put("userId", user_id);
+        return (String) APIRouter.callPostURLWithBearerToken(ROUTE + "users", parameters, APIAuthController.getSession());
+    }
 }
