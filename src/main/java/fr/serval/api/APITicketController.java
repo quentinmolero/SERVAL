@@ -21,11 +21,11 @@ public class APITicketController
         return (JSONObject) APIRouter.callPostURLWithBearerToken(ROUTE + "projects", parameters, APIAuthController.getSession());
     }
 
-    public void deleteTicketToAProjet(int ticket_id) {
+    public String deleteTicketToAProjet(int ticket_id) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();
         parameters.put("ticketId", ticket_id);
-        APIRouter.callDeleteURLWithBearerToken(ROUTE, parameters, APIAuthController.getSession());
+        return (String) APIRouter.callDeleteURLWithBearerToken(ROUTE, parameters, APIAuthController.getSession());
     }
 
     public String addUserToATicket(int ticket_id, int user_id) {

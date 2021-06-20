@@ -94,7 +94,7 @@ public class APIRouter
         return null;
     }
 
-    public static void callDeleteURL(String urlRoute, JSONObject parameters) {
+    public static Object callDeleteURL(String urlRoute, JSONObject parameters) {
         try {
             URL url = new URL(BASE_URL + urlRoute);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -106,14 +106,15 @@ public class APIRouter
                 callParameters(connection, parameters);
             }
 
-            connection.getInputStream();
+            return readConnection(connection);
         }
-        catch (IOException e){
+        catch (IOException | ParseException e){
             e.printStackTrace();
         }
+        return null;
     }
 
-    public static void callDeleteURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) {
+    public static Object callDeleteURLWithBearerToken(String urlRoute, JSONObject parameters, String authValue) {
         try {
             URL url = new URL(BASE_URL + urlRoute);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -126,11 +127,12 @@ public class APIRouter
                 callParameters(connection, parameters);
             }
 
-            connection.getInputStream();
+            return readConnection(connection);
         }
-        catch (IOException e){
+        catch (IOException | ParseException e){
             e.printStackTrace();
         }
+        return null;
     }
 
     private static void callParameters(HttpURLConnection connection, JSONObject parameters) throws IOException {
