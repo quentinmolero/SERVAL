@@ -1,5 +1,7 @@
 package fr.serval.application.ticket.ihm;
 
+import fr.serval.application.project.Project;
+import fr.serval.application.task.ihm.NewTaskDialog;
 import fr.serval.ihm.IHMComponentBuilder;
 import fr.serval.tools.GridPaneConstraintBuilder;
 import javafx.scene.control.Button;
@@ -13,16 +15,20 @@ public class TicketTopView implements IHMComponentBuilder {
 
     private final TicketListView ticketListView;
 
+    private final Project project;
+
     private final Button newTicketButton;
     private final Text openedTicketText;
     private final Text closedTicketText;
     private final Text totalTicketText;
 
-    public TicketTopView(TicketListView ticketListView) {
+    public TicketTopView(TicketListView ticketListView, Project project) {
         this.topTicketView = new GridPane();
         this.topTicketTextListView = new GridPane();
 
         this.ticketListView = ticketListView;
+
+        this.project = project;
 
         this.newTicketButton = new Button();
         this.openedTicketText = new Text();
@@ -35,6 +41,10 @@ public class TicketTopView implements IHMComponentBuilder {
     @Override
     public void setupComponent() {
         this.newTicketButton.setText("Nouveau Ticket");
+        this.newTicketButton.setOnAction(event -> {
+            final NewTicketDialog newTicketDialog = new NewTicketDialog(this.ticketListView, this.project);
+            newTicketDialog.getComponent().show();
+        });
 
         this.openedTicketText.setText("Nombre de tickets ouverts: 3");
         this.closedTicketText.setText("Nombre de tickets finis: 0");
