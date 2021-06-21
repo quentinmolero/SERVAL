@@ -2,16 +2,16 @@ package fr.serval.cli;
 
 import fr.serval.api.APIController;
 import fr.serval.api.APITaskController;
-import fr.serval.api.APITaskGroupController;
 import fr.serval.tools.JSONTools;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class TaskMenu {
-    public static void main(int projectId, int taskGroupId){
+    public static void main(int projectId, JSONObject taskGroup){
+        System.out.println("=================");
         int userAnswer;
         do {
-            System.out.println("Que souhaitez vous faire ?");
+            System.out.println("Que souhaitez vous faire avec " + JSONTools.extractStringFromJSONObject(taskGroup, "name") + " ?");
             System.out.println("1 : Voir les tâches");
             System.out.println("2 : Ajouter une tâches");
             System.out.println("3 : Retourner aux autres groupes de tâches");
@@ -19,16 +19,17 @@ public class TaskMenu {
 
             switch(userAnswer){
                 case 1:
-                    selectTaskMenu(projectId, taskGroupId);
+                    selectTaskMenu(projectId, JSONTools.extractIntFromJSONObject(taskGroup, "id"));
                     break;
                 case 2:
-                    addTaskMenu(taskGroupId);
+                    addTaskMenu(JSONTools.extractIntFromJSONObject(taskGroup, "id"));
                     break;
             }
         } while(userAnswer != 3);
     }
 
     private static void selectTaskMenu(int projectId, int taskGroupId){
+        System.out.println("=================");
         int userAnswer;
         APITaskController apiTaskController = APIController.getInstance().getAPITaskController();
         JSONArray taskGroups = apiTaskController.getAllTaskForATaskGroup(projectId, taskGroupId);
@@ -49,13 +50,13 @@ public class TaskMenu {
             userAnswer = CLIController.readUserChoice(1, taskGroups.size() + 1);
 
             if(userAnswer <= taskGroups.size()){
-                int taskId = JSONTools.extractIntFromJSONObject((JSONObject) taskGroups.get(userAnswer - 1), "id");
-                TaskMenu.taskOptionsMenu(taskId);
+                TaskMenu.taskOptionsMenu((JSONObject) taskGroups.get(userAnswer - 1));
             }
         } while(userAnswer != (taskGroups.size() + 1));
     }
 
     private static void addTaskMenu(int taskGroupId){
+        System.out.println("=================");
         APITaskController apiTaskController = APIController.getInstance().getAPITaskController();
         String taskName;
         String taskDescription;
@@ -69,7 +70,8 @@ public class TaskMenu {
         System.out.println("Le groupe de tâche " + taskName + " a bien été ajouté");
     }
 
-    private static void taskOptionsMenu(int taskId){
+    private static void taskOptionsMenu(JSONObject task){
+        System.out.println("=================");
         System.out.println("WIP"); //TODO: tastOptionsMenu
     }
 }

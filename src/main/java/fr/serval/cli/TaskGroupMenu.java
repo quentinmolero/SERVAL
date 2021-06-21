@@ -7,10 +7,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class TaskGroupMenu {
-    public static void main(int projectId){
+    public static void main(JSONObject project){
+        System.out.println("=================");
+
         int userAnswer;
+
         do {
-            System.out.println("Que souhaitez vous faire ?");
+            System.out.println("Que souhaitez vous faire sur " + JSONTools.extractStringFromJSONObject(project, "name") + " ?");
             System.out.println("1 : Voir les groupes de tâches");
             System.out.println("2 : Ajouter un groupe de tâches");
             System.out.println("3 : Retourner aux autres projets");
@@ -18,16 +21,17 @@ public class TaskGroupMenu {
 
             switch(userAnswer){
                 case 1:
-                    selectTaskGroupMenu(projectId);
+                    selectTaskGroupMenu(JSONTools.extractIntFromJSONObject(project, "id"));
                     break;
                 case 2:
-                    addTaskGroupMenu(projectId);
+                    addTaskGroupMenu(JSONTools.extractIntFromJSONObject(project, "id"));
                     break;
             }
         } while(userAnswer != 3);
     }
 
     private static void selectTaskGroupMenu(int projectId){
+        System.out.println("=================");
         int userAnswer;
         APITaskGroupController apiTaskGroupController = APIController.getInstance().getAPITaskGroupController();
         JSONArray taskGroups = apiTaskGroupController.getAllTaskGroupForAProject(projectId);
@@ -48,13 +52,13 @@ public class TaskGroupMenu {
             userAnswer = CLIController.readUserChoice(1, taskGroups.size() + 1);
 
             if(userAnswer <= taskGroups.size()){
-                int taskGroupId = JSONTools.extractIntFromJSONObject((JSONObject) taskGroups.get(userAnswer - 1), "id");
-                TaskMenu.main(projectId, taskGroupId);
+                TaskMenu.main(projectId, (JSONObject) taskGroups.get(userAnswer - 1));
             }
         } while(userAnswer != (taskGroups.size() + 1));
     }
 
     private static void addTaskGroupMenu(int projectId){
+        System.out.println("=================");
         APITaskGroupController apiTaskGroupController = APIController.getInstance().getAPITaskGroupController();
         String taskGroupName;
         String taskGroupDescription;
