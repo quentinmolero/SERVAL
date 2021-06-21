@@ -2,10 +2,12 @@ package fr.serval.application.ticket.ihm;
 
 import fr.serval.ihm.IHMComponentBuilder;
 import fr.serval.tools.GridPaneConstraintBuilder;
+import fr.serval.tools.JSONTools;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
+import org.json.simple.JSONObject;
 
 public class TicketMainView implements IHMComponentBuilder {
     private final GridPane ticketMainView;
@@ -34,9 +36,6 @@ public class TicketMainView implements IHMComponentBuilder {
 
     @Override
     public void setupComponent() {
-        this.ticketTitle.setText("ticket001");
-        this.ticketDescription.setText("Probleme sur l'IHM principale");
-
         this.closeTicketButton.setText("Fermer le ticket");
 
         this.ticketMainView.add(this.ticketInfoView, 0, 0);
@@ -54,6 +53,12 @@ public class TicketMainView implements IHMComponentBuilder {
         this.ticketInfoView.getRowConstraints().add(1, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 5));
         this.ticketInfoView.getRowConstraints().add(2, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 80));
         this.ticketInfoView.getRowConstraints().add(3, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 10));
+    }
+
+    public void updateTicketData(JSONObject ticketJSONObject) {
+        System.out.println(ticketJSONObject);
+        this.ticketTitle.setText(JSONTools.extractStringFromJSONObject(ticketJSONObject, "title"));
+        this.ticketDescription.setText(JSONTools.extractStringFromJSONObject(ticketJSONObject, "description"));
     }
 
     @Override

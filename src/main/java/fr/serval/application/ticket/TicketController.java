@@ -1,5 +1,6 @@
 package fr.serval.application.ticket;
 
+import fr.serval.application.project.Project;
 import fr.serval.application.ticket.ihm.TicketListView;
 import fr.serval.application.ticket.ihm.TicketMainView;
 import fr.serval.application.ticket.ihm.TicketTopView;
@@ -17,13 +18,17 @@ public class TicketController implements Controller, IHMComponentBuilder {
     private final TicketListView ticketListView;
     private final TicketMainView ticketMainView;
 
-    public TicketController() {
+    private final Project project;
+
+    public TicketController(Project project) {
         this.ticketView = new GridPane();
         this.ticketCenterView = new GridPane();
 
-        this.ticketTopView = new TicketTopView();
-        this.ticketListView = new TicketListView();
+        this.project = project;
+
         this.ticketMainView = new TicketMainView();
+        this.ticketListView = new TicketListView(this.project, this.ticketMainView);
+        this.ticketTopView = new TicketTopView(this.ticketListView);
 
         this.setupComponent();
     }

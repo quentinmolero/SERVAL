@@ -11,14 +11,18 @@ public class TicketTopView implements IHMComponentBuilder {
     private final GridPane topTicketView;
     private final GridPane topTicketTextListView;
 
+    private final TicketListView ticketListView;
+
     private final Button newTicketButton;
     private final Text openedTicketText;
     private final Text closedTicketText;
     private final Text totalTicketText;
 
-    public TicketTopView() {
+    public TicketTopView(TicketListView ticketListView) {
         this.topTicketView = new GridPane();
         this.topTicketTextListView = new GridPane();
+
+        this.ticketListView = ticketListView;
 
         this.newTicketButton = new Button();
         this.openedTicketText = new Text();
@@ -34,7 +38,7 @@ public class TicketTopView implements IHMComponentBuilder {
 
         this.openedTicketText.setText("Nombre de tickets ouverts: 3");
         this.closedTicketText.setText("Nombre de tickets finis: 0");
-        this.totalTicketText.setText("Nombre de total de tickets: 3");
+        this.totalTicketText.setText("Nombre de total de tickets: " + this.ticketListView.getTicketHashMap().size());
 
         this.topTicketView.add(this.newTicketButton, 0, 0);
         this.topTicketView.add(this.topTicketTextListView, 1, 0);

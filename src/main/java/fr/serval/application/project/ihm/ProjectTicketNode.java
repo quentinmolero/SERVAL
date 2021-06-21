@@ -28,6 +28,6 @@ public class ProjectTicketNode implements ProjectTreeNode {
 
     @Override
     public GridPane getDisplayComponent() {
-        return (new TicketController()).getComponent();
+        return (new TicketController(this.project)).getComponent();
     }
 }
