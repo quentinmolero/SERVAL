@@ -8,6 +8,6 @@ public class APIRoleController
 
     public JSONArray getAllRoles() {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
-        return (JSONArray) APIRouter.callGetURLWithBearerToken(ROUTE + "all", null, APIAuthController.getSession());
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "all", null, APIAuthController.getSession());
     }
 }

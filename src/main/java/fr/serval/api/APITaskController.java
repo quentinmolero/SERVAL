@@ -13,21 +13,30 @@ public class APITaskController
         parameters.put("task_group_id", task_group_id);
         parameters.put("name", task_name);
         parameters.put("description", task_description);
-        return (JSONObject) APIRouter.callPostURLWithBearerToken(ROUTE, parameters, APIAuthController.getSession());
+        return (JSONObject) APIRouter.callURL("POST", ROUTE, parameters, APIAuthController.getSession());
     }
 
     public JSONArray getAllTaskForATaskGroup(int projectId, int taskGroupId) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
-        return (JSONArray) APIRouter.callGetURLWithBearerToken(ROUTE + "all?taskGroupId="+taskGroupId+"&projectId="+projectId, null, APIAuthController.getSession());
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "all?taskGroupId="+taskGroupId+"&projectId="+projectId, null, APIAuthController.getSession());
     }
 
     public JSONArray getAllCommitsForATask(int projectId, int taskId) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
-        return (JSONArray) APIRouter.callGetURLWithBearerToken(ROUTE + "commits?taskId="+taskId+"&projectId="+projectId, null, APIAuthController.getSession());
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "commits?taskId="+taskId+"&projectId="+projectId, null, APIAuthController.getSession());
     }
 
     public JSONArray getAllTasksForACommit(int projectId, String commitName) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
-        return (JSONArray) APIRouter.callGetURLWithBearerToken(ROUTE + "commits/task?projectId="+projectId+"&commitName="+commitName.replaceAll(" ", "_").toLowerCase(), null, APIAuthController.getSession());
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "commits/task?projectId="+projectId+"&commitName="+commitName.replaceAll(" ", "_").toLowerCase(), null, APIAuthController.getSession());
+    }
+
+    public JSONObject updateTaskIsClosedAttribut(int project_id,int task_id, boolean new_is_done) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        JSONObject parameters = new JSONObject();
+        parameters.put("projectId", project_id);
+        parameters.put("taskId", task_id);
+        parameters.put("newIsDone", new_is_done);
+        return (JSONObject) APIRouter.callURL("PUT", ROUTE + "isDone", parameters, APIAuthController.getSession());
     }
 }

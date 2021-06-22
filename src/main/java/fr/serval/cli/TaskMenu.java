@@ -72,6 +72,22 @@ public class TaskMenu {
 
     private static void taskOptionsMenu(JSONObject task){
         System.out.println("=================");
-        System.out.println("WIP"); //TODO: tastOptionsMenu
+        int userAnswer;
+        do {
+            System.out.println("Que souhaitez vous faire avec " + JSONTools.extractStringFromJSONObject(task, "name") + " ?");
+            System.out.println("1 : Gérer les membre");
+            System.out.println("2 : Ajouter une tâches");
+            System.out.println("3 : Retourner aux autres groupes de tâches");
+            userAnswer = CLIController.readUserChoice(1, 3);
+
+            switch(userAnswer){
+                case 1:
+//                    selectTaskMenu(projectId, JSONTools.extractIntFromJSONObject(task, "id"));
+                    break;
+                case 2:
+//                    addTaskMenu(JSONTools.extractIntFromJSONObject(task, "id"));
+                    break;
+            }
+        } while(userAnswer != 3);
     }
 }

@@ -2,8 +2,6 @@ package fr.serval.api;
 
 import org.json.simple.JSONObject;
 
-import java.net.ConnectException;
-
 public class APIAuthController {
     private String access_token;
     private String session;
@@ -13,7 +11,7 @@ public class APIAuthController {
         JSONObject parameters = new JSONObject();
         parameters.put("username", login);
         parameters.put("password", password);
-        JSONObject res = (JSONObject) APIRouter.callPostURL("auth/login", parameters);
+        JSONObject res = (JSONObject) APIRouter.callURL("POST", "auth/login", parameters, null);
         if (res == null) {
             throw new Error("An error have occurred while calling API");
         }
@@ -23,7 +21,7 @@ public class APIAuthController {
     }
 
     public void logout() {
-        APIRouter.callDeleteURLWithBearerToken("auth/logout", null, session);
+        APIRouter.callURL("DELETE", "auth/logout", null, session);
         access_token = null;
         user_name = null;
         session = null;

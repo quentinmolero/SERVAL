@@ -9,7 +9,7 @@ public class APITicketController
 
     public JSONArray getProjetTickets(int project_id) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
-        return (JSONArray) APIRouter.callGetURLWithBearerToken(ROUTE + "projects/"+project_id, null, APIAuthController.getSession());
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "projects/"+project_id, null, APIAuthController.getSession());
     }
 
     public JSONObject addTicketToAProjet(int project_id, String title, String description) {
@@ -18,14 +18,14 @@ public class APITicketController
         parameters.put("projectId", project_id);
         parameters.put("title", title);
         parameters.put("description", description);
-        return (JSONObject) APIRouter.callPostURLWithBearerToken(ROUTE + "projects", parameters, APIAuthController.getSession());
+        return (JSONObject) APIRouter.callURL("POST", ROUTE + "projects", parameters, APIAuthController.getSession());
     }
 
     public String deleteTicketToAProjet(int ticket_id) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();
         parameters.put("ticketId", ticket_id);
-        return (String) APIRouter.callDeleteURLWithBearerToken(ROUTE, parameters, APIAuthController.getSession());
+        return (String) APIRouter.callURL("DELETE", ROUTE, parameters, APIAuthController.getSession());
     }
 
     public String addUserToATicket(int ticket_id, int user_id) {
@@ -33,6 +33,6 @@ public class APITicketController
         JSONObject parameters = new JSONObject();
         parameters.put("ticketId", ticket_id);
         parameters.put("userId", user_id);
-        return (String) APIRouter.callPostURLWithBearerToken(ROUTE + "users", parameters, APIAuthController.getSession());
+        return (String) APIRouter.callURL("POST", ROUTE + "users", parameters, APIAuthController.getSession());
     }
 }
