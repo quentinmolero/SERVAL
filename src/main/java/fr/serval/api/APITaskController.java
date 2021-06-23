@@ -31,12 +31,17 @@ public class APITaskController
         return (JSONArray) APIRouter.callURL("GET", ROUTE + "commits/task?projectId="+projectId+"&commitName="+commitName.replaceAll(" ", "_").toLowerCase(), null, APIAuthController.getSession());
     }
 
-    public JSONObject updateTaskIsClosedAttribut(int project_id,int task_id, boolean new_is_done) {
+    public JSONObject updateTaskIsClosedAttribut(int project_id, int task_id, boolean new_is_done) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();
         parameters.put("projectId", project_id);
         parameters.put("taskId", task_id);
         parameters.put("newIsDone", new_is_done);
         return (JSONObject) APIRouter.callURL("PUT", ROUTE + "isDone", parameters, APIAuthController.getSession());
+    }
+
+    public JSONArray getUsersForATask(int project_id, int task_id) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "users?taskId="+project_id+"&projectId="+task_id, null, APIAuthController.getSession());
     }
 }
