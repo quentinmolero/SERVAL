@@ -35,4 +35,9 @@ public class APITicketController
         parameters.put("userId", user_id);
         return (String) APIRouter.callURL("POST", ROUTE + "users", parameters, APIAuthController.getSession());
     }
+
+    public JSONArray getUsersForATicket(int project_id, int ticket_id) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "users?projectId="+project_id+"&ticketId="+ticket_id, null, APIAuthController.getSession());
+    }
 }
