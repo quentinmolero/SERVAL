@@ -22,6 +22,10 @@ public class JSONTools {
         return jsonObject.get(key).toString();
     }
 
+    public static boolean extractBooleanFromJSONObject(JSONObject jsonObject, String key) {
+        return (boolean) jsonObject.get(key);
+    }
+
     public static JSONObject extractJSONObjectFromJSONObject(JSONObject jsonObject, String key) {
         return (JSONObject) jsonObject.get(key);
     }

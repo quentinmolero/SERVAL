@@ -1,13 +1,20 @@
 package fr.serval.application.ticket.ihm;
 
+import fr.serval.api.APIController;
 import fr.serval.application.project.Project;
 import fr.serval.application.task.ihm.NewTaskDialog;
 import fr.serval.ihm.IHMComponentBuilder;
 import fr.serval.tools.GridPaneConstraintBuilder;
+import fr.serval.tools.JSONTools;
 import javafx.scene.control.Button;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.util.List;
 
 public class TicketTopView implements IHMComponentBuilder {
     private final GridPane topTicketView;
@@ -46,9 +53,7 @@ public class TicketTopView implements IHMComponentBuilder {
             newTicketDialog.getComponent().show();
         });
 
-        this.openedTicketText.setText("Nombre de tickets ouverts: 3");
-        this.closedTicketText.setText("Nombre de tickets finis: 0");
-        this.totalTicketText.setText("Nombre de total de tickets: " + this.ticketListView.getTicketHashMap().size());
+        this.updateTicketNumbers();
 
         this.topTicketView.add(this.newTicketButton, 0, 0);
         this.topTicketView.add(this.topTicketTextListView, 1, 0);
@@ -65,6 +70,23 @@ public class TicketTopView implements IHMComponentBuilder {
         this.topTicketTextListView.getRowConstraints().add(0, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 33));
         this.topTicketTextListView.getRowConstraints().add(1, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 33));
         this.topTicketTextListView.getRowConstraints().add(2, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 33));
+    }
+
+    public void updateTicketNumbers() {
+        int openedTickets = 0;
+        int closedTickets = 0;
+
+        for (JSONObject ticket : this.ticketListView.getTicketHashMap().values()) {
+            if (JSONTools.extractBooleanFromJSONObject(ticket, "is_closed")) {
+                openedTickets++;
+            } else {
+                closedTickets++;
+            }
+        }
+
+        this.openedTicketText.setText("Nombre de tickets ouverts: " + openedTickets);
+        this.closedTicketText.setText("Nombre de tickets finis: " + closedTickets);
+        this.totalTicketText.setText("Nombre de total de tickets: " + (openedTickets + closedTickets));
     }
 
     @Override

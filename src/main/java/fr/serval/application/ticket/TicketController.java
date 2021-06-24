@@ -26,9 +26,11 @@ public class TicketController implements Controller, IHMComponentBuilder {
 
         this.project = project;
 
-        this.ticketMainView = new TicketMainView();
+        this.ticketMainView = new TicketMainView(this.project);
         this.ticketListView = new TicketListView(this.project, this.ticketMainView);
         this.ticketTopView = new TicketTopView(this.ticketListView, this.project);
+        this.ticketMainView.setTicketTopView(this.ticketTopView);
+        this.ticketMainView.setTicketListView(this.ticketListView);
 
         this.setupComponent();
     }

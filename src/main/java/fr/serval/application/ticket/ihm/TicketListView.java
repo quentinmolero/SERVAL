@@ -21,6 +21,7 @@ public class TicketListView implements IHMComponentBuilder {
     private final TreeItem<String> ticketRoot;
 
     private final TicketMainView ticketMainView;
+    private final TicketDetailView ticketDetailView;
 
     private final Project project;
 
@@ -31,6 +32,7 @@ public class TicketListView implements IHMComponentBuilder {
         this.ticketRoot = new TreeItem<>();
 
         this.ticketMainView = ticketMainView;
+        this.ticketDetailView = this.ticketMainView.getTicketDetailView();
 
         this.project = project;
 
@@ -50,6 +52,7 @@ public class TicketListView implements IHMComponentBuilder {
             TreeItem<String> selectedNode = this.ticketTree.getSelectionModel().getSelectedItem();
             JSONObject selectedTicket = this.ticketHashMap.get(selectedNode.getValue());
             this.ticketMainView.updateTicketData(selectedTicket);
+            this.ticketMainView.getTicketDetailView().updateList(JSONTools.extractIntFromJSONObject(selectedTicket, "id"));
         });
 
         this.updateTicketList();
@@ -61,6 +64,10 @@ public class TicketListView implements IHMComponentBuilder {
         List<JSONObject> tickets = JSONTools.collectJSONArrayChildrenAsArrayList(ticketList);
         for (JSONObject ticket : tickets) {
             String ticketTitle = JSONTools.extractStringFromJSONObject(ticket, "title");
+
+            if (JSONTools.extractBooleanFromJSONObject(ticket, "is_closed")) {
+                ticketTitle = '✅' + ticketTitle;
+            }
 
             this.ticketRoot.getChildren().add(new TreeItem<>(ticketTitle));
             this.ticketHashMap.put(ticketTitle, ticket);

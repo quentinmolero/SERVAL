@@ -1,5 +1,6 @@
 package fr.serval.application.ticket.ihm;
 
+import fr.serval.application.project.Project;
 import fr.serval.ihm.IHMComponentBuilder;
 import fr.serval.tools.GridPaneConstraintBuilder;
 import fr.serval.tools.JSONTools;
@@ -18,9 +19,13 @@ public class TicketMainView implements IHMComponentBuilder {
 
     private final Button closeTicketButton;
 
-    private final TicketDetailView ticketDetailView;
+    private final Project project;
 
-    public TicketMainView() {
+    private final TicketDetailView ticketDetailView;
+    private TicketTopView ticketTopView;
+    private TicketListView ticketListView;
+
+    public TicketMainView(Project project) {
         this.ticketMainView = new GridPane();
         this.ticketInfoView = new GridPane();
 
@@ -29,7 +34,9 @@ public class TicketMainView implements IHMComponentBuilder {
 
         this.closeTicketButton = new Button();
 
-        this.ticketDetailView = new TicketDetailView();
+        this.project = project;
+
+        this.ticketDetailView = new TicketDetailView(this.project);
 
         this.setupComponent();
     }
@@ -37,6 +44,7 @@ public class TicketMainView implements IHMComponentBuilder {
     @Override
     public void setupComponent() {
         this.closeTicketButton.setText("Fermer le ticket");
+        this.closeTicketButton.setOnAction(event -> this.closeTicketAction());
 
         this.ticketMainView.add(this.ticketInfoView, 0, 0);
 
@@ -56,13 +64,31 @@ public class TicketMainView implements IHMComponentBuilder {
     }
 
     public void updateTicketData(JSONObject ticketJSONObject) {
-        System.out.println(ticketJSONObject);
         this.ticketTitle.setText(JSONTools.extractStringFromJSONObject(ticketJSONObject, "title"));
         this.ticketDescription.setText(JSONTools.extractStringFromJSONObject(ticketJSONObject, "description"));
+    }
+
+    private void closeTicketAction() {
+        this.closeTicketButton.setDisable(true);
+        this.ticketListView.updateTicketList();
+        this.ticketTopView.updateTicketNumbers();
+        this.closeTicketButton.setDisable(false);
     }
 
     @Override
     public GridPane getComponent() {
         return this.ticketMainView;
+    }
+
+    public TicketDetailView getTicketDetailView() {
+        return ticketDetailView;
+    }
+
+    public void setTicketTopView(TicketTopView ticketTopView) {
+        this.ticketTopView = ticketTopView;
+    }
+
+    public void setTicketListView(TicketListView ticketListView) {
+        this.ticketListView = ticketListView;
     }
 }
