@@ -40,4 +40,12 @@ public class APITicketController
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         return (JSONArray) APIRouter.callURL("GET", ROUTE + "users?projectId="+project_id+"&ticketId="+ticket_id, null, APIAuthController.getSession());
     }
+
+    public JSONObject updateTicketIsClosedAttribut(int ticket_id, boolean new_is_closed) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        JSONObject parameters = new JSONObject();
+        parameters.put("ticketId", ticket_id);
+        parameters.put("newIsClosed", new_is_closed);
+        return (JSONObject) APIRouter.callURL("PUT", ROUTE + "isClosed", parameters, APIAuthController.getSession());
+    }
 }
