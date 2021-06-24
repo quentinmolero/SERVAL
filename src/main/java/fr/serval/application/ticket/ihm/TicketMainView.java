@@ -71,11 +71,7 @@ public class TicketMainView implements IHMComponentBuilder {
         this.ticketTitle.setText(JSONTools.extractStringFromJSONObject(ticketJSONObject, "title"));
         this.ticketDescription.setText(JSONTools.extractStringFromJSONObject(ticketJSONObject, "description"));
         this.ticketId = JSONTools.extractIntFromJSONObject(ticketJSONObject, "id");
-        if (JSONTools.extractBooleanFromJSONObject(ticketJSONObject, "is_closed")) {
-            this.closeTicketButton.setDisable(true);
-        } else {
-            this.closeTicketButton.setDisable(false);
-        }
+        this.closeTicketButton.setDisable(JSONTools.extractBooleanFromJSONObject(ticketJSONObject, "is_closed"));
     }
 
     private void closeTicketAction() {
