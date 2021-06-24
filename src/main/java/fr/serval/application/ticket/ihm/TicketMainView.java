@@ -1,5 +1,6 @@
 package fr.serval.application.ticket.ihm;
 
+import fr.serval.api.APIController;
 import fr.serval.application.project.Project;
 import fr.serval.ihm.IHMComponentBuilder;
 import fr.serval.tools.GridPaneConstraintBuilder;
@@ -25,6 +26,8 @@ public class TicketMainView implements IHMComponentBuilder {
     private TicketTopView ticketTopView;
     private TicketListView ticketListView;
 
+    private int ticketId;
+
     public TicketMainView(Project project) {
         this.ticketMainView = new GridPane();
         this.ticketInfoView = new GridPane();
@@ -45,6 +48,7 @@ public class TicketMainView implements IHMComponentBuilder {
     public void setupComponent() {
         this.closeTicketButton.setText("Fermer le ticket");
         this.closeTicketButton.setOnAction(event -> this.closeTicketAction());
+        this.closeTicketButton.setDisable(true);
 
         this.ticketMainView.add(this.ticketInfoView, 0, 0);
 
@@ -66,13 +70,19 @@ public class TicketMainView implements IHMComponentBuilder {
     public void updateTicketData(JSONObject ticketJSONObject) {
         this.ticketTitle.setText(JSONTools.extractStringFromJSONObject(ticketJSONObject, "title"));
         this.ticketDescription.setText(JSONTools.extractStringFromJSONObject(ticketJSONObject, "description"));
+        this.ticketId = JSONTools.extractIntFromJSONObject(ticketJSONObject, "id");
+        if (JSONTools.extractBooleanFromJSONObject(ticketJSONObject, "is_closed")) {
+            this.closeTicketButton.setDisable(true);
+        } else {
+            this.closeTicketButton.setDisable(false);
+        }
     }
 
     private void closeTicketAction() {
         this.closeTicketButton.setDisable(true);
+        APIController.getInstance().getAPITicketController().updateTicketIsClosedAttribut(this.ticketId, true);
         this.ticketListView.updateTicketList();
         this.ticketTopView.updateTicketNumbers();
-        this.closeTicketButton.setDisable(false);
     }
 
     @Override
