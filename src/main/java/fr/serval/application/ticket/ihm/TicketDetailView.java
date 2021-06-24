@@ -77,10 +77,15 @@ public class TicketDetailView implements IHMComponentBuilder {
         this.peopleView.setItems(peopleViewObservableList);
         this.peopleView.refresh();
 
+        JSONArray commitList = APIController.getInstance().getAPITicketController().getAllCommitsForATicket(this.project.getId(), ticketId);
         ObservableList<String> stringObservableList = this.commitList.getItems();
 
         stringObservableList.clear();
-        stringObservableList.addAll(Arrays.asList(this.commits));
+
+        for (JSONObject commit : JSONTools.collectJSONArrayChildrenAsArrayList(commitList)) {
+            System.out.println(commit);
+            stringObservableList.add(JSONTools.extractStringFromJSONObject(commit, "name"));
+        }
 
         this.commitList.setItems(stringObservableList);
         this.commitList.refresh();
