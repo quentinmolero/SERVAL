@@ -31,7 +31,7 @@ public class APITaskController
         return (JSONArray) APIRouter.callURL("GET", ROUTE + "commits/task?projectId="+projectId+"&commitName="+commitName.replaceAll(" ", "_").toLowerCase(), null, APIAuthController.getSession());
     }
 
-    public JSONObject updateTaskIsClosedAttribut(int project_id, int task_id, boolean new_is_done) {
+    public JSONObject updateTaskIsDoneAttribut(int project_id, int task_id, boolean new_is_done) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();
         parameters.put("projectId", project_id);
