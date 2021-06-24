@@ -90,5 +90,6 @@ public class TicketMainView implements IHMComponentBuilder {
 
     public void setTicketListView(TicketListView ticketListView) {
         this.ticketListView = ticketListView;
+        this.ticketDetailView.setTicketListView(this.ticketListView);
     }
 }

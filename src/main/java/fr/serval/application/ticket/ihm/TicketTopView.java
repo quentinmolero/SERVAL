@@ -1,20 +1,14 @@
 package fr.serval.application.ticket.ihm;
 
-import fr.serval.api.APIController;
 import fr.serval.application.project.Project;
-import fr.serval.application.task.ihm.NewTaskDialog;
 import fr.serval.ihm.IHMComponentBuilder;
 import fr.serval.tools.GridPaneConstraintBuilder;
 import fr.serval.tools.JSONTools;
 import javafx.scene.control.Button;
-import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Text;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import java.util.List;
 
 public class TicketTopView implements IHMComponentBuilder {
     private final GridPane topTicketView;
