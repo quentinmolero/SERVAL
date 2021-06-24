@@ -48,4 +48,14 @@ public class APITicketController
         parameters.put("newIsClosed", new_is_closed);
         return (JSONObject) APIRouter.callURL("PUT", ROUTE + "isClosed", parameters, APIAuthController.getSession());
     }
+
+    public JSONArray getAllCommitsForATicket(int project_id, int ticket_id) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "commits?ticketId="+ticket_id+"&projectId="+project_id, null, APIAuthController.getSession());
+    }
+
+    public JSONArray getAllTicketsForACommit(int project_id, String commitName) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "commits/ticket?projectId="+project_id+"&commitName="+commitName.replaceAll(" ", "_").toLowerCase(), null, APIAuthController.getSession());
+    }
 }
