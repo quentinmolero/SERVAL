@@ -19,6 +19,11 @@ public class APIProjectController
         return (JSONArray) APIRouter.callURL("GET", ROUTE + "users/all", null, APIAuthController.getSession());
     }
 
+    public JSONArray getUsersFromAProject(int project_id) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "users?projectId="+project_id, null, APIAuthController.getSession());
+    }
+
     public JSONObject addUserToProject(String role_name, int project_id, String user_name) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();

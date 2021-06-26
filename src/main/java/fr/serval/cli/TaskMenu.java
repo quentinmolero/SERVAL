@@ -121,7 +121,57 @@ public class TaskMenu {
         System.out.println();
     }
 
-    private static void selectUserTaskMenu(int projectId, int id) {
-        System.out.println("W.I.P."); //TODO selectUserTaskMenu
+    private static void selectUserTaskMenu(int projectId, int taskId) {
+        System.out.println("=================");
+        APITaskController apiTaskController = APIController.getInstance().getAPITaskController();
+        JSONArray users = apiTaskController.getUsersForATask(projectId, taskId);
+        int userAnswer;
+
+        if(users.size() == 0){
+            System.out.println("Vous n'avez pas d'utilisateur assigné à cette tâche");
+            System.out.println("Vous devriez donc en ajouter un");
+        }
+
+        do {
+            if(users.size() != 0){
+                System.out.println("Voici les utilisateur liés à cette tâche, sélectionnez en un pour le retirer de cette tâche");
+            }
+            for (int i = 0; i < users.size(); i++)
+            {
+                String username = JSONTools.extractStringFromJSONObject((JSONObject) users.get(i), "name");
+                System.out.println((i + 1) + " : " + username);
+            }
+            System.out.println((users.size() + 1) + " : Ajouter un utilisateur");
+            System.out.println((users.size() + 2) + " : Revenir au menu précédent");
+            userAnswer = CLIController.readUserChoice(1, users.size() + 2);
+
+            if(userAnswer <= users.size()){
+                apiTaskController.deleteUserToATask(taskId,
+                        JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer), "name"));
+            }
+            else if(userAnswer == users.size() + 1){
+                addUser(projectId, taskId);
+                users = apiTaskController.getUsersForATask(projectId, taskId);
+            }
+        } while(userAnswer != (users.size() + 2));
+    }
+
+    public static void addUser(int projectId, int taskId){
+        System.out.println("=================");
+        APITaskController apiTaskController = APIController.getInstance().getAPITaskController();
+        JSONArray users = APIController.getInstance().getAPIProjectController().getUsersFromAProject(projectId);
+        int userAnswer;
+        do {
+            System.out.println("Sélectionner l'utilisateur que vous voulez ajouter au projet");
+            for (int i = 0; i < users.size(); i++)
+            {
+                String username = JSONTools.extractStringFromJSONObject((JSONObject) users.get(i), "username");
+                System.out.println((i + 1) + " : " + username);
+            }
+            userAnswer = CLIController.readUserChoice(1, users.size());
+        } while(apiTaskController.addUserToATask(taskId,
+                JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer - 1), "username")) == null);
+
+        System.out.println("L'utilisateur " + JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer - 1), "surname") + " à bien été ajouté à cette tâche");
     }
 }
