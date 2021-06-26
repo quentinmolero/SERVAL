@@ -44,4 +44,20 @@ public class APITaskController
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         return (JSONArray) APIRouter.callURL("GET", ROUTE + "users?taskId="+project_id+"&projectId="+task_id, null, APIAuthController.getSession());
     }
+
+    public String addUserToATask(int task_id, String user_name) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        JSONObject parameters = new JSONObject();
+        parameters.put("taskId", task_id);
+        parameters.put("userName", user_name);
+        return (String) APIRouter.callURL("POST", ROUTE + "users", parameters, APIAuthController.getSession());
+    }
+
+    public String deleteUserToATask(int task_id, String user_id) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        JSONObject parameters = new JSONObject();
+        parameters.put("taskId", task_id);
+        parameters.put("userId", user_id);
+        return (String) APIRouter.callURL("DELETE", ROUTE + "users", parameters, APIAuthController.getSession());
+    }
 }
