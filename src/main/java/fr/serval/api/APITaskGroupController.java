@@ -18,9 +18,7 @@ public class APITaskGroupController
 
     public JSONArray getAllTaskGroupForAProject(int project_id) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
-        JSONObject parameters = new JSONObject();
-        parameters.put("project_id", project_id);
-        return (JSONArray) APIRouter.callURL("POST", ROUTE + "all", parameters, APIAuthController.getSession());
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "all?projectId="+project_id, null, APIAuthController.getSession());
     }
 
     public JSONObject getTaskGroup(int task_group_id) {
