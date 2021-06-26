@@ -34,7 +34,7 @@ public class TaskMenu {
         APITaskController apiTaskController = APIController.getInstance().getAPITaskController();
         JSONArray taskGroups = apiTaskController.getAllTaskForATaskGroup(projectId, taskGroupId);
 
-        if(taskGroups == null){
+        if(taskGroups.size() == 0){
             System.out.println("Vous n'avez pas enregistré de tâche");
             return;
         }
