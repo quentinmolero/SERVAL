@@ -46,7 +46,7 @@ public class TaskMenu {
                 String projectName = JSONTools.extractStringFromJSONObject((JSONObject) taskGroups.get(i), "name");
                 System.out.println((i + 1) + " : " + projectName);
             }
-            System.out.println((taskGroups.size() + 1) + " : Retourner à la sélection des projets");
+            System.out.println((taskGroups.size() + 1) + " : Retourner à la sélection des groupes de tâche");
             userAnswer = CLIController.readUserChoice(1, taskGroups.size() + 1);
 
             if(userAnswer <= taskGroups.size()){
