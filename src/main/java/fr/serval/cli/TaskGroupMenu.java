@@ -1,6 +1,8 @@
 package fr.serval.cli;
 
 import fr.serval.api.APIController;
+import fr.serval.api.APIProjectController;
+import fr.serval.api.APITaskController;
 import fr.serval.api.APITaskGroupController;
 import fr.serval.tools.JSONTools;
 import org.json.simple.JSONArray;
@@ -16,7 +18,8 @@ public class TaskGroupMenu {
             System.out.println("Que souhaitez vous faire sur " + JSONTools.extractStringFromJSONObject(project, "name") + " ?");
             System.out.println("1 : Voir les groupes de tâches");
             System.out.println("2 : Ajouter un groupe de tâches");
-            System.out.println("3 : Retourner aux autres projets");
+            System.out.println("3 : Gérer les membres du groupe");
+            System.out.println("4 : Retourner aux autres projets");
             userAnswer = CLIController.readUserChoice(1, 3);
 
             switch(userAnswer){
@@ -26,8 +29,11 @@ public class TaskGroupMenu {
                 case 2:
                     addTaskGroupMenu(JSONTools.extractIntFromJSONObject(project, "id"));
                     break;
+                case 3:
+                    selectUserProjectMenu(JSONTools.extractIntFromJSONObject(project, "id"));
+                    break;
             }
-        } while(userAnswer != 3);
+        } while(userAnswer != 4);
     }
 
     private static void selectTaskGroupMenu(int projectId){
@@ -70,5 +76,65 @@ public class TaskGroupMenu {
         } while(apiTaskGroupController.addNewTaskGroupToProject(projectId, taskGroupName, taskGroupDescription) == null);
 
         System.out.println("Le groupe de tâche " + taskGroupName + " a bien été ajouté");
+    }
+
+    private static void selectUserProjectMenu(int projectId) {
+        System.out.println("=================");
+        APIProjectController apiProjectController = APIController.getInstance().getAPIProjectController();
+        JSONArray users = apiProjectController.getUsersFromAProject(projectId);
+        int userAnswer;
+
+        if(users.size() == 0){
+            System.out.println("Vous n'avez pas d'utilisateur assigné à ce projet");
+            System.out.println("Vous devriez donc en ajouter un");
+        }
+
+        do {
+            if(users.size() != 0){
+                System.out.println("Voici les utilisateur liés à ce projet, sélectionnez en un pour le retirer de ce projet");
+            }
+            for (int i = 0; i < users.size(); i++)
+            {
+                String username = JSONTools.extractStringFromJSONObject((JSONObject) users.get(i), "name");
+                System.out.println((i + 1) + " : " + username);
+            }
+            System.out.println((users.size() + 1) + " : Ajouter un utilisateur");
+            System.out.println((users.size() + 2) + " : Revenir au menu précédent");
+            userAnswer = CLIController.readUserChoice(1, users.size() + 2);
+
+            if(userAnswer <= users.size()){
+                apiProjectController.removeUserFromAProject(projectId,
+                        JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer), "name"));
+            }
+            else if(userAnswer == users.size() + 1){
+                addUser(projectId);
+                users = apiProjectController.getUsersFromAProject(projectId);
+            }
+        } while(userAnswer != (users.size() + 2));
+    }
+
+    public static void addUser(int projectId){
+        System.out.println("=================");
+        APIProjectController apiProjectController = APIController.getInstance().getAPIProjectController();
+        JSONArray roles = APIController.getInstance().getAPIRoleController().getAllRoles();
+        String name;
+        int userAnswer;
+
+        do {
+            System.out.println("Veuillez saisir le nom de l'utilisateur que vous souhaitez ajouter à ce projet : ");
+            name = CLIController.readStringUserInput();
+        } while(name == null);
+
+        System.out.println("Sélectionner de rôle l'utilisateur que vous voulez ajouter au projet");
+        for (int i = 0; i < roles.size(); i++)
+        {
+            String username = JSONTools.extractStringFromJSONObject((JSONObject) roles.get(i), "label");
+            System.out.println((i + 1) + " : " + username);
+        }
+        userAnswer = CLIController.readUserChoice(1, roles.size());
+
+        apiProjectController.addUserToProject(JSONTools.extractStringFromJSONObject((JSONObject) roles.get(userAnswer), "label"), projectId, name);
+
+        System.out.println("L'utilisateur " + name + " à bien été ajouté à cette tâche");
     }
 }
