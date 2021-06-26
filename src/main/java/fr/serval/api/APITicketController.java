@@ -28,6 +28,11 @@ public class APITicketController
         return (String) APIRouter.callURL("DELETE", ROUTE, parameters, APIAuthController.getSession());
     }
 
+    public JSONArray getUsersForATicket(int project_id, int ticket_id) {
+        APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "users?projectId="+project_id+"&ticketId="+ticket_id, null, APIAuthController.getSession());
+    }
+
     public String addUserToATicket(int ticket_id, String user_name) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();
@@ -36,9 +41,12 @@ public class APITicketController
         return (String) APIRouter.callURL("POST", ROUTE + "users", parameters, APIAuthController.getSession());
     }
 
-    public JSONArray getUsersForATicket(int project_id, int ticket_id) {
+    public String deleteUserToATicket(int ticket_id, String user_id) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
-        return (JSONArray) APIRouter.callURL("GET", ROUTE + "users?projectId="+project_id+"&ticketId="+ticket_id, null, APIAuthController.getSession());
+        JSONObject parameters = new JSONObject();
+        parameters.put("ticketId", ticket_id);
+        parameters.put("userId", user_id);
+        return (String) APIRouter.callURL("DELETE", ROUTE + "users", parameters, APIAuthController.getSession());
     }
 
     public JSONObject updateTicketIsClosedAttribut(int ticket_id, boolean new_is_closed) {
