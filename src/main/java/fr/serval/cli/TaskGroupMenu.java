@@ -18,9 +18,10 @@ public class TaskGroupMenu {
             System.out.println("Que souhaitez vous faire sur " + JSONTools.extractStringFromJSONObject(project, "name") + " ?");
             System.out.println("1 : Voir les groupes de tâches");
             System.out.println("2 : Ajouter un groupe de tâches");
-            System.out.println("3 : Gérer les membres du groupe");
-            System.out.println("4 : Retourner aux autres projets");
-            userAnswer = CLIController.readUserChoice(1, 3);
+            System.out.println("3 : Gérer les tickets");
+            System.out.println("4 : Gérer les membres du groupe");
+            System.out.println("5 : Retourner aux autres projets");
+            userAnswer = CLIController.readUserChoice(1, 5);
 
             switch(userAnswer){
                 case 1:
@@ -30,6 +31,9 @@ public class TaskGroupMenu {
                     addTaskGroupMenu(JSONTools.extractIntFromJSONObject(project, "id"));
                     break;
                 case 3:
+                    TicketMenu.main(project);
+                    break;
+                case 4:
                     selectUserProjectMenu(JSONTools.extractIntFromJSONObject(project, "id"));
                     break;
             }
