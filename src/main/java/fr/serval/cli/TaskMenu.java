@@ -78,7 +78,7 @@ public class TaskMenu {
         System.out.println("=================");
         int userAnswer;
         do {
-            System.out.println("Que souhaitez vous faire avec " + JSONTools.extractStringFromJSONObject(task, "name") + " ?");
+            System.out.println("Que souhaitez vous faire avec " + JSONTools.extractStringFromJSONObject(task, "name") + " ? ID = " + JSONTools.extractIntFromJSONObject(task, "id"));
             System.out.println("1 : Gérer les membres");
             System.out.println("2 : Voir les commits associés");
             if(JSONTools.extractStringFromJSONObject(task, "is_done").equals("false")){
@@ -88,14 +88,14 @@ public class TaskMenu {
                 System.out.println("3 : Indiquer que la tâche n'est pas terminée");
             }
             System.out.println("4 : Retourner aux autres groupes de tâches");
-            userAnswer = CLIController.readUserChoice(1, 3);
+            userAnswer = CLIController.readUserChoice(1, 4);
 
             switch(userAnswer){
                 case 1:
                     selectUserTaskMenu(projectId, JSONTools.extractIntFromJSONObject(task, "id"));
                     break;
                 case 2:
-                    addTaskMenu(JSONTools.extractIntFromJSONObject(task, "id"));
+                    displayTaskCommits(projectId, JSONTools.extractIntFromJSONObject(task, "id"));
                     break;
                 case 3:
                     APIController.getInstance().getAPITaskController().updateTaskIsDoneAttribut(projectId,
@@ -103,6 +103,22 @@ public class TaskMenu {
                             JSONTools.extractStringFromJSONObject(task, "is_done").equals("false"));
             }
         } while(userAnswer != 4);
+    }
+
+    private static void displayTaskCommits(int projectId, int taskId) {
+        JSONArray commits = APIController.getInstance().getAPITaskController().getAllCommitsForATask(projectId, taskId);
+        System.out.println("=================");
+
+        if(commits.size() == 0){
+            System.out.println("Aucun commit n'a été renseigné avec cette tâche, pour en ajouter saisissez \"[" + taskId + "]\" dans les messages de vos commits pour pouvoir l'ajouter à cette tâche");
+            return;
+        }
+
+        System.out.println("Voici les commits associés à cette tâche : ");
+        for (Object commit : commits) {
+            System.out.println(" - \"" + JSONTools.extractStringFromJSONObject((JSONObject) commit, "message") + "\"");
+        }
+        System.out.println();
     }
 
     private static void selectUserTaskMenu(int projectId, int id) {
