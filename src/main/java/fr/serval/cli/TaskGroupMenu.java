@@ -36,7 +36,7 @@ public class TaskGroupMenu {
         APITaskGroupController apiTaskGroupController = APIController.getInstance().getAPITaskGroupController();
         JSONArray taskGroups = apiTaskGroupController.getAllTaskGroupForAProject(projectId);
 
-        if(taskGroups == null){
+        if(taskGroups.size() == 0){
             System.out.println("Vous n'avez pas enregistré de groupe de tâches");
             return;
         }
