@@ -44,13 +44,17 @@ public class TaskMenu {
             for (int i = 0; i < taskGroups.size(); i++)
             {
                 String projectName = JSONTools.extractStringFromJSONObject((JSONObject) taskGroups.get(i), "name");
-                System.out.println((i + 1) + " : " + projectName);
+                String is_done = "[ ]";
+                if(JSONTools.extractStringFromJSONObject((JSONObject) taskGroups.get(i), "is_done").equals("true")){
+                    is_done = "[x]";
+                }
+                System.out.println((i + 1) + " : " + is_done + " " + projectName);
             }
             System.out.println((taskGroups.size() + 1) + " : Retourner à la sélection des groupes de tâche");
             userAnswer = CLIController.readUserChoice(1, taskGroups.size() + 1);
 
             if(userAnswer <= taskGroups.size()){
-                TaskMenu.taskOptionsMenu((JSONObject) taskGroups.get(userAnswer - 1));
+                TaskMenu.taskOptionsMenu(projectId, (JSONObject) taskGroups.get(userAnswer - 1));
             }
         } while(userAnswer != (taskGroups.size() + 1));
     }
@@ -70,24 +74,38 @@ public class TaskMenu {
         System.out.println("Le groupe de tâche " + taskName + " a bien été ajouté");
     }
 
-    private static void taskOptionsMenu(JSONObject task){
+    private static void taskOptionsMenu(int projectId, JSONObject task){
         System.out.println("=================");
         int userAnswer;
         do {
             System.out.println("Que souhaitez vous faire avec " + JSONTools.extractStringFromJSONObject(task, "name") + " ?");
-            System.out.println("1 : Gérer les membre");
-            System.out.println("2 : Ajouter une tâches");
-            System.out.println("3 : Retourner aux autres groupes de tâches");
+            System.out.println("1 : Gérer les membres");
+            System.out.println("2 : Voir les commits associés");
+            if(JSONTools.extractStringFromJSONObject(task, "is_done").equals("false")){
+                System.out.println("3 : Indiquer que la tâche est terminée");
+            }
+            else {
+                System.out.println("3 : Indiquer que la tâche n'est pas terminée");
+            }
+            System.out.println("4 : Retourner aux autres groupes de tâches");
             userAnswer = CLIController.readUserChoice(1, 3);
 
             switch(userAnswer){
                 case 1:
-//                    selectTaskMenu(projectId, JSONTools.extractIntFromJSONObject(task, "id"));
+                    selectUserTaskMenu(projectId, JSONTools.extractIntFromJSONObject(task, "id"));
                     break;
                 case 2:
-//                    addTaskMenu(JSONTools.extractIntFromJSONObject(task, "id"));
+                    addTaskMenu(JSONTools.extractIntFromJSONObject(task, "id"));
                     break;
+                case 3:
+                    APIController.getInstance().getAPITaskController().updateTaskIsDoneAttribut(projectId,
+                            JSONTools.extractIntFromJSONObject(task, "id"),
+                            JSONTools.extractStringFromJSONObject(task, "is_done").equals("false"));
             }
-        } while(userAnswer != 3);
+        } while(userAnswer != 4);
+    }
+
+    private static void selectUserTaskMenu(int projectId, int id) {
+        System.out.println("W.I.P."); //TODO selectUserTaskMenu
     }
 }
