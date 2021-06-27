@@ -37,7 +37,7 @@ public class TaskGroupMenu {
                     selectUserProjectMenu(JSONTools.extractIntFromJSONObject(project, "id"));
                     break;
             }
-        } while(userAnswer != 4);
+        } while(userAnswer != 5);
     }
 
     private static void selectTaskGroupMenu(int projectId){
