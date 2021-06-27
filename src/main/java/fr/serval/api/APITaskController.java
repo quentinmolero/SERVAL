@@ -42,7 +42,7 @@ public class APITaskController
 
     public JSONArray getUsersForATask(int project_id, int task_id) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
-        return (JSONArray) APIRouter.callURL("GET", ROUTE + "users?taskId="+project_id+"&projectId="+task_id, null, APIAuthController.getSession());
+        return (JSONArray) APIRouter.callURL("GET", ROUTE + "users?taskId="+task_id+"&projectId="+project_id, null, APIAuthController.getSession());
     }
 
     public String addUserToATask(int task_id, String user_name) {
