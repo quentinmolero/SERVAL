@@ -2,7 +2,6 @@ package fr.serval.cli;
 
 import fr.serval.api.APIController;
 import fr.serval.api.APIProjectController;
-import fr.serval.api.APITaskController;
 import fr.serval.api.APITaskGroupController;
 import fr.serval.tools.JSONTools;
 import org.json.simple.JSONArray;
@@ -55,7 +54,7 @@ public class TaskGroupMenu {
             System.out.println("À quel groupe de tâches souhaitez vous accéder ?");
             for (int i = 0; i < taskGroups.size(); i++)
             {
-                String projectName = JSONTools.extractStringFromJSONObject((JSONObject) taskGroups.get(i), "name");
+                String projectName = JSONTools.extractStringFromJSONObject((JSONObject) taskGroups.get(i), "username");
                 System.out.println((i + 1) + " : " + projectName);
             }
             System.out.println((taskGroups.size() + 1) + " : Retourner à la sélection des projets");
@@ -99,7 +98,7 @@ public class TaskGroupMenu {
             }
             for (int i = 0; i < users.size(); i++)
             {
-                String username = JSONTools.extractStringFromJSONObject((JSONObject) users.get(i), "name");
+                String username = JSONTools.extractStringFromJSONObject((JSONObject) users.get(i), "username");
                 System.out.println((i + 1) + " : " + username);
             }
             System.out.println((users.size() + 1) + " : Ajouter un utilisateur");
@@ -108,7 +107,7 @@ public class TaskGroupMenu {
 
             if(userAnswer <= users.size()){
                 apiProjectController.removeUserFromAProject(projectId,
-                        JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer), "name"));
+                        JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer - 1), "username"));
             }
             else if(userAnswer == users.size() + 1){
                 addUser(projectId);
@@ -137,8 +136,8 @@ public class TaskGroupMenu {
         }
         userAnswer = CLIController.readUserChoice(1, roles.size());
 
-        apiProjectController.addUserToProject(JSONTools.extractStringFromJSONObject((JSONObject) roles.get(userAnswer), "label"), projectId, name);
+        apiProjectController.addUserToProject(JSONTools.extractStringFromJSONObject((JSONObject) roles.get(userAnswer - 1), "label"), projectId, name);
 
-        System.out.println("L'utilisateur " + name + " à bien été ajouté à cette tâche");
+        System.out.println("L'utilisateur " + name + " à bien été ajouté à cette tâche en tant que " + JSONTools.extractStringFromJSONObject((JSONObject) roles.get(userAnswer - 1), "label"));
     }
 }
