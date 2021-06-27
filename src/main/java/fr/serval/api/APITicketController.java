@@ -41,7 +41,7 @@ public class APITicketController
         return (String) APIRouter.callURL("POST", ROUTE + "users", parameters, APIAuthController.getSession());
     }
 
-    public String deleteUserToATicket(int ticket_id, String user_id) {
+    public String deleteUserToATicket(int ticket_id, int user_id) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();
         parameters.put("ticketId", ticket_id);

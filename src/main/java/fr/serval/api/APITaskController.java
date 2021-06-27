@@ -53,7 +53,7 @@ public class APITaskController
         return (String) APIRouter.callURL("POST", ROUTE + "users", parameters, APIAuthController.getSession());
     }
 
-    public String deleteUserToATask(int task_id, String user_id) {
+    public String deleteUserToATask(int task_id, int user_id) {
         APIAuthController APIAuthController = APIController.getInstance().getAPIAuthController();
         JSONObject parameters = new JSONObject();
         parameters.put("taskId", task_id);

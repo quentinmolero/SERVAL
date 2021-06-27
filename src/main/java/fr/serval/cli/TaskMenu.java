@@ -138,7 +138,7 @@ public class TaskMenu {
             }
             for (int i = 0; i < users.size(); i++)
             {
-                String username = JSONTools.extractStringFromJSONObject((JSONObject) users.get(i), "name");
+                String username = JSONTools.extractStringFromJSONObject((JSONObject) users.get(i), "username");
                 System.out.println((i + 1) + " : " + username);
             }
             System.out.println((users.size() + 1) + " : Ajouter un utilisateur");
@@ -147,7 +147,8 @@ public class TaskMenu {
 
             if(userAnswer <= users.size()){
                 apiTaskController.deleteUserToATask(taskId,
-                        JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer), "name"));
+                        JSONTools.extractIntFromJSONObject((JSONObject) users.get(userAnswer - 1), "id"));
+                users = apiTaskController.getUsersForATask(projectId, taskId);
             }
             else if(userAnswer == users.size() + 1){
                 addUser(projectId, taskId);
@@ -172,6 +173,6 @@ public class TaskMenu {
         } while(apiTaskController.addUserToATask(taskId,
                 JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer - 1), "username")) == null);
 
-        System.out.println("L'utilisateur " + JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer - 1), "surname") + " à bien été ajouté à cette tâche");
+        System.out.println("L'utilisateur " + JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer - 1), "username") + " à bien été ajouté à cette tâche");
     }
 }

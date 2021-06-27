@@ -138,7 +138,7 @@ public class TicketMenu {
             }
             for (int i = 0; i < users.size(); i++)
             {
-                String username = JSONTools.extractStringFromJSONObject((JSONObject) users.get(i), "name");
+                String username = JSONTools.extractStringFromJSONObject((JSONObject) users.get(i), "username");
                 System.out.println((i + 1) + " : " + username);
             }
             System.out.println((users.size() + 1) + " : Ajouter un utilisateur");
@@ -147,7 +147,8 @@ public class TicketMenu {
 
             if(userAnswer <= users.size()){
                 apiTicketController.deleteUserToATicket(ticketId,
-                        JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer), "name"));
+                        JSONTools.extractIntFromJSONObject((JSONObject) users.get(userAnswer - 1), "id"));
+                users = apiTicketController.getUsersForATicket(projectId, ticketId);
             }
             else if(userAnswer == users.size() + 1){
                 addUser(projectId, ticketId);
@@ -172,6 +173,6 @@ public class TicketMenu {
         } while(apiTicketController.addUserToATicket(ticketId,
                 JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer - 1), "username")) == null);
 
-        System.out.println("L'utilisateur " + JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer - 1), "surname") + " à bien été ajouté à cette ticket");
+        System.out.println("L'utilisateur " + JSONTools.extractStringFromJSONObject((JSONObject) users.get(userAnswer - 1), "username") + " à bien été ajouté à ce ticket");
     }
 }
