@@ -30,7 +30,7 @@ public class APIProjectController
         parameters.put("role_name", role_name);
         parameters.put("project_id", project_id);
         parameters.put("user_name", user_name);
-        return (JSONObject) APIRouter.callURL("GET", ROUTE + "users", parameters, APIAuthController.getSession());
+        return (JSONObject) APIRouter.callURL("POST", ROUTE + "users", parameters, APIAuthController.getSession());
     }
 
     public void removeUserFromAProject(int project_id, String user_name) {
