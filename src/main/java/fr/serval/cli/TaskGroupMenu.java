@@ -124,7 +124,7 @@ public class TaskGroupMenu {
         int userAnswer;
 
         do {
-            System.out.println("Veuillez saisir le nom de l'utilisateur que vous souhaitez ajouter à ce projet : ");
+            System.out.println("Veuillez saisir le nom de l'utilisateur que vous souhaitez ajouter à ce projet (il doit déjà être inscrit sur Serval et être un collaborateur sur le dépôt Github) : ");
             name = CLIController.readStringUserInput();
         } while(name == null);
 
