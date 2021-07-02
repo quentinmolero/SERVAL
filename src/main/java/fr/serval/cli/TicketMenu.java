@@ -82,10 +82,10 @@ public class TicketMenu {
             System.out.println("1 : Gérer les membres");
             System.out.println("2 : Voir les commits associés");
             if(JSONTools.extractStringFromJSONObject(ticket, "is_closed").equals("false")){
-                System.out.println("3 : Indiquer que la ticket fermé");
+                System.out.println("3 : Indiquer que le ticket est fermé");
             }
             else {
-                System.out.println("3 : Indiquer que la ticket n'est plus fermé");
+                System.out.println("3 : Indiquer que le ticket n'est plus fermé");
             }
             System.out.println("4 : Retourner aux autres tickets");
             userAnswer = CLIController.readUserChoice(1, 4);
