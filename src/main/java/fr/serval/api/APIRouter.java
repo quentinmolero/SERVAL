@@ -33,7 +33,7 @@ public class APIRouter
             return readConnection(connection);
         }
         catch (IOException | ParseException e){
-            e.printStackTrace();
+            System.out.println("L'API à renvoyé une erreur, veuillez vérifier les paramètres envoyés");
         }
         return null;
     }
