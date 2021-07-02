@@ -77,11 +77,12 @@ public class TaskMenu {
     private static void taskOptionsMenu(int projectId, JSONObject task){
         System.out.println("=================");
         int userAnswer;
+        boolean is_done = JSONTools.extractStringFromJSONObject(task, "is_done").equals("true");
         do {
             System.out.println("Que souhaitez vous faire avec " + JSONTools.extractStringFromJSONObject(task, "name") + " ? ID = " + JSONTools.extractIntFromJSONObject(task, "id"));
             System.out.println("1 : Gérer les membres");
             System.out.println("2 : Voir les commits associés");
-            if(JSONTools.extractStringFromJSONObject(task, "is_done").equals("false")){
+            if(!is_done){
                 System.out.println("3 : Indiquer que la tâche est terminée");
             }
             else {
@@ -101,6 +102,7 @@ public class TaskMenu {
                     APIController.getInstance().getAPITaskController().updateTaskIsDoneAttribut(projectId,
                             JSONTools.extractIntFromJSONObject(task, "id"),
                             JSONTools.extractStringFromJSONObject(task, "is_done").equals("false"));
+                    is_done = !is_done;
             }
         } while(userAnswer != 4);
     }

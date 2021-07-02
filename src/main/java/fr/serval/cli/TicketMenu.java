@@ -77,11 +77,12 @@ public class TicketMenu {
     private static void ticketOptionsMenu(int projectId, JSONObject ticket){
         System.out.println("=================");
         int userAnswer;
+        boolean is_closed = JSONTools.extractStringFromJSONObject(ticket, "is_closed").equals("true");
         do {
             System.out.println("Que souhaitez vous faire avec " + JSONTools.extractStringFromJSONObject(ticket, "title") + " ? ID = " + JSONTools.extractIntFromJSONObject(ticket, "id"));
             System.out.println("1 : Gérer les membres");
             System.out.println("2 : Voir les commits associés");
-            if(JSONTools.extractStringFromJSONObject(ticket, "is_closed").equals("false")){
+            if(!is_closed){
                 System.out.println("3 : Indiquer que le ticket est fermé");
             }
             else {
@@ -101,6 +102,7 @@ public class TicketMenu {
                     APIController.getInstance().getAPITicketController().updateTicketIsClosedAttribut(
                             JSONTools.extractIntFromJSONObject(ticket, "id"),
                             JSONTools.extractStringFromJSONObject(ticket, "is_closed").equals("false"));
+                    is_closed = !is_closed;
             }
         } while(userAnswer != 4);
     }
