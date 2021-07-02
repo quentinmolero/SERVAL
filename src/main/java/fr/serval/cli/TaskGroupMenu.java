@@ -54,7 +54,7 @@ public class TaskGroupMenu {
             System.out.println("À quel groupe de tâches souhaitez vous accéder ?");
             for (int i = 0; i < taskGroups.size(); i++)
             {
-                String projectName = JSONTools.extractStringFromJSONObject((JSONObject) taskGroups.get(i), "username");
+                String projectName = JSONTools.extractStringFromJSONObject((JSONObject) taskGroups.get(i), "name");
                 System.out.println((i + 1) + " : " + projectName);
             }
             System.out.println((taskGroups.size() + 1) + " : Retourner à la sélection des projets");
