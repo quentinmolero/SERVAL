@@ -32,14 +32,16 @@ public class TicketMenu {
         System.out.println("=================");
         int userAnswer;
         APITicketController apiTicketController = APIController.getInstance().getAPITicketController();
-        JSONArray tickets = apiTicketController.getProjetTickets(projectId);
-
-        if(tickets.size() == 0){
-            System.out.println("Vous n'avez pas enregistré de ticket");
-            return;
-        }
+        JSONArray tickets;
 
         do {
+            tickets = apiTicketController.getProjetTickets(projectId);
+
+            if(tickets.size() == 0){
+                System.out.println("Vous n'avez pas enregistré de ticket");
+                return;
+            }
+
             System.out.println("À quel ticket souhaitez vous accéder ?");
             for (int i = 0; i < tickets.size(); i++)
             {

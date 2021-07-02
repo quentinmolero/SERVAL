@@ -32,14 +32,16 @@ public class TaskMenu {
         System.out.println("=================");
         int userAnswer;
         APITaskController apiTaskController = APIController.getInstance().getAPITaskController();
-        JSONArray taskGroups = apiTaskController.getAllTaskForATaskGroup(projectId, taskGroupId);
-
-        if(taskGroups.size() == 0){
-            System.out.println("Vous n'avez pas enregistré de tâche");
-            return;
-        }
+        JSONArray taskGroups;
 
         do {
+            taskGroups = apiTaskController.getAllTaskForATaskGroup(projectId, taskGroupId);
+
+            if(taskGroups.size() == 0){
+                System.out.println("Vous n'avez pas enregistré de tâche");
+                return;
+            }
+
             System.out.println("À quelle tâche souhaitez vous accéder ?");
             for (int i = 0; i < taskGroups.size(); i++)
             {
