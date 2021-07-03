@@ -20,7 +20,7 @@ public class SettingsMenu implements IHMComponentBuilder {
     public void setupComponent() {
         this.menu.textProperty().setValue("Paramètres");
 
-        this.menu.getItems().add(this.projectMenuItem.getComponent());
+        this.menu.getItems().addAll(this.projectMenuItem.getComponent());
     }
 
     @Override

@@ -55,7 +55,8 @@ public class ProjectController implements Controller {
         return name != null && this.projectList.stream().noneMatch(project -> project.getName().equals(name));
     }
 
-    private void fillProjectList() {
+    public void fillProjectList() {
+        this.projectList.clear();
         JSONArray jsonArray = APIController.getInstance().getAPIProjectController().getCurrentUserProjects();
         List<JSONObject> jsonObjectList = JSONTools.collectJSONArrayChildrenAsArrayList(jsonArray);
         for (JSONObject jsonObject : jsonObjectList) {
