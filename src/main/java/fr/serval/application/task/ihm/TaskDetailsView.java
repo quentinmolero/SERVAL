@@ -20,6 +20,7 @@ import java.util.List;
 public class TaskDetailsView implements IHMComponentBuilder {
     private final GridPane taskDetailsView;
     private final Label taskDescription;
+    private final Label taskId;
     private final TreeView<String> commitTree;
     private final TreeItem<String> commitRoot;
     private final Button finishTask;
@@ -29,6 +30,7 @@ public class TaskDetailsView implements IHMComponentBuilder {
     public TaskDetailsView(Project project) {
         this.taskDetailsView = new GridPane();
         this.taskDescription = new Label();
+        this.taskId = new Label();
         this.commitTree = new TreeView<>();
         this.commitRoot = new TreeItem<>();
         this.finishTask = new Button();
@@ -46,23 +48,26 @@ public class TaskDetailsView implements IHMComponentBuilder {
         this.commitRoot.setExpanded(true);
 
         this.taskDetailsView.getColumnConstraints().add(0, GridPaneConstraintBuilder.buildGridColumnConstraint(Priority.SOMETIMES, 100));
-        this.taskDetailsView.getRowConstraints().add(0, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 10));
-        this.taskDetailsView.getRowConstraints().add(1, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 70));
-        this.taskDetailsView.getRowConstraints().add(2, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 20));
+        this.taskDetailsView.getRowConstraints().add(0, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 5));
+        this.taskDetailsView.getRowConstraints().add(1, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 5));
+        this.taskDetailsView.getRowConstraints().add(2, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 70));
+        this.taskDetailsView.getRowConstraints().add(3, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 20));
 
         this.taskDetailsView.add(this.taskDescription, 0, 0);
-        this.taskDetailsView.add(this.commitTree, 0, 1);
-        this.taskDetailsView.add(this.finishTask, 0, 2);
+        this.taskDetailsView.add(this.taskId, 0, 1);
+        this.taskDetailsView.add(this.commitTree, 0, 2);
+        this.taskDetailsView.add(this.finishTask, 0, 3);
 
         this.finishTask.setText("Finir la tache");
     }
 
     public void updateDetails(JSONObject taskJSONObject) {
         this.taskDescription.setText(JSONTools.extractStringFromJSONObject(taskJSONObject, "description"));
+        this.taskId.setText(JSONTools.extractStringFromJSONObject(taskJSONObject, "id"));
         JSONArray taskCommits = APIController.getInstance().getAPITaskController().getAllCommitsForATask(this.project.getId(), JSONTools.extractIntFromJSONObject(taskJSONObject, "id"));
         List<JSONObject> commits = JSONTools.collectJSONArrayChildrenAsArrayList(taskCommits);
         for (JSONObject commit : commits) {
-            this.commitRoot.getChildren().add(new TreeItem<>(JSONTools.extractStringFromJSONObject(commit, "name")));
+            this.commitRoot.getChildren().add(new TreeItem<>(JSONTools.extractStringFromJSONObject(commit, "message")));
         }
     }
 

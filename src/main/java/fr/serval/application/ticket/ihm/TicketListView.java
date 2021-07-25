@@ -53,6 +53,7 @@ public class TicketListView implements IHMComponentBuilder {
             JSONObject selectedTicket = this.ticketHashMap.get(selectedNode.getValue());
             this.ticketMainView.updateTicketData(selectedTicket);
             this.ticketMainView.getTicketDetailView().updateList(JSONTools.extractIntFromJSONObject(selectedTicket, "id"));
+            this.ticketDetailView.updateList(JSONTools.extractIntFromJSONObject(selectedTicket, "id"));
         });
 
         this.updateTicketList();

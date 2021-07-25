@@ -13,8 +13,6 @@ import javafx.scene.layout.Priority;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.Arrays;
-
 public class TicketDetailView implements IHMComponentBuilder {
     private final GridPane ticketDetailView;
     private final GridPane ticketPeopleDetailsView;
@@ -83,8 +81,7 @@ public class TicketDetailView implements IHMComponentBuilder {
         stringObservableList.clear();
 
         for (JSONObject commit : JSONTools.collectJSONArrayChildrenAsArrayList(commitList)) {
-            System.out.println(commit);
-            stringObservableList.add(JSONTools.extractStringFromJSONObject(commit, "name"));
+            stringObservableList.add(JSONTools.extractStringFromJSONObject(commit, "message"));
         }
 
         this.commitList.setItems(stringObservableList);

@@ -55,7 +55,7 @@ public class TaskCategoriesView implements IHMComponentBuilder {
             this.taskListView.updateTasks(this.project.getId(), selectedCategories);
         });
 
-        this.addCategoriesTask.setText("Ajouter une tache");
+        this.addCategoriesTask.setText("Ajouter une categorie");
         this.addCategoriesTask.setOnAction(event -> {
             final NewCategoriesDialog newCategoriesDialog = new NewCategoriesDialog(this, this.project.getId());
             newCategoriesDialog.getComponent().show();

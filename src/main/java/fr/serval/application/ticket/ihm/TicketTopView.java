@@ -71,6 +71,7 @@ public class TicketTopView implements IHMComponentBuilder {
         int closedTickets = 0;
 
         for (JSONObject ticket : this.ticketListView.getTicketHashMap().values()) {
+            System.out.println(JSONTools.extractBooleanFromJSONObject(ticket, "is_closed"));
             if (JSONTools.extractBooleanFromJSONObject(ticket, "is_closed")) {
                 openedTickets++;
             } else {

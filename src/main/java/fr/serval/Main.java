@@ -1,6 +1,5 @@
 package fr.serval;
 
-import fr.serval.api.APIController;
 import fr.serval.cli.LauncherMenu;
 import fr.serval.launcher.Launcher;
 
