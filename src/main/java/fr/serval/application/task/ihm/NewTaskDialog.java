@@ -79,7 +79,7 @@ public class NewTaskDialog implements IHMComponentBuilder {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(ApplicationMainView.getMainStage());
         dialog.setScene(dialogScene);
-        dialog.setTitle("Ajouter unr tache");
+        dialog.setTitle("Ajouter une tache");
     }
 
     private void addNewTask() {

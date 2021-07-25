@@ -17,6 +17,7 @@ public class TicketMainView implements IHMComponentBuilder {
 
     private final Text ticketTitle;
     private final Text ticketDescription;
+    private final Text ticketTextId;
 
     private final Button closeTicketButton;
 
@@ -34,6 +35,7 @@ public class TicketMainView implements IHMComponentBuilder {
 
         this.ticketTitle = new Text();
         this.ticketDescription = new Text();
+        this.ticketTextId = new Text();
 
         this.closeTicketButton = new Button();
 
@@ -57,19 +59,22 @@ public class TicketMainView implements IHMComponentBuilder {
 
         this.ticketInfoView.add(this.ticketTitle, 0, 0);
         this.ticketInfoView.add(this.ticketDescription, 0, 1);
-        this.ticketInfoView.add(this.ticketDetailView.getComponent(), 0, 2);
-        this.ticketInfoView.add(this.closeTicketButton, 0, 3);
+        this.ticketInfoView.add(this.ticketTextId, 0, 2);
+        this.ticketInfoView.add(this.ticketDetailView.getComponent(), 0, 3);
+        this.ticketInfoView.add(this.closeTicketButton, 0, 4);
 
         this.ticketInfoView.getColumnConstraints().add(0, GridPaneConstraintBuilder.buildGridColumnConstraint(Priority.SOMETIMES, 100));
         this.ticketInfoView.getRowConstraints().add(0, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 5));
         this.ticketInfoView.getRowConstraints().add(1, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 5));
-        this.ticketInfoView.getRowConstraints().add(2, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 80));
-        this.ticketInfoView.getRowConstraints().add(3, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 10));
+        this.ticketInfoView.getRowConstraints().add(2, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 5));
+        this.ticketInfoView.getRowConstraints().add(3, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 75));
+        this.ticketInfoView.getRowConstraints().add(4, GridPaneConstraintBuilder.buildGridRowConstraint(Priority.SOMETIMES, 10));
     }
 
     public void updateTicketData(JSONObject ticketJSONObject) {
         this.ticketTitle.setText(JSONTools.extractStringFromJSONObject(ticketJSONObject, "title"));
         this.ticketDescription.setText(JSONTools.extractStringFromJSONObject(ticketJSONObject, "description"));
+        this.ticketTextId.setText(JSONTools.extractStringFromJSONObject(ticketJSONObject, "id"));
         this.ticketId = JSONTools.extractIntFromJSONObject(ticketJSONObject, "id");
         this.closeTicketButton.setDisable(JSONTools.extractBooleanFromJSONObject(ticketJSONObject, "is_closed"));
     }

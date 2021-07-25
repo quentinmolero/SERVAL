@@ -79,7 +79,7 @@ public class NewTicketDialog implements IHMComponentBuilder {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(ApplicationMainView.getMainStage());
         dialog.setScene(dialogScene);
-        dialog.setTitle("Ajouter unr tache");
+        dialog.setTitle("Ajouter un ticket");
     }
 
     private void addNewTicket() {
