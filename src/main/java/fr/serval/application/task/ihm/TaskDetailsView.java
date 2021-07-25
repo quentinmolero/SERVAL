@@ -62,6 +62,7 @@ public class TaskDetailsView implements IHMComponentBuilder {
     }
 
     public void updateDetails(JSONObject taskJSONObject) {
+        this.commitRoot.getChildren().clear();
         this.taskDescription.setText(JSONTools.extractStringFromJSONObject(taskJSONObject, "description"));
         this.taskId.setText(JSONTools.extractStringFromJSONObject(taskJSONObject, "id"));
         JSONArray taskCommits = APIController.getInstance().getAPITaskController().getAllCommitsForATask(this.project.getId(), JSONTools.extractIntFromJSONObject(taskJSONObject, "id"));
